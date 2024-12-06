@@ -1,0 +1,43 @@
+name: Tag and Release
+
+on:
+  repository_dispatch:
+    types: [event-release]    
+
+jobs:
+  build:
+    runs-on: macos-15
+
+    steps:
+    - name: Download artifact identityx-ios-sdk-fido binary targets
+      uses: dawidd6/action-download-artifact@v3
+      with:
+        name: identityx-ios-sdk-fido-binary-targets-${{ github.event.client_payload.version }}
+        github_token: ${{ secrets.ACCESS_TOKEN }}
+        repo: daon-private/identityx-ios-sdk-fido
+        workflow: publish.yml
+        branch: master
+        run_number: ${{ github.event.client_payload.run_number }}
+        path: release
+
+    - name: Create tag
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/${{ github.event.client_payload.version }}',
+            sha: context.sha
+          })
+
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: |        
+        gh release create "${{ github.event.client_payload.version }}" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${{ github.event.client_payload.version }}" \
+            --generate-notes \
+            release/*.zip 
