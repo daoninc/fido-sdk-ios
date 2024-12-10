@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Download artifact identityx-ios-sdk-fido binary targets
-      uses: dawidd6/action-download-artifact@v3
+      uses: dawidd6/action-download-artifact@v6
       with:
         name: identityx-ios-sdk-fido-binary-targets-${{ github.event.client_payload.version }}
         github_token: ${{ secrets.ACCESS_TOKEN }}
