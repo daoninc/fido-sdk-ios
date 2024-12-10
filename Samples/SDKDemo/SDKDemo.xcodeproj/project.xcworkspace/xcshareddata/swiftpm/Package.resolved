@@ -1,0 +1,15 @@
+{
+  "originHash" : "80d8fd6b5de628065b65ccd5952bd22a81c619c226d64bae2bbe9ffc2df635cf",
+  "pins" : [
+    {
+      "identity" : "fido-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/daoninc/fido-sdk-ios",
+      "state" : {
+        "revision" : "140136033a6ddd3f21ce202dd8491e9cfef24abc",
+        "version" : "4.8.137"
+      }
+    }
+  ],
+  "version" : 3
+}
