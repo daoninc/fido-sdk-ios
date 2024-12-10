@@ -14,3 +14,52 @@ FIDO UAF also supports a wide range of authentication methods, including biometr
 ## License
 The SDK requires a license that is bound to an application identifier. This license may in turn embed licenses that are required for specific authenticators. Contact Daon Support or Sales to request a license.
 
+## Samples
+
+The demo sample includes the following:
+
+- **RelyingParty**: A reference sample Relying Party application.
+
+- **AuthBasicFaceInjectionDetection**: Basic sample application with face authentication using IFP.
+
+- **AuthBasic**: Basic sample application for use with the tutorial.
+
+
+
+## API
+
+
+
+### Initialize
+
+Initialize a new IXUAF instance using the RPSA server.
+
+```swift
+
+
+```
+
+See included samples and [xAuth FIDO SDK Documentation](https://developer.identityx-cloud.com/client/fido/ios/) for details and additional information.
+
+### Register 
+
+Register a new authenticator with the FIDO server.
+
+```swift
+
+```
+
+See included samples and [xAuth FIDO SDK Documentation](https://developer.identityx-cloud.com/client/fido/ios/) for details and additional information.
+
+### Authenticate
+
+Authenticate the user with the FIDO server. If a username is provided, a step-up authentication is performed.
+
+```swift
+
+```
+
+See included samples and [xAuth FIDO SDK Documentation](https://developer.identityx-cloud.com/client/fido/ios/) for details and additional information.
+
+
+

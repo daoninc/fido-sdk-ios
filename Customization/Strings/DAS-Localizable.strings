@@ -1,0 +1,252 @@
+/* 
+  Localizable.strings
+  DaonAuthenticatorSDK
+
+  Copyright © 2016 Daon. All rights reserved.
+*/
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - COMMON STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Alert - Title - Error" = "Error";
+
+"Button - Title - OK" = "OK";
+
+"Button - Title - Next" = "Continue";
+
+"Button - Title - Cancel" = "Cancel";
+
+"Button - Title - Retry" = "Retry";
+
+"Attempts - 1 Remaining" = "1 retry remaining.";
+
+"Attempts - X Remaining - Formatted" = "%ld retries remaining.";
+
+"Attempts - Try Again" = "Please try again.";
+
+"Locked - Too Many Attempts - Duration - Format" = "%@\n\nLock will expire after %d seconds.";
+
+"Register" = "Register";
+
+"Authenticate" = "Authenticate";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - FACE SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Face Screen - Title" = "Face";
+
+"Face Screen - Instructions - Preparing" = "Preparing";
+
+"Face Screen - Instructions - Registration" = "Please take a photo of yourself";
+
+"Face Screen - Instructions - Authentication" = "Looking for liveness";
+
+"Face Screen - Instructions - Confimation" = "Use Photo?";
+
+"Face Screen - Instructions - Verifying" = "Verifying";
+
+"Face Screen - Instructions - Analyzing" = "Analyzing";
+
+"Face Screen - Instructions - Liveness Detected" = "Liveness detected. Hold still.";
+
+"Face Screen - Instructions - Spoof" = "Please move to another location with good lighting and try again.";
+
+"Face Screen - Enrollment Issue - Could Not Enroll" = "Failed to enroll face";
+
+"Face Screen - Verification Issue - Could Not Verify" = "Failed to verify face";
+
+"Face Screen - Button - Take Photo" = "Take Photo";
+
+"Face Screen - Button - Use Photo" = "Use Photo";
+
+"Face Screen - Button - Reake Photo" = "Retake Photo";
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - FACE IFP SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Face Screen - Accept - Registration" = "Register";
+
+"Face Screen - Accept - Authentication" = "Authenticate";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - FACE V3 SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Face Screen - Instructions - Authentication - Blink" = "Please blink to capture a photo";
+"Face Screen - Instructions - Authentication - Passive" = "Looking for liveness";
+"Face Screen - Instructions - Authentication - Passive And Blink" = "Looking for liveness and blink";
+"Face Screen - Instructions - Registration - Blink" = "Looking for blink";
+"Face Screen - Instructions - Registration - Passive" = "Looking for liveness";
+"Face Screen - Instructions - Registration - Passive And Blink" = "Looking for liveness and blink";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - FACE OVERLAY STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Face Overlay - Initializing" = "Your face here!";
+"Face Overlay - Started" = "Hold";
+"Face Overlay - Tracking" = "Move in";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - FINGERPRINT SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Fingerprint Screen - Title" = "Touch ID";
+
+"Fingerprint Screen - Button - Retry" = "Retry";
+
+"Fingerprint Screen - Reason - Registration" = "Verify your fingerprint to continue registration.";
+
+"Fingerprint Screen - Reason - Authentication" = "Verify your fingerprint to continue authentication.";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - FACE ID SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Face ID Screen - Title" = "Face ID";
+
+"Face ID Screen - Button - Retry" = "Retry";
+
+"Face ID Screen - Reason - Registration" = "Verify your face to continue registration.";
+
+"Face ID Screen - Reason - Authentication" = "Verify your face to continue authentication.";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - PASSWORD SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Password Screen - Title" = "Passcode";
+
+"Password Screen - Instructions - Registration" = "Choose a passcode to be used when authenticating.";
+
+"Password Screen - Instructions - Registration - Confirm" = "Please confirm your passcode for authenticating.";
+
+"Password Screen - Instructions - Authentication" = "Enter passcode.";
+
+"Password Screen - Instructions - Authentication - Current" = "Enter current passcode.";
+
+"Password Screen - Instructions - Reenroll" = "Choose a new passcode to be used when authenticating.";
+
+"Password Screen - Instructions - Reenroll - Confirm" = "Please confirm your new passcode for authenticating.";
+
+"Password Screen - Text Field Place Holder" = "Passcode";
+
+"Password Screen - Text Field Place Holder - Confirmation" = "Confirm";
+
+"Password Screen - Error - Wrong Lengths - Formatted" = "Passcode must be between %d and %d characters. Please try again.";
+
+"Password Screen - Error - Too short - Formatted" = "Passcode must be at least %d characters. Please try again.";
+
+"Password Screen - Error - Too long - Formatted" = "Passcode must be at most %d characters. Please try again.";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - VOICE SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Voice Screen - Title" = "Voice";
+
+"Voice Screen - Instructions - Registration" = "Please speak the following text clearly, in a normal voice:";
+
+"Voice Screen - Instructions - Authentication" = "Please speak the following text clearly, in a normal voice:";
+
+"Voice Screen - Utterance" = "My identity is secure because my voice is my passport. Verify me.";
+
+"Voice Screen - Progress - Formatted" = "%d of %d";
+
+"Voice Screen - Action - Start Recording" = "Start";
+
+"Voice Screen - Action - Stop Recording" = "Stop";
+
+"Voice Screen - Message - Enrolled" = "Voice enrolled.";
+
+"Voice Screen - Message - Verified" = "Voice verified.";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - EYE SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Eye Screen - Title" = "Eye";
+
+"Eye Screen - Instructions - Registration" = "Remove glasses and scan eyes to enroll";
+
+"Eye Screen - Instructions - Authentication" = "Remove glasses and scan eyes to authenticate";
+
+"Eye Screen - Instructions - Scan Again" = "Almost done.\n\nPress 'Keep Scanning' and continue scanning your eyes.";
+
+"Eye Screen - Button Title - Scan Again" = "Keep Scanning";
+
+"Eye Screen - Progress Message - Position Eyes" = "Position your eyes in the window";
+
+"Eye Screen - Progress Message - Move Device Closer" = "Move device closer";
+
+"Eye Screen - Progress Message - Move Device Further Away" = "Move device further away";
+
+"Eye Screen - Progress Message - Hold still" = "Hold device steady";
+
+"Eye Screen - Progress Message - Registration Failed" = "Failed registration.";
+
+"Eye Screen - Progress Message - Authentication Failed" = "Failed authentication.";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - PALM SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Palm Screen - Title" = "Palm";
+
+"Palm Screen - Instructions - Registration" = "• Spread your fingers apart\n• Position palm toward light\n• Align your palm outline with circle";
+
+"Palm Screen - Instructions - Authentication" = "• Spread your fingers apart\n• Position palm toward light\n• Align your palm outline with circle";
+
+"Palm Screen - Instructions - Saving" = "Saving...";
+
+"Palm Screen - Orientation - Left" = "LEFT PALM";
+
+"Palm Screen - Orientation - Right" = "RIGHT PALM";
+
+"Palm Screen - Liveness - Make Fist" = "MAKE A FIST";
+
+"Palm Screen - Button Text - Skip" = "Skip this palm";
+
+"Palm Screen - Button Text - Continue" = "Continue (Right Palm)";
+
+"Palm Screen - Button Text - Retry" = "Retry";
+
+"Palm Screen - Status Text - Left Completed" = "Left Palm\nCompleted";
+
+"Palm Screen - Status Text - Right Completed" = "Right Palm\nCompleted\n\nSaving";
+
+"Palm Screen - Status Text - Saving" = "Saving";
+
+"Palm Screen - Status Text - Verified" = "Verified";
+
+"Palm Screen - Status Text - Failed" = "Failed";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - OFFLINE OTP SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Offline OTP Screen - Title" = "Offline OTP";
+
+"Offline OTP Screen - Instructions" = "Line up the QR code to fit in the frame.";
+
+"Offline OTP Screen - Cannot access camera" = "Unable to access Camera. Please restart app.";
+
+
+//////////////////////////////////////////////////////////////////////
+// DAON AUTHENTICATOR SDK - SILENT SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Silent Screen - Title" = "Silent";

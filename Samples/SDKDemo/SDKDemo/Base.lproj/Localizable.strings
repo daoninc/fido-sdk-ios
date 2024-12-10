@@ -1,0 +1,259 @@
+/*
+ Localisations.strings
+ DaonFidoSampleRpApp
+ 
+ Copyright © 2016 Daon. All rights reserved.
+ */
+
+//////////////////////////////////////////////////////////////////////
+// COMMON STRINGS
+//////////////////////////////////////////////////////////////////////
+
+/* Generic OK Button */
+"OK" = "OK";
+
+/* Generic YES Button */
+"Yes" = "Yes";
+
+/* Generic NO Button */
+"No" = "No";
+
+/* Generic Error header */
+"Error" = "Error";
+
+
+//////////////////////////////////////////////////////////////////////
+// LANDING PAGE SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Landing Page Screen - Button Title - Standard Login" = "Sign In With Password";
+"Landing Page Screen - Button Title - FIDO Login" = "Sign In With FIDO";
+"Landing Page Screen - Button Title - Create Account" = "Create New Account";
+"Landing Page Screen - Button Title - Settings" = "Settings";
+"Landing Page Screen - Label Text - Version - Formatted" = "v%@";
+
+//////////////////////////////////////////////////////////////////////
+// HOME SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Home Screen - Title" = "Welcome";
+"Home Screen - Button Title - Transactions" = "Transactions";
+"Home Screen - Button Title - Authenticators" = "Authenticators";
+"Home Screen - Button Title - Delete" = "Delete Account";
+"Home Screen - Button Title - Sign Out" = "Sign Out";
+"Home Screen - Alert - Title - Delete" = "Delete Account";
+"Home Screen - Alert - Contents - Delete" = "Are you sure you wish to delete your account?";
+"Home Screen - Alert - Title - Sign Out" = "Sign Out";
+"Home Screen - Alert - Contents - Sign Out" = "Are you sure you wish to sign out of the application?";
+
+
+//////////////////////////////////////////////////////////////////////
+// AUTHENTICATORS MANAGEMENT SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Authenticator Management Screen - Title" = "Authenticators";
+"Authenticator Management Screen - State - Registered" = "Registered";
+"Authenticator Management Screen - Button Title - Register" = "Register";
+"Authenticator Management Screen - Button Title - Deregister" = "Deregister";
+"Authenticator Management Screen - Error - No Authenticators" = "No Authenticators Available.";
+"Authenticator Management Screen - Error - Unknown State" = "Could not determine authenticator registration state.";
+"Authenticator Management Screen - Message - Registered" = "Authenticator Registered";
+"Authenticator Management Screen - Message - Deregistered" = "Authenticator Deregistered";
+"Authenticator Management Screen - Alert - Deregistration Confirmation - Title" = "Deregister";
+"Authenticator Management Screen - Alert - Deregistration Confirmation - Message" = "Deregister this authenticator?";
+"Authenticator Management Screen - Alert - Deregistration Confirmation - Cancel Button" = "Cancel";
+"Authenticator Management Screen - Alert - Deregistration Confirmation - Other Button" = "Deregister";
+
+
+//////////////////////////////////////////////////////////////////////
+// LOGIN WITH PASSWORD SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Standard Login Screen - Title" = "Login with Password";
+"Standard Login Screen - Placeholder Text - Email" = "Email";
+"Standard Login Screen - Placeholder Text - Password" = "Password";
+"Standard Login Screen - Button Title - Login" = "Login";
+"Standard Login Screen - Error - Missing All Inputs" = "Please enter your email and password.";
+"Standard Login Screen - Error - Missing Email" = "Please enter your email.";
+"Standard Login Screen - Error - Missing Password" = "Please enter your password.";
+"Standard Login Screen - Error - Invalid Email" = "Invalid email.";
+
+
+//////////////////////////////////////////////////////////////////////
+// LOGIN WITH FIDO SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"FIDO Login Screen - Title" = "Authenticators";
+"FIDO Login Screen - Subtitle" = "Select which Authenticator you wish to authenticate with.";
+"FIDO Login Screen - No Registrations" = "No registered authenticators available.";
+
+
+//////////////////////////////////////////////////////////////////////
+// CREATE NEW ACCOUNT SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Create New Account Screen - Title" = "Create New Account";
+"Create New Account Screen - Button Title - Create" = "Create";
+"Create New Account Screen - Text Field Label - First Name" = "First Name";
+"Create New Account Screen - Text Field Label - Last Name" = "Last Name";
+"Create New Account Screen - Text Field Label - Email" = "Email";
+"Create New Account Screen - Text Field Label - Password" = "Password";
+"Create New Account Screen - Text Field Label - Confirm Password" = "Confirm Password";
+"Create New Account Screen - Error - Password Mismatch" = "Passwords do not match.";
+"Create New Account Screen - Error - Invalid Email" = "Invalid email address.";
+"Create New Account Screen - Error - Invalid Password" = "Password too short.";
+"Create New Account Screen - Error - Missing Data" = "Please complete all fields to continue.";
+
+
+//////////////////////////////////////////////////////////////////////
+// REGISTER AUTHENTICATORS (NEW ACCOUNT) SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"Register Authenticators Screen - Title" = "Choose Authenticators";
+"Register Authenticators Screen - Subtitle" = "Select which Authenticators you wish to register with FIDO.";
+"Register Authenticators Screen - Button Title - Done" = "Done";
+"Register Authenticators Screen - Alert - Failed Discover - Title" = "Failed Discover";
+"Register Authenticators Screen - Alert - Failed Discover - Message" = "An error occurred while discovering available authenticators.";
+"Register Authenticators Screen - Alert - Failed Discover - Cancel" = "OK";
+"Register Authenticators Screen - Alert - Already Registered - Title" = "Already Registered";
+"Register Authenticators Screen - Alert - Already Registered - Message" = "You have already registered this authenticator.";
+"Register Authenticators Screen - Alert - Already Registered - Cancel" = "OK";
+"Register Authenticators Screen - Alert - Failed Registration - Title" = "Failed Registration";
+"Register Authenticators Screen - Alert - Failed Registration - Message" = "An error occurred while registering authenticator.";
+"Register Authenticators Screen - Alert - Failed Registration - Cancel" = "OK";
+"Register Authenticators Screen - Alert - Done Confirmation - Title" = "Complete Registration";
+"Register Authenticators Screen - Alert - Done Confirmation - Message" = "Do you want to finish registration?";
+"Register Authenticators Screen - Alert - Done Confirmation - Button 1" = "Finish";
+"Register Authenticators Screen - Alert - Done Confirmation - Cancel" = "Cancel";
+"Register Authenticators Screen - Alert - Done - Title" = "Registration Complete";
+"Register Authenticators Screen - Alert - Done - Message" = "Authenticators successfully registered with new account.";
+"Register Authenticators Screen - Alert - Done - Cancel" = "Continue To Login";
+
+
+//////////////////////////////////////////////////////////////////////
+// APP SETTINGS SCREEN STRINGS
+//////////////////////////////////////////////////////////////////////
+
+"App Settings Screen - Button Title - Reset" = "Reset App";
+"App Settings Screen - Button Title - Unlock Authenticators" = "Unlock Authenticators";
+"App Settings Screen - Title" = "Settings";
+"App Settings Screen - Section Title - Server Settings" = "SERVER SETTINGS";
+"App Settings Screen - Section Title - Facet ID" = "FACET ID";
+"App Settings Screen - Section Title - App Reset" = "RESET";
+"App Settings Screen - Section Title - Other" = "OTHER";
+"App Settings Screen - Text Field Label - URL" = "URL";
+"App Settings Screen - Text Field Label - Port" = "Port";
+"App Settings Screen - Text Field Placeholder - URL" = "e.g. example.com";
+"App Settings Screen - Text Field Placeholder - Port" = "e.g. 440";
+"App Settings Screen - Setting Label - Secure Connection" = "Secure Connection (https)";
+"App Settings Screen - Setting Label - Tabbed Verification" = "Tabbed Verification";
+"App Settings Screen - Setting Label - Multiple Choice Authentication" = "Multiple Choice Authentication";
+"App Settings Screen - Setting Label - ADoS" = "Enable ADoS";
+"App Settings Screen - Setting Label - Single Shot" = "Single Shot Auth Request";
+"App Settings Screen - Alert - Title - Confirm Reset" = "Confirm Reset";
+"App Settings Screen - Alert - Message - Confirm Reset" = "Resetting will delete your enrollment and settings off of your device, are you sure you want to continue?\n\nOn reset, the app will close.";
+"App Settings Screen - Alert - Title - UI Tabs" = "Tabbed UI";
+"App Settings Screen - Alert - Message - UI Tabs" = "The Tabbed UI will not work unless particular FIDO policies are set. See documentation for details.";
+"App Settings Screen - Alert - Title - Single Shot" = "Single Shot";
+"App Settings Screen - Alert - Message - Single Shot" = "Client-generated authentication requests will not work with all authenticators and requires the latest SRP Server.\n\nNOTE. By default the sample app creates an Open Policy.";
+
+"App Settings Screen - Error - Invalid Url" = "Invalid URL";
+"App Settings Screen - Error - Invalid Port" = "Invalid Port";
+"App Settings Screen - Alert - No Email - Message" = "No email account has been configured. Please check your settings and try again.";
+"App Settings Screen - Email - Subject" = "Facet ID";
+"App Settings Screen - Alert - Authenticators Unlocked - Title" = "Authenticators Unlocked";
+"App Settings Screen - Alert - Authenticators Unlocked - Message" = "All available registered authenticators have been unlocked.";
+"App Settings Screen - Alert - Authenticators Unlocked - Cancel" = "OK";
+
+//////////////////////////////////////////////////////////////////////
+// TRANSACTIONS SCREEN
+//////////////////////////////////////////////////////////////////////
+
+"Transactions Screen - Title" = "Transactions";
+"Transactions Screen - Label - Step Up Authentication" = "Step Up Authentication";
+"Transactions Screen - Label - Transaction Confirmation" = "Transaction Confirmation";
+"Transactions Screen - Segmented Control - Text" = "Text";
+"Transactions Screen - Segmented Control - Image" = "Image";
+"Transactions Screen - Button - Authenticate" = "Authenticate";
+"Transactions Screen - Text Field - Transaction Content - Placeholder" = "Enter example transaction text...";
+"Transactions Screen - Error - Transaction Cancelled" = "User cancelled verification.";
+"App Settings Screen - Alert - Transaction Verified - Title" = "Transaction Verified";
+"App Settings Screen - Alert - Transaction Verified - Message" = "Thanks for verifying your transaction!";
+"App Settings Screen - Alert - Transaction Verified - Cancel Button" = "Continue";
+
+//////////////////////////////////////////////////////////////////////
+// TRANSACTION CONFIRMATION SCREEN
+//////////////////////////////////////////////////////////////////////
+
+"Transaction Confirmation Screen - Button - Verify" = "Verify";
+"Transaction Confirmation Screen - Button - Cancel" = "Cancel";
+
+//////////////////////////////////////////////////////////////////////
+// CHOOSE ACCOUNT SCREEN
+//////////////////////////////////////////////////////////////////////
+
+"Choose Account Screen - Title" = "Choose Account";
+
+//////////////////////////////////////////////////////////////////////
+// UAF SDK/ERROR MESSAGES
+//////////////////////////////////////////////////////////////////////
+
+"uaf_error_none" = "No error";
+"uaf_error_wait_user_action" = "Waiting on user action to proceed.";
+"uaf_error_insecure_transport" = "Insecure transport mechanism or content.";
+"uaf_error_user_cancelled" = "The user cancelled the action.";
+"uaf_error_unsupported_version" = "Unsupported FIDO version.";
+"uaf_error_no_suitable_authenticator" = "No suitable FIDO authenticator was found.";
+"uaf_error_protocol" = "A violation of the FIDO UAF protocol occurred.";
+"uaf_error_untrusted_facet_id" = "The caller of the UAF client is not trusted.";
+"uaf_error_key_disappeared_permanently" = "The required FIDO authentication key could not be found. If the device Passcode has recently been removed, please deregister and re-register the authenticator.";
+"uaf_error_authenticator_access_denied" = "Authenticator access denied.";
+"uaf_error_invalid_transaction_content" = "Invalid FIDO transaction content.";
+"uaf_error_user_not_responsive" = "The user took to long to perform an operation.";
+"uaf_error_insufficient_authenticator_resources" = "Insufficient resources in FIDO authenticator.";
+"uaf_error_user_lockout" = "User is locked.";
+"uaf_error_sdk_not_initialized" = "SDK not initialized.";
+"uaf_error_sdk_already_initialized" = "SDK already initialized.";
+"uaf_error_sdk_no_hardware_keystore" = "Hardware keystore required.";
+"uaf_error_client_not_found" = "No suitable FIDO UAF Client was found.";
+"uaf_error_unexpected" = "An unexpected error occurred.";
+"uaf_error_user_not_enrolled" = "User not enrolled";
+
+"uaf_accounts" = "Choose Account";
+
+"uaf_transaction" = "Confirm";
+"uaf_transaction_accept" = "YES";
+"uaf_transaction_deny" = "NO";
+"uaf_transaction_unknown" = "Unknown content";
+
+//////////////////////////////////////////////////////////////////////
+// MISC ERROR MESSAGES
+//////////////////////////////////////////////////////////////////////
+
+
+
+//
+// RP Server
+//
+
+"1200" = "OK. Operation completed";
+"1202" = "Accepted. Message accepted, but not completed at this time.";
+"1400" = "Bad Request. The server did not understand the message.";
+"1401" = "Unauthorized. The userid must be authenticated to perform this operation, or this KeyID is not associated with this UserID.";
+"1403" = "Forbidden. The userid is not allowed to perform this operation. Client should not retry.";
+"1404" = "Not Found.";
+"1408" = "Request Timeout.";
+"1480" = "Unknown AAID. The server was unable to locate authoritative metadata for the AAID.";
+"1481" = "Unknown KeyID. The server was unable to locate a registration for the given UserID and KeyID combination.";
+"1490" = "Channel Binding Refused. The server refused to service the request due to a missing or mismatched channel binding(s).";
+"1491" = "Request Invalid. The server refused to service the request because the request message nonce was unknown, expired or the server has previously serviced a message with the same nonce and user ID.";
+"1492" = "Unacceptable Authenticator. The authenticator is not acceptable according to the server's policy.";
+"1493" = "Revoked Authenticator. The authenticator is considered revoked by the server.";
+"1494" = "Unacceptable Key. The key used is unacceptable. Perhaps it is on a list of known weak keys or uses insecure parameter choices.";
+"1495" = "Unacceptable Algorithm. The server believes the authenticator to be capable of using a stronger mutually-agreeable algorithm than was presented in the request.";
+"1496" = "Unacceptable Attestation. The attestation(s) provided were not accepted by the server.";
+"1497" = "Unacceptable Client Capabilities. The server was unable or unwilling to use required capabilities provided supplementally to the authenticator by the client software.";
+"1498" = "Unacceptable Content. There was a problem with the contents of the message and the server was unwilling or unable to process it.";
+"1500" = "Internal Server Error";
+
+

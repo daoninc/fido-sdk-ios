@@ -1,0 +1,268 @@
+/* 
+  Errors.strings
+  DaonAuthenticatorSDK
+
+  Copyright © 2016 Daon. All rights reserved.
+*/
+
+// Flow
+"0" = "Cancelled";
+"1" = "Aborted";
+"2" = "Fallback";
+
+// Permissions
+"50" = "App does not have permission to use the Camera. Please check your settings and try again";
+"51" = "App does not have permission to use the Microphone. Please check your settings and try again";
+
+// Authenticators
+"100" = "Authenticator Not Implemented";
+"101" = "Authenticator Not Supported";
+"102" = "No Host View Controller could be determined";
+"103" = "Too many authentication attempts. The authenticator is temporarily locked";
+"104" = "Too many authentication attempts. The authenticator is permanently locked";
+"105" = "Could Not Sign. Missing Auth Token";
+"106" = "Auth Token Mismatch";
+"107" = "Inconsistent application state";
+"108" = "Failed to start Multi Authenticator. Check for empty parameters!";
+"109" = "Failed to start Multi Authenticator. One or more authenticators is temporarily locked";
+"110" = "Failed to start Multi Authenticator. One or more authenticators is permanently locked";
+"111" = "Failed to start Multi Authenticator. All authenticators are locked";
+"112" = "Cannot switch to this authenticator. It is temporarily locked";
+"113" = "Cannot switch to this authenticator. It is permanently locked";
+"114" = "Failed to sign with Authenticator";
+"115" = "Cannot continue with Authentication. Remaining Authenticator is temporarily locked";
+"116" = "Cannot continue with Authentication. Remaining Authenticator is permanently locked";
+"117" = "Failed to write enrollment data. Please ensure you have sufficient free space on your device";
+"118" = "Failed to read enrollment data";
+"119" = "Failed to encrypt enrollment data";
+"120" = "Failed to decrypt enrollment data";
+"121" = "Failed to load local data key. If the device Passcode has recently been removed, please deregister and re-register the authenticator";
+"122" = "Local authentication enrollment has changed";
+"123" = "Failed to start Multi Authenticator. The only available authenticators have no UI, and these are not supported in multi-authenticator mode";
+"124" = "Failed to start Multi Authenticator. Non-UI authenticators are not supported in multiple-choice multi-authenticator mode";
+"125" = "Enrolled data is missing";
+"126" = "Could not load view controller for presentation";
+"127" = "Failed to start Multi Authenticator. Could not load policy view controller for presentation";
+
+// Passcode collection
+"200" = "Failed to verify passcode";
+"201" = "Please enter a passcode to proceed";
+"202" = "The passcodes you have entered do not match. Please try again";
+"203" = "We are detecting multiple failed matches, please ensure you are entering the correct Passcode and try again";
+"204" = "The password does not have the required format";
+"205" = "The password is not in an allowed format";
+"206" = "The password format is not allowed";
+"207" = "The passcode requires at least %d digit(s)";
+"208" = "The passcode requires at least %d upper-case character(s)";
+"209" = "The passcode requires at least %d lower-case character(s)";
+"210" = "The passcode requires at least %d symbol(s) (!, @, -)";
+"211" = "The passcode requires a mix of upper & lower case, digits and symbols";
+"212" = "The current and new passcodes you have entered cannot match. Please try again";
+
+// Face collection
+"300" = "Failed to verify face in time";
+"301" = "Failed to register image";
+"302" = "Low quality image";
+"303" = "Face not detected";
+"304" = "Face not frontal. Please look directly at the camera";
+"305" = "Eyes not detected";
+"306" = "Eyes closed or not fully open. Keep eyes open and look directly at the camera";
+"307" = "Non-uniform lighting detected. Improve lighting";
+"308" = "Face too small. Move closer to the camera";
+"309" = "Face tilted. Please keep your head and handset device in a vertical position";
+"310" = "Image blur detected. Reduce motion or improve lighting";
+"311" = "Poor exposure, image too dark. Please improve lighting";
+"312" = "Face image too soft, lacking detail. Please improve lighting";
+"313" = "Keep face centered";
+"314" = "We are detecting multiple failed matches, please adjust your device or lighting condition and try again";
+"315" = "App does not have required face models";
+"316" = "Face License has expired";
+"317" = "Hold the device in an upright position";
+"318" = "Face License is missing";
+"319" = "Face License is invalid";
+"320" = "Unable to detect liveness at registration in time";
+"321" = "Lost face continuity. Keep face centered, adjust your device or lighting condition and try again";
+"322" = "Failed to verify face";
+"323" = "Failed to verify face in time. No face was detected";
+"324" = "Face not detected";
+"325" = "Face not centered";
+"326" = "Motion too fast";
+"327" = "Nod/Shake movement too fast";
+"328" = "Nod/Shake movement too far";
+"329" = "Face is too close to the edge";
+"330" = "Move device further away";
+"331" = "Move device closer";
+"332" = "Failed to pass liveness check";
+"333" = "Failed to pass liveness check (Spoof)";
+"334" = "Failed to pass liveness check (Eyes Closed)";
+"335" = "Insufficient Face Data";
+"336" = "Insufficient Frame Data";
+"337" = "Frame Mismatch";
+"338" = "No Movement Detected";
+"339" = "Template matching only supported for authentication";
+"340" = "Template nil or empty";
+"341" = "Face too close";
+"342" = "Face mask detected";
+"343" = "Please improve lighting";
+"344" = "Image resolution too low";
+"345" = "IFP is required";
+
+// Voice Collection
+"700" = "Unknown error";
+"701" = "Failed to start recording. Please Retry";
+"702" = "Sample not saved. Please Retry";
+"703" = "Recording is not in progress";
+"704" = "Quality Issue: Audio too soft";
+"705" = "Quality Issue: Audio too noisy";
+"706" = "Quality Issue: Audio too soft, speak clearly";
+"707" = "Quality Issue: Audio too short";
+"708" = "Quality Issue: Audio too loud";
+"709" = "Quality Issue: Audio corrupt or empty";
+"710" = "Quality Issue: Incorrect phrase";
+"711" = "Quality Issue: Frequency Mismatch";
+"712" = "No voice template generated for registered data";
+"713" = "Could not load voice template";
+"714" = "Failed to verify voice";
+"715" = "We are detecting multiple failed matches, please ensure you are in a quiet place and speak clearly in a normal voice and try again";
+"716" = "Audio sample was not collected in the given time. Please try again";
+"717" = "Could not determine voice model location";
+"718" = "Could not encode audio sample";
+"719" = "Unsupported format";
+
+// Touch ID
+"800" = "Failed to verify Touch ID";
+"801" = "We are detecting multiple failed matches, please ensure you are using the finger configured in your device settings and try again";
+
+// Face ID
+"900" = "Failed to verify Face ID";
+"901" = "We are detecting multiple failed matches";
+
+// Local Authentication (Common to both Touch ID *AND* Face ID)
+"1000" = "Application retry limit exceeded";
+"1001" = "Biometry is locked out";
+"1002" = "User has denied the use of biometry for this app";
+"1003" = "Passcode not set";
+"1004" = "Face ID or Touch ID is supported by this device but has not been enrolled";
+"1005" = "Cancelled";
+"1006" = "Failed to verify biometrics";
+
+// ADoS (Client) Errors
+"1100" = "Invalid passcode data";
+"1101" = "Could not generate validator for passcode";
+"1102" = "Could not generate authentication data";
+"1103" = "Could not validate server response";
+"1104" = "Missing Server Parameters, unable to continue";
+"1105" = "Too many authentication attempts. This modality is now locked";
+"1106" = "Missing Reenroll data for delivery";
+
+// OTP Errors
+"1200" = "Failed to generate keys";
+"1201" = "Missing OTP Authentication Data";
+"1202" = "Failed to generate OTP";
+"1203" = "Invalid Transaction Data";
+"1204" = "Unable to access Camera";
+
+// Palm Collection
+"1300" = "Failed to start Palm decoder";
+"1301" = "No license provided";
+"1302" = "Invalid license key";
+"1303" = "Missing enrollment data";
+"1304" = "Could not save enrollment data";
+"1305" = "Can't start palm decoder when it is already running";
+"1306" = "Failed to verify palm";
+"1307" = "We are detecting multiple failed matches, please ensure you are using the correct hand and try again";
+"1308" = "Failed to verify palm in time";
+"1309" = "Liveness was not detected";
+"1310" = "Expected left palm, but right palm was detected. Please ensure you are using the correct hand and try again";
+"1311" = "Expected right palm, but left palm was detected. Please ensure you are using the correct hand and try again";
+"1312" = "Failed to verify palm in time. No palm detected";
+
+// ADoS (Server) Errors
+"8991" = "The Internet connection appears to be offline";
+"10000" = "Unknown ADoS Server Error";
+"10001" = "An unexpected error occurred.  Please see the log files";
+"10002" = "The method has not been implemented";
+"10010" = "Account not found";
+"10011" = "Invalid credentials provided - the user could not be authenticated";
+"10012" = "The user cannot be authenticated - please supply a username and password or a FIDO authentication response";
+"10013" = "The authentication request timed out - please retry";
+"10014" = "This authenticator is not known by the server";
+"10015" = "This authenticator has been deregistered.  It is no longer acceptable";
+"10100" = "The authentication request ID must be provided";
+"10101" = "The passcode must be provided";
+"10102" = "The email must be provided";
+"10103" = "The first name must be provided";
+"10104" = "The last name must be provided";
+"10105" = "An account with this email address already exists";
+"10200" = "The user was authenticated by FIDO but this account is not in the system";
+"10201" = "Unknown session identifier";
+"10202" = "The specified session has expired";
+"10203" = "The specified session does not exist";
+"10303" = "Transaction data must be provided";
+"10748" = "No face could be found in the image";
+"10749" = "More than one face was found in the image";
+"10750" = "The eyes could not be located in the image";
+"10751" = "No voice could be heard in the recording";
+"10752" = "The voice was too soft to be processed";
+"10753" = "More than one voice could be heard in the recording";
+"10754" = "There was too much background noise in the recording";
+"10756" = "Audio too long";
+"10757" = "Audio too loud";
+"10758" = "No voice in the sample or sample is too short";
+"10759" = "Invalid audio";
+"10760" = "Enrollment audio used in verification";
+"10761" = "Audio playback fraud occurred";
+"10762" = "Audio from a tone phone";
+"10763" = "Invalid audio format";
+"10775" = "Speech was not recognized";
+"10783" = "Speaker not enrolled";
+"10797" = "Face not frontal. Please look directly at the camera";
+"10798" = "Face lighting not uniform";
+"10799" = "Face is tilted. Please look directly at the camera";
+"10800" = "Image blur detected. Reduce motion or improve lighting";
+"10801" = "Image too dark. Please improve lighting";
+"10802" = "Face too small. Please move closer to camera";
+"10803" = "Face image too soft, lacking details. Please improve lighting";
+"10812" = "Medical mask detected";
+"10851" = "Audio too soft";
+"10852" = "Audio too noisy";
+"10853" = "Audio speech clarity too soft";
+"10854" = "Utterance too short";
+"10855" = "Audio too loud";
+"10856" = "Audio file is corrupted";
+"10857" = "Audio file is empty";
+"10858" = "Audio wrong utterance detected";
+"10859" = "Audio unsupported format";
+"10878" = "Low quality image";
+"10913" = "Face is too close to the camera";
+"10914" = "Face is too close to one or more borders";
+"10915" = "Face is cropped";
+"10916" = "Facial area is not big enough for analysis. Inter-eye distance in pixels is below the configured value";
+"10917" = "Face not found in the image";
+"10918" = "There is occlusion on the face or it is difficult to see face";
+"10919" = "The typical points of a face expected to be seen in the image have not been found";
+"10927" = "Passive liveness check has failed due to error specified in the error message";
+"10928" = "Service is unreachable";
+"10929" = "Liveness failed";
+"11001" = "An invalid passcode format has been provided";
+"11002" = "A match has been requested with no suitable live match data provided";
+"11003" = "A match has been requested with no suitable reference data provided";
+"11004" = "Incorrect passcode";
+"11005" = "Audio data format information not present";
+"11006" = "The image could not be parsed to a supported format";
+"11007" = "The format of the image data provided is not supported";
+"11008" = "The data provided was not of sufficient quality";
+"11009" = "Face did not match";
+"11010" = "Voice did not match";
+"11011" = "Subject is wearing glasses";
+"11012" = "The passcode provided is the same as a previous passcode";
+"11014" = "The authenticator has been suspended or locked";
+"11501" = "Please Retry";
+"11600" = "No more authentication attempts are allowed";
+"11601" = "The user is blocked or suspended";
+"11602" = "No more face authentication attempts are allowed";
+"11603" = "No more voice authentication attempts are allowed";
+"11604" = "No more passcode authentication attempts are allowed";
+
+
+

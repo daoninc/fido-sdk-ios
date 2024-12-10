@@ -1,0 +1,842 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		772B6C602CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C5F2CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift */; };
+		772B6C622CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C612CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib */; };
+		772B6C682CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C672CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib */; };
+		772B6C692CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C662CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift */; };
+		775DA25E2D078DE800A29393 /* DaonAuthenticatorFaceIFP in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA25D2D078DE800A29393 /* DaonAuthenticatorFaceIFP */; };
+		775DA2602D078DE800A29393 /* DaonAuthenticatorVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA25F2D078DE800A29393 /* DaonAuthenticatorVoice */; };
+		775DA2622D078DE800A29393 /* DaonFIDOSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2612D078DE800A29393 /* DaonFIDOSDK */; };
+		775DA2642D078E1B00A29393 /* DaonAuthenticatorFace in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2632D078E1B00A29393 /* DaonAuthenticatorFace */; };
+		775DA2682D079A0000A29393 /* DaonAuthenticatorPasscode in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2672D079A0000A29393 /* DaonAuthenticatorPasscode */; };
+		775DA28D2D08C68700A29393 /* DaonAuthenticatorFace in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA28C2D08C68700A29393 /* DaonAuthenticatorFace */; };
+		775DA28F2D08C68700A29393 /* DaonAuthenticatorFaceIFP in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA28E2D08C68700A29393 /* DaonAuthenticatorFaceIFP */; };
+		775DA2912D08C68700A29393 /* DaonAuthenticatorPasscode in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2902D08C68700A29393 /* DaonAuthenticatorPasscode */; };
+		775DA2932D08C68700A29393 /* DaonAuthenticatorVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2922D08C68700A29393 /* DaonAuthenticatorVoice */; };
+		775DA2952D08C68700A29393 /* DaonFIDOSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2942D08C68700A29393 /* DaonFIDOSDK */; };
+		775DA2A72D08DD9200A29393 /* IXUAFRESTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2A52D08DD9200A29393 /* IXUAFRESTService.swift */; };
+		775DA2A82D08DD9200A29393 /* DeregistrationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA29B2D08DD9200A29393 /* DeregistrationRequest.swift */; };
+		775DA2A92D08DD9200A29393 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2A32D08DD9200A29393 /* HTTPError.swift */; };
+		775DA2AA2D08DD9200A29393 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2992D08DD9200A29393 /* Authenticator.swift */; };
+		775DA2AB2D08DD9200A29393 /* RegistrationChallenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA29E2D08DD9200A29393 /* RegistrationChallenge.swift */; };
+		775DA2AC2D08DD9200A29393 /* Authenticators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA29A2D08DD9200A29393 /* Authenticators.swift */; };
+		775DA2AD2D08DD9200A29393 /* IdentityX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2A42D08DD9200A29393 /* IdentityX.swift */; };
+		775DA2AE2D08DD9200A29393 /* PolicyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA29D2D08DD9200A29393 /* PolicyItem.swift */; };
+		775DA2AF2D08DD9200A29393 /* Policies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA29C2D08DD9200A29393 /* Policies.swift */; };
+		775DA2B02D08DD9200A29393 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2A22D08DD9200A29393 /* HTTP.swift */; };
+		775DA2B12D08DD9200A29393 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2A02D08DD9200A29393 /* Users.swift */; };
+		775DA2B22D08DD9200A29393 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA29F2D08DD9200A29393 /* User.swift */; };
+		775DA2B32D08DD9200A29393 /* AuthenticationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775DA2982D08DD9200A29393 /* AuthenticationRequest.swift */; };
+		775DA2B62D08E0D800A29393 /* DaonAuthenticatorFace in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2B52D08E0D800A29393 /* DaonAuthenticatorFace */; };
+		775DA2B82D08E0D800A29393 /* DaonAuthenticatorFaceIFP in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2B72D08E0D800A29393 /* DaonAuthenticatorFaceIFP */; };
+		775DA2BA2D08E0D800A29393 /* DaonAuthenticatorPasscode in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2B92D08E0D800A29393 /* DaonAuthenticatorPasscode */; };
+		775DA2BC2D08E0D800A29393 /* DaonAuthenticatorVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2BB2D08E0D800A29393 /* DaonAuthenticatorVoice */; };
+		775DA2BE2D08E0D800A29393 /* DaonFIDOSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2BD2D08E0D800A29393 /* DaonFIDOSDK */; };
+		775DA2C12D08E1A300A29393 /* DaonAuthenticatorFace in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2C02D08E1A300A29393 /* DaonAuthenticatorFace */; };
+		775DA2C32D08E1A400A29393 /* DaonAuthenticatorFaceIFP in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2C22D08E1A300A29393 /* DaonAuthenticatorFaceIFP */; };
+		775DA2C52D08E1A400A29393 /* DaonAuthenticatorPasscode in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2C42D08E1A400A29393 /* DaonAuthenticatorPasscode */; };
+		775DA2C72D08E1A400A29393 /* DaonAuthenticatorVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2C62D08E1A400A29393 /* DaonAuthenticatorVoice */; };
+		775DA2C92D08E1A400A29393 /* DaonFIDOSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2C82D08E1A400A29393 /* DaonFIDOSDK */; };
+		775DA2CC2D08E2D300A29393 /* DaonAuthenticatorFace in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2CB2D08E2D300A29393 /* DaonAuthenticatorFace */; };
+		775DA2CE2D08E2D300A29393 /* DaonAuthenticatorFaceIFP in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2CD2D08E2D300A29393 /* DaonAuthenticatorFaceIFP */; };
+		775DA2D02D08E2D300A29393 /* DaonAuthenticatorPasscode in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2CF2D08E2D300A29393 /* DaonAuthenticatorPasscode */; };
+		775DA2D22D08E2D300A29393 /* DaonAuthenticatorVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2D12D08E2D300A29393 /* DaonAuthenticatorVoice */; };
+		775DA2D42D08E2D300A29393 /* DaonFIDOSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 775DA2D32D08E2D300A29393 /* DaonFIDOSDK */; };
+		C3721AA32318127E0018A048 /* DAS-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3721AA22318127E0018A048 /* DAS-Images.xcassets */; };
+		C3721AA72318128D0018A048 /* DASAndPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3721AA42318128C0018A048 /* DASAndPolicyViewController.swift */; };
+		C3721AA92318128D0018A048 /* DASOrPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3721AA62318128D0018A048 /* DASOrPolicyViewController.swift */; };
+		C3721AAD2318129E0018A048 /* DASOrPolicyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3721AAB2318129E0018A048 /* DASOrPolicyViewController.xib */; };
+		FB083678267CFBA900F124E8 /* DASCircularLevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB083676267CFBA900F124E8 /* DASCircularLevelMeter.swift */; };
+		FB083679267CFBA900F124E8 /* DASFaceOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB083677267CFBA900F124E8 /* DASFaceOverlayView.swift */; };
+		FB2CF51F22148C7600846C06 /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB2CF51E22148C7600846C06 /* defaultPrefs.plist */; };
+		FB2CF521221491F900846C06 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CF520221491F900846C06 /* SettingsTableViewController.swift */; };
+		FB2CF5232214924400846C06 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CF5222214924400846C06 /* SwitchTableViewCell.swift */; };
+		FB2CF5292215A8C200846C06 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CF5282215A8C200846C06 /* StatusViewController.swift */; };
+		FB36263D220B1E0300CB5C56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36263C220B1E0300CB5C56 /* AppDelegate.swift */; };
+		FB36263F220B1E0300CB5C56 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36263E220B1E0300CB5C56 /* ViewController.swift */; };
+		FB362642220B1E0300CB5C56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB362640220B1E0300CB5C56 /* Main.storyboard */; };
+		FB362644220B1E0600CB5C56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB362643220B1E0600CB5C56 /* Assets.xcassets */; };
+		FB362647220B1E0600CB5C56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB362645220B1E0600CB5C56 /* LaunchScreen.storyboard */; };
+		FB36266B220B2FDE00CB5C56 /* license.txt in Resources */ = {isa = PBXBuildFile; fileRef = FB362661220B2FDE00CB5C56 /* license.txt */; };
+		FB36266D220B2FDE00CB5C56 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB362663220B2FDE00CB5C56 /* Settings.swift */; };
+		FB36266E220B2FDE00CB5C56 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB362664220B2FDE00CB5C56 /* Logging.swift */; };
+		FB362674220C93C600CB5C56 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB362670220C93C600CB5C56 /* Localizable.strings */; };
+		FBBA6DC0238C73F900BC6C25 /* DAS-Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBBA6DBF238C73F900BC6C25 /* DAS-Localizable.strings */; };
+		FBF597F7230B2FF700D9AAA6 /* DAS-Errors.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBF597F6230B2FF700D9AAA6 /* DAS-Errors.strings */; };
+		FBF59811230B304D00D9AAA6 /* DASFaceIdAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBF597FD230B304C00D9AAA6 /* DASFaceIdAuthenticatorViewController.xib */; };
+		FBF59812230B304D00D9AAA6 /* DASVoiceAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBF597FE230B304C00D9AAA6 /* DASVoiceAuthenticatorViewController.xib */; };
+		FBF59814230B304D00D9AAA6 /* DASFingerprintAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBF59800230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.xib */; };
+		FBF59816230B304D00D9AAA6 /* DASVoiceAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF59802230B304C00D9AAA6 /* DASVoiceAuthenticatorViewController.swift */; };
+		FBF59819230B304D00D9AAA6 /* DASPasswordAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBF59805230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.xib */; };
+		FBF5981A230B304D00D9AAA6 /* DASFaceIdAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF59806230B304C00D9AAA6 /* DASFaceIdAuthenticatorViewController.swift */; };
+		FBF5981B230B304D00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF59807230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift */; };
+		FBF5981D230B304D00D9AAA6 /* DASPasswordAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF59809230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.swift */; };
+		FBF5981F230B304D00D9AAA6 /* DASAuthenticatorViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF5980B230B304C00D9AAA6 /* DASAuthenticatorViewControllerBase.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FB36265A220B2E3D00CB5C56 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		772B6C5F2CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DASFaceIFPAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFaceIFPAuthenticatorViewController.swift"; sourceTree = "<group>"; };
+		772B6C612CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DASFaceIFPAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASFaceIFPAuthenticatorViewController.xib"; sourceTree = "<group>"; };
+		772B6C662CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DASFaceAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFaceAuthenticatorViewController.swift"; sourceTree = "<group>"; };
+		772B6C672CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DASFaceAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASFaceAuthenticatorViewController.xib"; sourceTree = "<group>"; };
+		775DA2982D08DD9200A29393 /* AuthenticationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRequest.swift; sourceTree = "<group>"; };
+		775DA2992D08DD9200A29393 /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
+		775DA29A2D08DD9200A29393 /* Authenticators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticators.swift; sourceTree = "<group>"; };
+		775DA29B2D08DD9200A29393 /* DeregistrationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeregistrationRequest.swift; sourceTree = "<group>"; };
+		775DA29C2D08DD9200A29393 /* Policies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Policies.swift; sourceTree = "<group>"; };
+		775DA29D2D08DD9200A29393 /* PolicyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyItem.swift; sourceTree = "<group>"; };
+		775DA29E2D08DD9200A29393 /* RegistrationChallenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationChallenge.swift; sourceTree = "<group>"; };
+		775DA29F2D08DD9200A29393 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		775DA2A02D08DD9200A29393 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		775DA2A22D08DD9200A29393 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
+		775DA2A32D08DD9200A29393 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
+		775DA2A42D08DD9200A29393 /* IdentityX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityX.swift; sourceTree = "<group>"; };
+		775DA2A52D08DD9200A29393 /* IXUAFRESTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IXUAFRESTService.swift; sourceTree = "<group>"; };
+		C3721AA22318127E0018A048 /* DAS-Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "DAS-Images.xcassets"; path = "../../../Customization/View-Controller-Samples/Resources/Images/DAS-Images.xcassets"; sourceTree = "<group>"; };
+		C3721AA42318128C0018A048 /* DASAndPolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASAndPolicyViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASAndPolicyViewController.swift"; sourceTree = "<group>"; };
+		C3721AA62318128D0018A048 /* DASOrPolicyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASOrPolicyViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASOrPolicyViewController.swift"; sourceTree = "<group>"; };
+		C3721AAB2318129E0018A048 /* DASOrPolicyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DASOrPolicyViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASOrPolicyViewController.xib"; sourceTree = "<group>"; };
+		FB083676267CFBA900F124E8 /* DASCircularLevelMeter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASCircularLevelMeter.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/Controls/DASCircularLevelMeter.swift"; sourceTree = "<group>"; };
+		FB083677267CFBA900F124E8 /* DASFaceOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASFaceOverlayView.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/Controls/DASFaceOverlayView.swift"; sourceTree = "<group>"; };
+		FB2CF51E22148C7600846C06 /* defaultPrefs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultPrefs.plist; sourceTree = "<group>"; };
+		FB2CF520221491F900846C06 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		FB2CF5222214924400846C06 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
+		FB2CF5272214BDA700846C06 /* SDKDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SDKDemo.entitlements; sourceTree = "<group>"; };
+		FB2CF5282215A8C200846C06 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
+		FB362639220B1E0300CB5C56 /* SDKDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB36263C220B1E0300CB5C56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FB36263E220B1E0300CB5C56 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FB362641220B1E0300CB5C56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FB362643220B1E0600CB5C56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FB362646220B1E0600CB5C56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FB362648220B1E0600CB5C56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB362661220B2FDE00CB5C56 /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license.txt; sourceTree = "<group>"; };
+		FB362663220B2FDE00CB5C56 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		FB362664220B2FDE00CB5C56 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		FB362671220C93C600CB5C56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FBBA6DBF238C73F900BC6C25 /* DAS-Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = "DAS-Localizable.strings"; path = "../../../Customization/Strings/DAS-Localizable.strings"; sourceTree = "<group>"; };
+		FBF597F6230B2FF700D9AAA6 /* DAS-Errors.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = "DAS-Errors.strings"; path = "../../../Customization/Strings/DAS-Errors.strings"; sourceTree = "<group>"; };
+		FBF597FD230B304C00D9AAA6 /* DASFaceIdAuthenticatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DASFaceIdAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASFaceIdAuthenticatorViewController.xib"; sourceTree = "<group>"; };
+		FBF597FE230B304C00D9AAA6 /* DASVoiceAuthenticatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DASVoiceAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASVoiceAuthenticatorViewController.xib"; sourceTree = "<group>"; };
+		FBF59800230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DASFingerprintAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASFingerprintAuthenticatorViewController.xib"; sourceTree = "<group>"; };
+		FBF59802230B304C00D9AAA6 /* DASVoiceAuthenticatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASVoiceAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASVoiceAuthenticatorViewController.swift"; sourceTree = "<group>"; };
+		FBF59805230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DASPasswordAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASPasswordAuthenticatorViewController.xib"; sourceTree = "<group>"; };
+		FBF59806230B304C00D9AAA6 /* DASFaceIdAuthenticatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASFaceIdAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFaceIdAuthenticatorViewController.swift"; sourceTree = "<group>"; };
+		FBF59807230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASFingerprintAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFingerprintAuthenticatorViewController.swift"; sourceTree = "<group>"; };
+		FBF59809230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASPasswordAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASPasswordAuthenticatorViewController.swift"; sourceTree = "<group>"; };
+		FBF5980B230B304C00D9AAA6 /* DASAuthenticatorViewControllerBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASAuthenticatorViewControllerBase.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASAuthenticatorViewControllerBase.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FB362636220B1E0300CB5C56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				775DA28D2D08C68700A29393 /* DaonAuthenticatorFace in Frameworks */,
+				775DA2C12D08E1A300A29393 /* DaonAuthenticatorFace in Frameworks */,
+				775DA2BC2D08E0D800A29393 /* DaonAuthenticatorVoice in Frameworks */,
+				775DA2C72D08E1A400A29393 /* DaonAuthenticatorVoice in Frameworks */,
+				775DA2952D08C68700A29393 /* DaonFIDOSDK in Frameworks */,
+				775DA2C92D08E1A400A29393 /* DaonFIDOSDK in Frameworks */,
+				775DA2C52D08E1A400A29393 /* DaonAuthenticatorPasscode in Frameworks */,
+				775DA2BA2D08E0D800A29393 /* DaonAuthenticatorPasscode in Frameworks */,
+				775DA2932D08C68700A29393 /* DaonAuthenticatorVoice in Frameworks */,
+				775DA2D22D08E2D300A29393 /* DaonAuthenticatorVoice in Frameworks */,
+				775DA2D42D08E2D300A29393 /* DaonFIDOSDK in Frameworks */,
+				775DA2BE2D08E0D800A29393 /* DaonFIDOSDK in Frameworks */,
+				775DA25E2D078DE800A29393 /* DaonAuthenticatorFaceIFP in Frameworks */,
+				775DA2642D078E1B00A29393 /* DaonAuthenticatorFace in Frameworks */,
+				775DA28F2D08C68700A29393 /* DaonAuthenticatorFaceIFP in Frameworks */,
+				775DA2B62D08E0D800A29393 /* DaonAuthenticatorFace in Frameworks */,
+				775DA2CC2D08E2D300A29393 /* DaonAuthenticatorFace in Frameworks */,
+				775DA2C32D08E1A400A29393 /* DaonAuthenticatorFaceIFP in Frameworks */,
+				775DA2B82D08E0D800A29393 /* DaonAuthenticatorFaceIFP in Frameworks */,
+				775DA2912D08C68700A29393 /* DaonAuthenticatorPasscode in Frameworks */,
+				775DA2602D078DE800A29393 /* DaonAuthenticatorVoice in Frameworks */,
+				775DA2682D079A0000A29393 /* DaonAuthenticatorPasscode in Frameworks */,
+				775DA2622D078DE800A29393 /* DaonFIDOSDK in Frameworks */,
+				775DA2CE2D08E2D300A29393 /* DaonAuthenticatorFaceIFP in Frameworks */,
+				775DA2D02D08E2D300A29393 /* DaonAuthenticatorPasscode in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		775DA2A12D08DD9200A29393 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				775DA2982D08DD9200A29393 /* AuthenticationRequest.swift */,
+				775DA2992D08DD9200A29393 /* Authenticator.swift */,
+				775DA29A2D08DD9200A29393 /* Authenticators.swift */,
+				775DA29B2D08DD9200A29393 /* DeregistrationRequest.swift */,
+				775DA29C2D08DD9200A29393 /* Policies.swift */,
+				775DA29D2D08DD9200A29393 /* PolicyItem.swift */,
+				775DA29E2D08DD9200A29393 /* RegistrationChallenge.swift */,
+				775DA29F2D08DD9200A29393 /* User.swift */,
+				775DA2A02D08DD9200A29393 /* Users.swift */,
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		775DA2A62D08DD9200A29393 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				775DA2A12D08DD9200A29393 /* Messages */,
+				775DA2A22D08DD9200A29393 /* HTTP.swift */,
+				775DA2A32D08DD9200A29393 /* HTTPError.swift */,
+				775DA2A42D08DD9200A29393 /* IdentityX.swift */,
+				775DA2A52D08DD9200A29393 /* IXUAFRESTService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		C3EA97E522E61E0000A05742 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				FB083676267CFBA900F124E8 /* DASCircularLevelMeter.swift */,
+				FB083677267CFBA900F124E8 /* DASFaceOverlayView.swift */,
+			);
+			name = Controls;
+			sourceTree = "<group>";
+		};
+		FB1A4A822339246000864F5F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FB2CF52422149B0F00846C06 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FB752BDE22B293350054CD8F /* Authenticators */,
+				FB36263E220B1E0300CB5C56 /* ViewController.swift */,
+				FB2CF5282215A8C200846C06 /* StatusViewController.swift */,
+				FB2CF520221491F900846C06 /* SettingsTableViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		FB2CF52522149B3700846C06 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FB2CF5222214924400846C06 /* SwitchTableViewCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FB2CF52622149BA300846C06 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FBBA6DBF238C73F900BC6C25 /* DAS-Localizable.strings */,
+				FBF597F6230B2FF700D9AAA6 /* DAS-Errors.strings */,
+				FB362640220B1E0300CB5C56 /* Main.storyboard */,
+				FB362670220C93C600CB5C56 /* Localizable.strings */,
+				FB362643220B1E0600CB5C56 /* Assets.xcassets */,
+				FB362645220B1E0600CB5C56 /* LaunchScreen.storyboard */,
+				FB362661220B2FDE00CB5C56 /* license.txt */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		FB362630220B1E0300CB5C56 = {
+			isa = PBXGroup;
+			children = (
+				FB36263B220B1E0300CB5C56 /* SDKDemo */,
+				FB36263A220B1E0300CB5C56 /* Products */,
+				FB1A4A822339246000864F5F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FB36263A220B1E0300CB5C56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB362639220B1E0300CB5C56 /* SDKDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB36263B220B1E0300CB5C56 /* SDKDemo */ = {
+			isa = PBXGroup;
+			children = (
+				775DA2A62D08DD9200A29393 /* Service */,
+				FB2CF52622149BA300846C06 /* Resources */,
+				FB2CF52522149B3700846C06 /* Views */,
+				FB2CF52422149B0F00846C06 /* View Controllers */,
+				FB362664220B2FDE00CB5C56 /* Logging.swift */,
+				FB362663220B2FDE00CB5C56 /* Settings.swift */,
+				FB36263C220B1E0300CB5C56 /* AppDelegate.swift */,
+				FB362648220B1E0600CB5C56 /* Info.plist */,
+				FB2CF51E22148C7600846C06 /* defaultPrefs.plist */,
+				FB2CF5272214BDA700846C06 /* SDKDemo.entitlements */,
+			);
+			path = SDKDemo;
+			sourceTree = "<group>";
+		};
+		FB752BDE22B293350054CD8F /* Authenticators */ = {
+			isa = PBXGroup;
+			children = (
+				C3721AA22318127E0018A048 /* DAS-Images.xcassets */,
+				772B6C662CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift */,
+				772B6C672CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib */,
+				772B6C612CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib */,
+				772B6C5F2CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift */,
+				C3721AA42318128C0018A048 /* DASAndPolicyViewController.swift */,
+				FBF5980B230B304C00D9AAA6 /* DASAuthenticatorViewControllerBase.swift */,
+				FBF59806230B304C00D9AAA6 /* DASFaceIdAuthenticatorViewController.swift */,
+				FBF597FD230B304C00D9AAA6 /* DASFaceIdAuthenticatorViewController.xib */,
+				FBF59807230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift */,
+				FBF59800230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.xib */,
+				C3721AA62318128D0018A048 /* DASOrPolicyViewController.swift */,
+				C3721AAB2318129E0018A048 /* DASOrPolicyViewController.xib */,
+				FBF59809230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.swift */,
+				FBF59805230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.xib */,
+				FBF59802230B304C00D9AAA6 /* DASVoiceAuthenticatorViewController.swift */,
+				FBF597FE230B304C00D9AAA6 /* DASVoiceAuthenticatorViewController.xib */,
+				C3EA97E522E61E0000A05742 /* Controls */,
+			);
+			name = Authenticators;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FB362638220B1E0300CB5C56 /* SDKDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB36264B220B1E0600CB5C56 /* Build configuration list for PBXNativeTarget "SDKDemo" */;
+			buildPhases = (
+				FB362635220B1E0300CB5C56 /* Sources */,
+				FB362636220B1E0300CB5C56 /* Frameworks */,
+				FB362637220B1E0300CB5C56 /* Resources */,
+				FB36265A220B2E3D00CB5C56 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDKDemo;
+			productName = SDKDemo;
+			productReference = FB362639220B1E0300CB5C56 /* SDKDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FB362631220B1E0300CB5C56 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1610;
+				ORGANIZATIONNAME = Daon;
+				TargetAttributes = {
+					FB362638220B1E0300CB5C56 = {
+						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1100;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = FB362634220B1E0300CB5C56 /* Build configuration list for PBXProject "SDKDemo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FB362630220B1E0300CB5C56;
+			packageReferences = (
+				775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */,
+			);
+			productRefGroup = FB36263A220B1E0300CB5C56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FB362638220B1E0300CB5C56 /* SDKDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FB362637220B1E0300CB5C56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBF59814230B304D00D9AAA6 /* DASFingerprintAuthenticatorViewController.xib in Resources */,
+				C3721AA32318127E0018A048 /* DAS-Images.xcassets in Resources */,
+				772B6C682CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib in Resources */,
+				C3721AAD2318129E0018A048 /* DASOrPolicyViewController.xib in Resources */,
+				772B6C622CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib in Resources */,
+				FB362674220C93C600CB5C56 /* Localizable.strings in Resources */,
+				FB36266B220B2FDE00CB5C56 /* license.txt in Resources */,
+				FBBA6DC0238C73F900BC6C25 /* DAS-Localizable.strings in Resources */,
+				FBF59819230B304D00D9AAA6 /* DASPasswordAuthenticatorViewController.xib in Resources */,
+				FB2CF51F22148C7600846C06 /* defaultPrefs.plist in Resources */,
+				FB362647220B1E0600CB5C56 /* LaunchScreen.storyboard in Resources */,
+				FBF59812230B304D00D9AAA6 /* DASVoiceAuthenticatorViewController.xib in Resources */,
+				FBF597F7230B2FF700D9AAA6 /* DAS-Errors.strings in Resources */,
+				FB362644220B1E0600CB5C56 /* Assets.xcassets in Resources */,
+				FB362642220B1E0300CB5C56 /* Main.storyboard in Resources */,
+				FBF59811230B304D00D9AAA6 /* DASFaceIdAuthenticatorViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB362635220B1E0300CB5C56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				772B6C692CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift in Sources */,
+				FB36263F220B1E0300CB5C56 /* ViewController.swift in Sources */,
+				FBF5981B230B304D00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift in Sources */,
+				FBF5981A230B304D00D9AAA6 /* DASFaceIdAuthenticatorViewController.swift in Sources */,
+				FBF5981F230B304D00D9AAA6 /* DASAuthenticatorViewControllerBase.swift in Sources */,
+				FB083678267CFBA900F124E8 /* DASCircularLevelMeter.swift in Sources */,
+				C3721AA72318128D0018A048 /* DASAndPolicyViewController.swift in Sources */,
+				FB36266E220B2FDE00CB5C56 /* Logging.swift in Sources */,
+				C3721AA92318128D0018A048 /* DASOrPolicyViewController.swift in Sources */,
+				FBF59816230B304D00D9AAA6 /* DASVoiceAuthenticatorViewController.swift in Sources */,
+				FB2CF5292215A8C200846C06 /* StatusViewController.swift in Sources */,
+				FB2CF5232214924400846C06 /* SwitchTableViewCell.swift in Sources */,
+				FB36266D220B2FDE00CB5C56 /* Settings.swift in Sources */,
+				FB2CF521221491F900846C06 /* SettingsTableViewController.swift in Sources */,
+				FB083679267CFBA900F124E8 /* DASFaceOverlayView.swift in Sources */,
+				775DA2A72D08DD9200A29393 /* IXUAFRESTService.swift in Sources */,
+				775DA2A82D08DD9200A29393 /* DeregistrationRequest.swift in Sources */,
+				775DA2A92D08DD9200A29393 /* HTTPError.swift in Sources */,
+				775DA2AA2D08DD9200A29393 /* Authenticator.swift in Sources */,
+				775DA2AB2D08DD9200A29393 /* RegistrationChallenge.swift in Sources */,
+				775DA2AC2D08DD9200A29393 /* Authenticators.swift in Sources */,
+				775DA2AD2D08DD9200A29393 /* IdentityX.swift in Sources */,
+				775DA2AE2D08DD9200A29393 /* PolicyItem.swift in Sources */,
+				775DA2AF2D08DD9200A29393 /* Policies.swift in Sources */,
+				775DA2B02D08DD9200A29393 /* HTTP.swift in Sources */,
+				775DA2B12D08DD9200A29393 /* Users.swift in Sources */,
+				775DA2B22D08DD9200A29393 /* User.swift in Sources */,
+				775DA2B32D08DD9200A29393 /* AuthenticationRequest.swift in Sources */,
+				FB36263D220B1E0300CB5C56 /* AppDelegate.swift in Sources */,
+				FBF5981D230B304D00D9AAA6 /* DASPasswordAuthenticatorViewController.swift in Sources */,
+				772B6C602CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FB362640220B1E0300CB5C56 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB362641220B1E0300CB5C56 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FB362645220B1E0600CB5C56 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB362646220B1E0600CB5C56 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FB362670220C93C600CB5C56 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB362671220C93C600CB5C56 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FB362649220B1E0600CB5C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FB36264A220B1E0600CB5C56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FB36264C220B1E0600CB5C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SDKDemo/SDKDemo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X35FV693K3;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				INFOPLIST_FILE = SDKDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-Wl,-weak-lswiftCoreGraphics";
+				PRODUCT_BUNDLE_IDENTIFIER = com.daon.sdk.fido.demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
+			};
+			name = Debug;
+		};
+		FB36264D220B1E0600CB5C56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SDKDemo/SDKDemo.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X35FV693K3;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = "";
+				INFOPLIST_FILE = SDKDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = "-Wl,-weak-lswiftCoreGraphics";
+				PRODUCT_BUNDLE_IDENTIFIER = com.daon.sdk.fido.demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_WORKSPACE = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FB362634220B1E0300CB5C56 /* Build configuration list for PBXProject "SDKDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB362649220B1E0600CB5C56 /* Debug */,
+				FB36264A220B1E0600CB5C56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB36264B220B1E0600CB5C56 /* Build configuration list for PBXNativeTarget "SDKDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB36264C220B1E0600CB5C56 /* Debug */,
+				FB36264D220B1E0600CB5C56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		775DA25C2D078DE800A29393 /* XCLocalSwiftPackageReference "../../../fido-package" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../../fido-package";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		775DA28B2D08C68700A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daoninc/fido-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.8.137;
+			};
+		};
+		775DA2B42D08E0D800A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daoninc/fido-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.8.137;
+			};
+		};
+		775DA2BF2D08E1A300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daoninc/fido-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.8.137;
+			};
+		};
+		775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daoninc/fido-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.8.137;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		775DA25D2D078DE800A29393 /* DaonAuthenticatorFaceIFP */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DaonAuthenticatorFaceIFP;
+		};
+		775DA25F2D078DE800A29393 /* DaonAuthenticatorVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DaonAuthenticatorVoice;
+		};
+		775DA2612D078DE800A29393 /* DaonFIDOSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DaonFIDOSDK;
+		};
+		775DA2632D078E1B00A29393 /* DaonAuthenticatorFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA25C2D078DE800A29393 /* XCLocalSwiftPackageReference "../../../fido-package" */;
+			productName = DaonAuthenticatorFace;
+		};
+		775DA2672D079A0000A29393 /* DaonAuthenticatorPasscode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA25C2D078DE800A29393 /* XCLocalSwiftPackageReference "../../../fido-package" */;
+			productName = DaonAuthenticatorPasscode;
+		};
+		775DA28C2D08C68700A29393 /* DaonAuthenticatorFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA28B2D08C68700A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFace;
+		};
+		775DA28E2D08C68700A29393 /* DaonAuthenticatorFaceIFP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA28B2D08C68700A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFaceIFP;
+		};
+		775DA2902D08C68700A29393 /* DaonAuthenticatorPasscode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA28B2D08C68700A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorPasscode;
+		};
+		775DA2922D08C68700A29393 /* DaonAuthenticatorVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA28B2D08C68700A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorVoice;
+		};
+		775DA2942D08C68700A29393 /* DaonFIDOSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA28B2D08C68700A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonFIDOSDK;
+		};
+		775DA2B52D08E0D800A29393 /* DaonAuthenticatorFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2B42D08E0D800A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFace;
+		};
+		775DA2B72D08E0D800A29393 /* DaonAuthenticatorFaceIFP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2B42D08E0D800A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFaceIFP;
+		};
+		775DA2B92D08E0D800A29393 /* DaonAuthenticatorPasscode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2B42D08E0D800A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorPasscode;
+		};
+		775DA2BB2D08E0D800A29393 /* DaonAuthenticatorVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2B42D08E0D800A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorVoice;
+		};
+		775DA2BD2D08E0D800A29393 /* DaonFIDOSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2B42D08E0D800A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonFIDOSDK;
+		};
+		775DA2C02D08E1A300A29393 /* DaonAuthenticatorFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2BF2D08E1A300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFace;
+		};
+		775DA2C22D08E1A300A29393 /* DaonAuthenticatorFaceIFP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2BF2D08E1A300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFaceIFP;
+		};
+		775DA2C42D08E1A400A29393 /* DaonAuthenticatorPasscode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2BF2D08E1A300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorPasscode;
+		};
+		775DA2C62D08E1A400A29393 /* DaonAuthenticatorVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2BF2D08E1A300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorVoice;
+		};
+		775DA2C82D08E1A400A29393 /* DaonFIDOSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2BF2D08E1A300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonFIDOSDK;
+		};
+		775DA2CB2D08E2D300A29393 /* DaonAuthenticatorFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFace;
+		};
+		775DA2CD2D08E2D300A29393 /* DaonAuthenticatorFaceIFP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFaceIFP;
+		};
+		775DA2CF2D08E2D300A29393 /* DaonAuthenticatorPasscode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorPasscode;
+		};
+		775DA2D12D08E2D300A29393 /* DaonAuthenticatorVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorVoice;
+		};
+		775DA2D32D08E2D300A29393 /* DaonFIDOSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 775DA2CA2D08E2D300A29393 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonFIDOSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = FB362631220B1E0300CB5C56 /* Project object */;
+}
