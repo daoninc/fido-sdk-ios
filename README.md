@@ -20,7 +20,10 @@ The demo sample includes the following:
 
 - **SDK Demo**: A sample that uses the IdentityX REST API to register and authenticate a user. The sample also provides an example of how to use the JavaScript-friendly API for easier integration with React and Cordova.
 
+## Swift Package
+Add your GitHub account to Xcode and add the xAuth FIDO SDK as a Swift Package.
 
+![Xcode Package Manager](images/xcode-package-manager.png)
 
 ## API
 
