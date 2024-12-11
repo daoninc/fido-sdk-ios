@@ -18,23 +18,56 @@ The SDK requires a license that is bound to an application identifier. This lice
 
 The demo sample includes the following:
 
-- **RelyingParty**: A reference sample Relying Party application.
-
-- **AuthBasicFaceInjectionDetection**: Basic sample application with face authentication using IFP.
-
-- **AuthBasic**: Basic sample application for use with the tutorial.
+- **SDK Demo**: A sample that uses the IdentityX REST API to register and authenticate a user. The sample also provides an example of how to use the JavaScript-friendly API for easier integration with React and Cordova.
 
 
 
 ## API
 
 
-
 ### Initialize
 
-Initialize a new IXUAF instance using the RPSA server.
+Server communication can be handled by the `DaonService` framework for a quick start. However, you can write your own custom communication code by implementing the `IXUAFServiceDelegate` interface. The `DaonService` framework supports both REST and RPSA communication.
+
+The `IXUAFRESTService` class implements the `IXUAFServiceDelegate` and is used to connect to the IdentityX server. 
+
 
 ```swift
+fido = IXUAF(service:IXUAFRESTService(url: server, application: application, username:serverUsername))
+
+let params = ["com.daon.sdk.ados.enabled" : "true"];
+
+fido?.logging = true
+fido?.delegate = self
+
+fido?.initialize(parameters: params) { (code, warnings) in
+        
+    if code == .licenseExpired {
+        self.show(title: "Initialize failed", message: "License expired")
+    } else if code == .licenseNotVerified {
+        self.show(title: "Initialize failed", message: "License not verified")
+    } else if code == .licenseNoAuthenticators {
+        self.show(title: "Initialize failed", message: "No licensed authenticators")
+    } else {
+        if code != .noError {
+            self.show(title: "Initialize", message: "\(code.rawValue)")
+        }
+    }
+    
+    for warning in warnings {
+        if warning == IXUAFWarningDeviceDebug {
+            self.updateInfo(message: "Application is running in debug mode")
+        } else if warning == IXUAFWarningDeviceSimulator {
+            self.updateInfo(message: "Application is running in a simulator")
+        } else if warning == IXUAFWarningDeviceSecurityDisabled {
+            self.updateInfo(message: "Device passcode/Touch ID/Face ID is not enabled")
+        } else if warning == IXUAFWarningDeviceCompromised {
+            self.updateInfo(message: "Device is jailbroken")
+        } else if warning == IXUAFWarningKeyMigrationFailed {
+            self.updateInfo(message: "Touch ID/Face ID. One or more keys failed to migrate and has been invalidated.")
+        }
+    }
+}
 
 
 ```
@@ -46,7 +79,13 @@ See included samples and [xAuth FIDO SDK Documentation](https://developer.identi
 Register a new authenticator with the FIDO server.
 
 ```swift
-
+fido?.register(username: username) { (res, error) in
+    if let e = error {
+        self.show(error: e);                
+    } else {
+        self.show(title: "Register", response:res);
+    }
+}
 ```
 
 See included samples and [xAuth FIDO SDK Documentation](https://developer.identityx-cloud.com/client/fido/ios/) for details and additional information.
@@ -56,7 +95,13 @@ See included samples and [xAuth FIDO SDK Documentation](https://developer.identi
 Authenticate the user with the FIDO server. If a username is provided, a step-up authentication is performed.
 
 ```swift
-
+fido?.authenticate(username:username, description: "Login") { (res, error) in
+    if let e = error {
+        self.show(error: e);
+    } else {
+        self.show(title: "Authenticate", response:res);
+    }
+}
 ```
 
 See included samples and [xAuth FIDO SDK Documentation](https://developer.identityx-cloud.com/client/fido/ios/) for details and additional information.
