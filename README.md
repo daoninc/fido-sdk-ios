@@ -21,9 +21,10 @@ The demo sample includes the following:
 ### SDK Demo 
 A sample that uses the IdentityX REST API to register and authenticate a user. The sample also provides an example of how to use the JavaScript-friendly API for easier integration with React and Cordova.
 
-The sample needs to know the IdentityX server URL, application identifier, and server credentials. The server credentials are used to authenticate the application with the IdentityX server. 
+The sample needs to know the IdentityX server URL (e.g. `https://domain/tenant`), application identifier, and server credentials. The server credentials are used to authenticate the application with the IdentityX server. 
 
 ![SDK Demo Settings](images/sdk-demo-config.png)
+![SDK Demo](images/sdk-demo.png)
 
 ## Swift Package
 Add your GitHub account to Xcode and add the xAuth FIDO SDK as a Swift Package.
