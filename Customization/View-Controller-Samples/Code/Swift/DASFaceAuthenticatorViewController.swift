@@ -6,6 +6,8 @@
 //
 
 import DaonAuthenticatorFace
+import DaonAuthenticatorSDK
+import DaonCryptoSDK
 import DaonFaceSDK
 
 enum DASFaceCaptureState : Int

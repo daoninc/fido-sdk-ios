@@ -93,103 +93,103 @@ let package = Package(
     targets: [
          .binaryTarget(
             name: "DaonAuthenticatorFace",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonAuthenticatorFace.xcframework.zip",
-            checksum: "11d4607fd88f52311c9db1f991ec0fd4d31544bf9bf27f2545a611c04c9e3c84"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonAuthenticatorFace.xcframework.zip",
+            checksum: "8b7acddcd863f89cd3f3c58a7ff907d76585ed5d6ffb9c820414713c732ef121"
          ),
          .binaryTarget(
             name: "DaonAuthenticatorFaceIFP",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonAuthenticatorFaceIFP.xcframework.zip",
-            checksum: "90ed09031e700ace2f189ef75c4c665ce50673f711a664dda7f6303381bf3daa"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonAuthenticatorFaceIFP.xcframework.zip",
+            checksum: "140f3cbb8ff65a9bd6256b32fb7f685b1a99a5ba9af104cec77ab1d0fdc12091"
          ),
          .binaryTarget(
             name: "DaonAuthenticatorFaceV3Support",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonAuthenticatorFaceV3Support.xcframework.zip",
-            checksum: "2c9ab34a5b8cd5e86ae60c2e76658204f4a66f42ee3f454621a760c35e392fe0"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonAuthenticatorFaceV3Support.xcframework.zip",
+            checksum: "3c39ba8525ca0e4cf2a845f575f00c3fe1d6b29cb695080ed93e72770baf179c"
          ),
          .binaryTarget(
             name: "DaonAuthenticatorPasscode",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonAuthenticatorPasscode.xcframework.zip",
-            checksum: "e6b5772dfb0f54517a5f77cf27b89aca620768d9e3ee5a7d9ebca25f41e3713d"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonAuthenticatorPasscode.xcframework.zip",
+            checksum: "e9680ba3538f3402b29c2467dfe646f5d19d63aec5fe0f1e137df86a29658158"
          ),
          .binaryTarget(
             name: "DaonAuthenticatorSDK",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonAuthenticatorSDK.xcframework.zip",
-            checksum: "9bd88907795897117a78eafc2f34fbc4f4ae5fc42ae4dc69d25aca2782fe5f35"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonAuthenticatorSDK.xcframework.zip",
+            checksum: "9c5e5e94c6985a6b93682cfa840c94b43070e00ce9c58188edd75feea71670ce"
          ),
          .binaryTarget(
             name: "DaonAuthenticatorVoice",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonAuthenticatorVoice.xcframework.zip",
-            checksum: "7f7155f5f146316247ae6325471286b501076bc85680c7f87153aecda9618696"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonAuthenticatorVoice.xcframework.zip",
+            checksum: "3cbc9eae1e282cfdeb337e1b5cbabb43b7eba97ed3b2d80a3248a8708072398a"
          ),
          .binaryTarget(
             name: "DaonCryptoSDK",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonCryptoSDK.xcframework.zip",
-            checksum: "eb79ca9e2b6d8b148f02891f2d0b9cdc3d9aeec5adc877330c2fe28d42fda435"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonCryptoSDK.xcframework.zip",
+            checksum: "46b7af75e6e3884b0a807ed29ab8f002efde4328ff2ea7a2b5b3b54448f87288"
          ),
          .binaryTarget(
             name: "DaonFIDOSDK",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFIDOSDK.xcframework.zip",
-            checksum: "43807151ffc23d156ba1e7f82024b16692c4346bfa325234476e5539224e7e64"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFIDOSDK.xcframework.zip",
+            checksum: "8aff6ddf32c5e342d6d0d44a828ef5da9670223ad8b837e8d75533575dae6e8f"
          ),
          .binaryTarget(
             name: "DaonFaceCapture",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceCapture.xcframework.zip",
-            checksum: "76db41303769b8d18eab75973626a8598f96d8805b43023e69f59318b541c9ab"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceCapture.xcframework.zip",
+            checksum: "d75d2c071ebfe17fed9dcdb5cedece28613796882c1a7571c8254ebee99991b6"
          ),
          .binaryTarget(
             name: "DaonFaceDetector",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceDetector.xcframework.zip",
-            checksum: "05a41a3b6b59ddd81e3d50832b1d48b4fdf86ca3076bb8468bd5f9ddbc9c81c5"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceDetector.xcframework.zip",
+            checksum: "b2bfef5f133c0f315ce9d0abf524ad8cb69134d389e70e5394510ff7959f9c6f"
          ),
          .binaryTarget(
             name: "DaonFaceLiveness",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceLiveness.xcframework.zip",
-            checksum: "b78addbd55d05c796cd7ffbc0468f5d63805b6750b76ca916885b6e88d73637a"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceLiveness.xcframework.zip",
+            checksum: "9ad9b4b7bd06196d91d4575e47d8bed62ecd735ed7c7e61ebee0588168b3ca98"
          ),
          .binaryTarget(
             name: "DaonFaceLivenessBlink",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceLivenessBlink.xcframework.zip",
-            checksum: "5e802c95502ba3f011baa422db6042382db608dc45b490362e93253ee6e169bb"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceLivenessBlink.xcframework.zip",
+            checksum: "2ad67c3ea3644703f8e047c51fa4704402f326a5f4cb2be2fe50b2e039000bcf"
          ),
          .binaryTarget(
             name: "DaonFaceMaskDetector",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceMaskDetector.xcframework.zip",
-            checksum: "50e3c66a24585d18a56500ba1c74f9978d79e53256cee5e1efa4ee1f9cfe1fbb"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceMaskDetector.xcframework.zip",
+            checksum: "b54d826f3a5131710ab18b6b4da6695b10c29f85496cce69291328a28e870716"
          ),
          .binaryTarget(
             name: "DaonFaceMatcher",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceMatcher.xcframework.zip",
-            checksum: "856dd81d071de39c5fc644a20833e0364e76db6005024034ef2dee33d706a99b"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceMatcher.xcframework.zip",
+            checksum: "7302de5ec1bb0915d77b47f9a066878fef750b1f9c70edffeaf5f8af7b2ed1c5"
          ),
          .binaryTarget(
             name: "DaonFacePassiveLiveness",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFacePassiveLiveness.xcframework.zip",
-            checksum: "2b9893567fb00a8e5cb449f2f136406867ffb0ad073d35030b03d4ea6ce7fc79"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFacePassiveLiveness.xcframework.zip",
+            checksum: "ac5a680224268868b55b11594e950cfc5416e9ee72cf6aedb1ffe0698d64638e"
          ),
          .binaryTarget(
             name: "DaonFaceQuality",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceQuality.xcframework.zip",
-            checksum: "5e608426eb5fb9f2728aea739bbae626023175d755adacd70924408573f233ff"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceQuality.xcframework.zip",
+            checksum: "159b99e58880cdba0d76a1224ce761783d886030f5db70d77d49fe93a2df8889"
          ),
          .binaryTarget(
             name: "DaonFaceSDK",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonFaceSDK.xcframework.zip",
-            checksum: "8aab6cc42b1dc8b726af56a00a712ede00d2a771f3700bbb816d907eb4e4dca4"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonFaceSDK.xcframework.zip",
+            checksum: "0c157cc36fb5f14dd61e61c7ef49e3b6c52bddbf5e8a267f1d0d3e60baa80ebf"
          ),
          .binaryTarget(
             name: "DaonService",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/DaonService.xcframework.zip",
-            checksum: "80ca03ca9c230240cad7b8d8b2c9ef9fb07c8298f510434a0b7feec76ebf25d4"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/DaonService.xcframework.zip",
+            checksum: "e3a8a946caba46a2e34137e3c3e11f6d2c3a80bd047487b3f9755cc903ed0dfd"
          ),
          .binaryTarget(
             name: "IDLiveFaceCamera",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/IDLiveFaceCamera.xcframework.zip",
-            checksum: "e765bcaaa59d9bafac80a95087a1e5dd2b359b9d1d1aa56fcff77c5a0e5c1e29"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/IDLiveFaceCamera.xcframework.zip",
+            checksum: "4cf7a0d215c4d98747bb4e3c22d9a29952902d99d729cc4bd748c41883705d05"
          ),
          .binaryTarget(
             name: "IDLiveFaceIAD",
-            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.8.137/IDLiveFaceIAD.xcframework.zip",
-            checksum: "26ff010bce00817b0c88c2959085e4d90f03667a61a7e7ca8f0ba6047ec81d0f"
+            url: "https://github.com/daoninc/fido-sdk-ios/releases/download/4.9.177/IDLiveFaceIAD.xcframework.zip",
+            checksum: "b5dde2b5027e79a7256f93017450c289db1dce2c2ec8e7328f2754d1e37fed19"
          ),
     ]
 )

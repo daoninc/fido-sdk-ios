@@ -61,7 +61,7 @@ import DaonFIDOSDK
     
 
     // Request a FIOD registration challenge
-    public func serviceRequestRegistration(parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceRequestRegistration(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         if let user = parameters?[kIXUAFServiceParameterUsername] as? String {
 
@@ -72,23 +72,23 @@ import DaonFIDOSDK
                 self.registrationChallenge = challenge
                 
                 if let e = error {
-                    handler(e.localizedDescription, e)
+                    handler(e.localizedDescription, [:], e)
                 } else {
-                    handler(challenge?.fidoRegistrationRequest, nil)
+                    handler(challenge?.fidoRegistrationRequest, [:], nil)
                 }
             }
         } else {
-            handler(nil, IXUAFError.protocolError())
+            handler(nil, [:], IXUAFError.protocolError())
         }
     }
     
     // Submit the provided FIDO registration message to the server
-    public func serviceRegister(message: String, parameters params: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceRegister(message: String, parameters params: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         register(message: message, handler: handler)
     }
     
     // Request a FIDO authentication
-    public func serviceRequestAuthentication(parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceRequestAuthentication(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         let username = parameters?[kIXUAFServiceParameterUsername] as? String
         let description = parameters?[kIXUAFServiceParameterDescription] as? String
@@ -96,26 +96,28 @@ import DaonFIDOSDK
         
         idx?.authenticationRequest(username: username, policyID: policy, description: description ?? "NA") { (error, request) -> (Void) in
             
+            let customData = ["custom1":"1"];
+            
             self.authenticationRequest = request
             
             if let e = error {
-                handler(e.localizedDescription, e)
+                handler(e.localizedDescription, customData, e)
             } else {
-                handler(request?.fidoAuthenticationRequest, nil)                                
+                handler(request?.fidoAuthenticationRequest, customData, nil)
             }
         }
         
     }
     
     // Submit the provided FIDO authentication message to the server
-    public func serviceAuthenticate(message: String, parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceAuthenticate(message: String, parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         authenticate(message: message, handler: handler)
     }
     
     // Submit updated FIDO message to the server. This would be an ADoS message with user data
     
-    public func serviceUpdate(message: String, username: String?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceUpdate(message: String, username: String?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         // If this is a registration request we have to use a different server call
         let operation = IXUAFMessageReader.init(message: message)
@@ -189,49 +191,52 @@ import DaonFIDOSDK
     // Helper methods
     //
     
-    private func register(message: String, handler: @escaping (String?, Error?) -> Void) {
+    private func register(message: String, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         if let challenge = registrationChallenge {
             challenge.fidoRegistrationResponse = message
             
             idx?.update(registrationChallenge: challenge) { (error, challenge) -> (Void) in
                 if let e = error {
-                    handler(e.localizedDescription, e)
+                    handler(e.localizedDescription, [:], e)
                 } else {
                     if let code = challenge?.fidoResponseCode {
                         if code == IXUAFServerErrorCode.noError.rawValue {
-                            handler(challenge?.fidoRegistrationResponse, nil)
+                            handler(challenge?.fidoRegistrationResponse, [:], nil)
                         } else {
-                            handler(challenge?.fidoRegistrationResponse, self.error(code: code, message: challenge?.fidoResponseMsg))
+                            handler(challenge?.fidoRegistrationResponse, [:], self.error(code: code, message: challenge?.fidoResponseMsg))
                         }
                     }
                 }
             }
         } else {
-            handler(nil, IXUAFError.protocolError())
+            handler(nil, [:], IXUAFError.protocolError())
         }
     }
     
-    private func authenticate(message: String, handler: @escaping (String?, Error?) -> Void) {
+    private func authenticate(message: String, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         if let authentication = authenticationRequest {
             authentication.fidoAuthenticationResponse = message
             
             idx?.update(authenticationRequest: authentication) { (error, reponse) -> (Void) in
+                
+                let customData = ["custom2":"2"];
+                
                 if let e = error {
-                    handler(e.localizedDescription, e)
+                    handler(e.localizedDescription, customData, e)
                 } else {
                     if let code = reponse?.fidoResponseCode {
                         if code == IXUAFServerErrorCode.noError.rawValue {
-                            handler(reponse?.fidoAuthenticationResponse, nil)
+                            handler(reponse?.fidoAuthenticationResponse, customData, nil)
                         } else {
-                            handler(reponse?.fidoAuthenticationResponse, self.error(code: code, message: reponse?.fidoResponseMsg))
+                            handler(reponse?.fidoAuthenticationResponse, customData, self.error(code: code, message: reponse?.fidoResponseMsg))
                         }
                     }
                 }
             }
         } else {
-            handler(nil, IXUAFError.protocolError())
+            handler(nil, [:], IXUAFError.protocolError())
         }
     }
     

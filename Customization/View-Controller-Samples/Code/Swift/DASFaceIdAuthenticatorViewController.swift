@@ -2,10 +2,12 @@
 //  DASFaceIdAuthenticatorViewController.swift
 //  DaonAuthenticatorSDK
 //
+//  Created by Neil Johnston on 3/22/19.
 //  Copyright © 2019 Daon. All rights reserved.
 //
 
 import DaonAuthenticatorSDK
+import DaonCryptoSDK
 
 /*!
  @brief View Controller for presenting the Face ID dialog.
@@ -232,7 +234,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
                         }
                         else
                         {
-                            NSLog(String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error!._code, error!.localizedDescription))
+                            IXALog.logError(withTag: KDASLocalAuthenticationLoggingTag, message: String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error!._code, error!.localizedDescription))
                             self.singleAuthenticatorContext!.completeCapture(error: .authenticatorInconsistentState)
                         }
                     }

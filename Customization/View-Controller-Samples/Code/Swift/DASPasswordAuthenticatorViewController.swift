@@ -2,9 +2,12 @@
 //  DASPasswordAuthenticatorViewController.swift
 //  DaonAuthenticatorSDK
 //
+//  Created by Neil Johnston on 3/20/19.
 //  Copyright © 2019 Daon. All rights reserved.
 //
 import DaonAuthenticatorPasscode
+import DaonAuthenticatorSDK
+import DaonCryptoSDK
 
 /*!
  @typedef DASPasscodeCaptureState
@@ -593,7 +596,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
             }
             else
             {
-                NSLog(String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error._code, error.localizedDescription))
+                IXALog.logError(withTag: KDASPasscodeLoggingTag, message: String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error._code, error.localizedDescription))
                 self.singleAuthenticatorContext!.completeCapture(error: .authenticatorInconsistentState)
             }
         }

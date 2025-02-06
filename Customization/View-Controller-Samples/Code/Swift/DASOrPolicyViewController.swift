@@ -2,10 +2,12 @@
 //  DASOrPolicyViewController.swift
 //  DaonAuthenticatorSDK
 //
+//  Created by Neil Johnston on 3/26/19.
 //  Copyright © 2019 Daon. All rights reserved.
 //
 
 import DaonAuthenticatorSDK
+import DaonCryptoSDK
 
 /*!
 @brief View Controller for allowing the user to chose one authenticator from a set of authenticators.
@@ -169,25 +171,25 @@ class DASOrPolicyViewController: DASAuthenticatorViewControllerBase
 
                         if (!selectedAuthenticator)
                         {
-                            NSLog("Could not determine which authenticator to show first!")
+                            IXALog.logError(withTag: KDASDefaultLoggingTag, message:"Could not determine which authenticator to show first!")
                             self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
                         }
                     }
                     else
                     {
-                        NSLog("Need at least 2 view controllers created for multi authentication with OR policy!")
+                        IXALog.logError(withTag: KDASDefaultLoggingTag, message:"Need at least 2 view controllers created for multi authentication with OR policy!")
                         self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
                     }
                 }
                 else
                 {
-                    NSLog("Multiple authenticator groups returned for OR policy. Expected only 1.")
+                    IXALog.logError(withTag: KDASDefaultLoggingTag, message:"Multiple authenticator groups returned for OR policy. Expected only 1.")
                     self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
                 }
             }
             else
             {
-                NSLog("No authenticator groups provided")
+                IXALog.logError(withTag: KDASDefaultLoggingTag, message: "No authenticator groups provided")
                 self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
             }
         }

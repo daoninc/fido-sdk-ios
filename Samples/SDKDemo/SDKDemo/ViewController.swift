@@ -82,19 +82,7 @@ class ViewController: UIViewController, IXUAFDelegate {
                         self.checkRemoteNotification()                        
                     }
                     
-                    for warning in warnings {
-                        if warning == IXUAFWarningDeviceDebug {
-                            self.updateInfo(message: "Application is running in debug mode")
-                        } else if warning == IXUAFWarningDeviceSimulator {
-                            self.updateInfo(message: "Application is running in a simulator")
-                        } else if warning == IXUAFWarningDeviceSecurityDisabled {
-                            self.updateInfo(message: "Device passcode/Touch ID/Face ID is not enabled")
-                        } else if warning == IXUAFWarningDeviceCompromised {
-                            self.updateInfo(message: "Device is jailbroken")
-                        } else if warning == IXUAFWarningKeyMigrationFailed {
-                            self.updateInfo(message: "Touch ID/Face ID. One or more keys failed to migrate and has been invalidated.")
-                        }
-                    }
+                    self.show(warnings: warnings)
                 }
             }
             
@@ -102,6 +90,36 @@ class ViewController: UIViewController, IXUAFDelegate {
         }
     }
 
+    func show(warnings: [NSNumber]) {
+        
+        var message = ""
+        
+        for warning in warnings {
+            if warning == IXUAFWarningDeviceDebug {
+                message = "Application is running in debug mode"
+            } else if warning == IXUAFWarningDeviceSimulator {
+                message = "Application is running in a simulator"
+            } else if warning == IXUAFWarningDeviceSecurityDisabled {
+                message = "Device passcode/Touch ID/Face ID is not enabled"
+            } else if warning == IXUAFWarningDeviceCompromised {
+                message = "Device is jailbroken"
+            } else if warning == IXUAFWarningKeyMigrationFailed {
+                message = "Touch ID/Face ID. One or more keys failed to migrate and has been invalidated."
+            }
+        }
+        
+        // Check keys
+        let status = IXUAF.checkKeys()
+        if status != errSecSuccess {
+            if let err = SecCopyErrorMessageString(status, nil) {
+                message = "\(message)\n\n\(err)"
+            } else {
+                message = "\(message)\n\nError: \(status)"
+            }
+        }
+        updateInfo(message: message)
+    }
+    
     func busy(on: Bool) {
         self.activityIndicator.isHidden = !on
         self.stackView.isHidden = on
@@ -151,7 +169,9 @@ class ViewController: UIViewController, IXUAFDelegate {
             if let e = error {
                 self.show(error: e);
             } else {
-                self.show(title: "Authenticate", response:res);
+                self.show(title: "Authenticate", response:res?.filter({ (k,v) in
+                    return k != "request";
+                }));
             }
         }
     }
@@ -387,8 +407,8 @@ class ViewController: UIViewController, IXUAFDelegate {
     }
 
     func show(title: String, response:[String : Any]?) {
-        if (response?.count)! > 0 {
-            show(title:title, message:(response?.description)!)
+        if let res = response {
+            show(title:title, message:res.filter({ (k, v) in return k != "request"}).description)
         } else {
             show(title:title, message:"Success!")
         }

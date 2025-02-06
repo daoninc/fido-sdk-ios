@@ -6,6 +6,8 @@
 //
 
 import DaonAuthenticatorVoice
+import DaonAuthenticatorSDK
+import DaonCryptoSDK
 
 
 /*!

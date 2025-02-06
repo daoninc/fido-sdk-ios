@@ -2,11 +2,13 @@
 //  DASCircularLevelMeter.swift
 //  DaonAuthenticatorSDK
 //
+//  Created by Neil Johnston on 7/17/19.
 //  Copyright © 2019 Daon. All rights reserved.
 //
 
 import UIKit
 
+import DaonAuthenticatorSDK
 import DaonAuthenticatorVoice
 
 // Closures

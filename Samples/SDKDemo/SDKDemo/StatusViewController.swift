@@ -65,7 +65,7 @@ class StatusViewController: UIViewController {
                 str.append(string(dictionary: value))
             } else if let value = value as? String {
                 str.append(value)
-            } else if let value = value as? IXUAFAuthenticator {
+            } else if let value = value as? Date {
                 str.append(value.description)
             }
             str.append("\n\n")

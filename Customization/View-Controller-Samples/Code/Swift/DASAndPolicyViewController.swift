@@ -2,10 +2,12 @@
 //  DASAndPolicyViewController.swift
 //  DaonAuthenticatorSDK
 //
+//  Created by Neil Johnston on 3/26/19.
 //  Copyright © 2019 Daon. All rights reserved.
 //
 
 import DaonAuthenticatorSDK
+import DaonCryptoSDK
 
 /*!
  @brief View Controller for controlling the sequential display of a set of authenticators.
@@ -136,25 +138,25 @@ class DASAndPolicyViewController: UINavigationController, UINavigationBarDelegat
                     }
                     else
                     {
-                        NSLog("No authenticator view controller available.")
+                        IXALog.logError(withTag: KDASDefaultLoggingTag, message:"No authenticator view controller available.")
                         self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
                     }
                 }
                 else
                 {
-                    NSLog("No view controllers created for multi authentication!")
+                    IXALog.logError(withTag: KDASDefaultLoggingTag, message:"No view controllers created for multi authentication!")
                     self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
                 }
             }
             else
             {
-                NSLog("Multiple authenticator groups returned for AND policy. Expected only 1.")
+                IXALog.logError(withTag: KDASDefaultLoggingTag, message:"Multiple authenticator groups returned for AND policy. Expected only 1.")
                 self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
             }
         }
         else
         {
-            NSLog("No authenticator groups returned for AND policy.")
+            IXALog.logError(withTag: KDASDefaultLoggingTag, message:"No authenticator groups returned for AND policy.")
             self.multiAuthenticatorContext.completeCaptureWithError(.authenticatorInconsistentState)
         }
     }
