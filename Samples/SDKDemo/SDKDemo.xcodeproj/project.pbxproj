@@ -3,28 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		772B6BA52CDD058100F1923A /* IDLiveFaceIAD.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6BA12CDD058100F1923A /* IDLiveFaceIAD.xcframework */; };
-		772B6BA62CDD058100F1923A /* IDLiveFaceIAD.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6BA12CDD058100F1923A /* IDLiveFaceIAD.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		772B6BA92CDD058100F1923A /* DaonFaceCapture.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6BA32CDD058100F1923A /* DaonFaceCapture.xcframework */; };
-		772B6BAA2CDD058100F1923A /* DaonFaceCapture.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6BA32CDD058100F1923A /* DaonFaceCapture.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		772B6BAB2CDD058100F1923A /* IDLiveFaceCamera.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6BA42CDD058100F1923A /* IDLiveFaceCamera.xcframework */; };
-		772B6BAC2CDD058100F1923A /* IDLiveFaceCamera.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6BA42CDD058100F1923A /* IDLiveFaceCamera.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		772B6C602CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C5F2CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift */; };
 		772B6C622CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C612CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib */; };
 		772B6C682CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772B6C672CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib */; };
 		772B6C692CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772B6C662CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift */; };
-		772B6C6A2CDE4F3000F1923A /* DaonAuthenticatorFace.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA113265594C7005A4521 /* DaonAuthenticatorFace.xcframework */; };
-		772B6C6B2CDE4F3000F1923A /* DaonAuthenticatorFace.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA113265594C7005A4521 /* DaonAuthenticatorFace.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		772B6C832CDEB9CC00F1923A /* DaonAuthenticatorFaceIFP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6C632CDE411300F1923A /* DaonAuthenticatorFaceIFP.xcframework */; };
-		772B6C842CDEB9CC00F1923A /* DaonAuthenticatorFaceIFP.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 772B6C632CDE411300F1923A /* DaonAuthenticatorFaceIFP.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		77310F8828B923BF00BD2530 /* DaonFacePassiveLiveness.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77310F7628B5600B00BD2530 /* DaonFacePassiveLiveness.xcframework */; };
-		77310F8928B923BF00BD2530 /* DaonFacePassiveLiveness.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 77310F7628B5600B00BD2530 /* DaonFacePassiveLiveness.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7737B85628D4CACE00640C61 /* DaonAuthenticatorPasscode.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69625DB07A00027E8B4 /* DaonAuthenticatorPasscode.xcframework */; };
-		7737B85728D4CACF00640C61 /* DaonAuthenticatorPasscode.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69625DB07A00027E8B4 /* DaonAuthenticatorPasscode.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7772B2642D79E55A0008F672 /* CustomUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772B25E2D79E55A0008F672 /* CustomUIHostingController.swift */; };
 		7772B2652D79E55A0008F672 /* LocalAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772B2612D79E55A0008F672 /* LocalAuthenticationView.swift */; };
 		7772B2662D79E55A0008F672 /* PasscodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7772B2632D79E55A0008F672 /* PasscodeView.swift */; };
@@ -48,22 +34,17 @@
 		77AE2F1B2D3AC8BF00E0FD85 /* Policies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AE2F062D3AC8BF00E0FD85 /* Policies.swift */; };
 		77AE2F1C2D3AC8BF00E0FD85 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AE2F0A2D3AC8BF00E0FD85 /* Users.swift */; };
 		77AE2F1D2D3AC8BF00E0FD85 /* AuthenticationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AE2F022D3AC8BF00E0FD85 /* AuthenticationRequest.swift */; };
+		77E616552DC4F6BE006B1512 /* DaonAuthenticatorFace in Frameworks */ = {isa = PBXBuildFile; productRef = 77E616542DC4F6BE006B1512 /* DaonAuthenticatorFace */; };
+		77E616572DC4F6BE006B1512 /* DaonAuthenticatorFaceIFP in Frameworks */ = {isa = PBXBuildFile; productRef = 77E616562DC4F6BE006B1512 /* DaonAuthenticatorFaceIFP */; };
+		77E616592DC4F6BE006B1512 /* DaonAuthenticatorPasscode in Frameworks */ = {isa = PBXBuildFile; productRef = 77E616582DC4F6BE006B1512 /* DaonAuthenticatorPasscode */; };
+		77E6165B2DC4F6BE006B1512 /* DaonAuthenticatorVoice in Frameworks */ = {isa = PBXBuildFile; productRef = 77E6165A2DC4F6BE006B1512 /* DaonAuthenticatorVoice */; };
+		77E6165D2DC4F6BE006B1512 /* DaonFIDOSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 77E6165C2DC4F6BE006B1512 /* DaonFIDOSDK */; };
 		C3721AA32318127E0018A048 /* DAS-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3721AA22318127E0018A048 /* DAS-Images.xcassets */; };
 		C3721AA72318128D0018A048 /* DASAndPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3721AA42318128C0018A048 /* DASAndPolicyViewController.swift */; };
 		C3721AA92318128D0018A048 /* DASOrPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3721AA62318128D0018A048 /* DASOrPolicyViewController.swift */; };
 		C3721AAD2318129E0018A048 /* DASOrPolicyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3721AAB2318129E0018A048 /* DASOrPolicyViewController.xib */; };
 		FB083678267CFBA900F124E8 /* DASCircularLevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB083676267CFBA900F124E8 /* DASCircularLevelMeter.swift */; };
 		FB083679267CFBA900F124E8 /* DASFaceOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB083677267CFBA900F124E8 /* DASFaceOverlayView.swift */; };
-		FB0FA115265594C7005A4521 /* DaonFaceSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA110265594C7005A4521 /* DaonFaceSDK.xcframework */; };
-		FB0FA116265594C7005A4521 /* DaonFaceSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA110265594C7005A4521 /* DaonFaceSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB0FA117265594C7005A4521 /* DaonFaceQuality.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA111265594C7005A4521 /* DaonFaceQuality.xcframework */; };
-		FB0FA118265594C7005A4521 /* DaonFaceQuality.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA111265594C7005A4521 /* DaonFaceQuality.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB0FA11D265594C7005A4521 /* DaonFaceLivenessBlink.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA114265594C7005A4521 /* DaonFaceLivenessBlink.xcframework */; };
-		FB0FA11E265594C7005A4521 /* DaonFaceLivenessBlink.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA114265594C7005A4521 /* DaonFaceLivenessBlink.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB0FA12F265C1F93005A4521 /* DaonFaceMatcher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA12E265C1F93005A4521 /* DaonFaceMatcher.xcframework */; };
-		FB0FA130265C1F93005A4521 /* DaonFaceMatcher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA12E265C1F93005A4521 /* DaonFaceMatcher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FB0FA135265C2005005A4521 /* DaonFaceDetector.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA134265C2005005A4521 /* DaonFaceDetector.xcframework */; };
-		FB0FA136265C2005005A4521 /* DaonFaceDetector.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB0FA134265C2005005A4521 /* DaonFaceDetector.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB2CF51F22148C7600846C06 /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB2CF51E22148C7600846C06 /* defaultPrefs.plist */; };
 		FB2CF521221491F900846C06 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CF520221491F900846C06 /* SettingsTableViewController.swift */; };
 		FB2CF5232214924400846C06 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2CF5222214924400846C06 /* SwitchTableViewCell.swift */; };
@@ -88,55 +69,13 @@
 		FBF5981B230B304D00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF59807230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift */; };
 		FBF5981D230B304D00D9AAA6 /* DASPasswordAuthenticatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF59809230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.swift */; };
 		FBF5981F230B304D00D9AAA6 /* DASAuthenticatorViewControllerBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF5980B230B304C00D9AAA6 /* DASAuthenticatorViewControllerBase.swift */; };
-		FBFCE69D25DB07A00027E8B4 /* DaonFIDOSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69725DB07A00027E8B4 /* DaonFIDOSDK.xcframework */; };
-		FBFCE69E25DB07A00027E8B4 /* DaonFIDOSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69725DB07A00027E8B4 /* DaonFIDOSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FBFCE69F25DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69825DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework */; };
-		FBFCE6A025DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69825DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FBFCE6A125DB07A00027E8B4 /* DaonCryptoSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69925DB07A00027E8B4 /* DaonCryptoSDK.xcframework */; };
-		FBFCE6A225DB07A00027E8B4 /* DaonCryptoSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69925DB07A00027E8B4 /* DaonCryptoSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FBFCE6A325DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69A25DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework */; };
-		FBFCE6A425DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FBFCE69A25DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		FB36265A220B2E3D00CB5C56 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FB0FA116265594C7005A4521 /* DaonFaceSDK.xcframework in Embed Frameworks */,
-				FB0FA130265C1F93005A4521 /* DaonFaceMatcher.xcframework in Embed Frameworks */,
-				FBFCE6A425DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework in Embed Frameworks */,
-				FB0FA11E265594C7005A4521 /* DaonFaceLivenessBlink.xcframework in Embed Frameworks */,
-				FBFCE6A025DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework in Embed Frameworks */,
-				772B6BAA2CDD058100F1923A /* DaonFaceCapture.xcframework in Embed Frameworks */,
-				FB0FA118265594C7005A4521 /* DaonFaceQuality.xcframework in Embed Frameworks */,
-				FB0FA136265C2005005A4521 /* DaonFaceDetector.xcframework in Embed Frameworks */,
-				772B6C6B2CDE4F3000F1923A /* DaonAuthenticatorFace.xcframework in Embed Frameworks */,
-				772B6C842CDEB9CC00F1923A /* DaonAuthenticatorFaceIFP.xcframework in Embed Frameworks */,
-				FBFCE69E25DB07A00027E8B4 /* DaonFIDOSDK.xcframework in Embed Frameworks */,
-				7737B85728D4CACF00640C61 /* DaonAuthenticatorPasscode.xcframework in Embed Frameworks */,
-				FBFCE6A225DB07A00027E8B4 /* DaonCryptoSDK.xcframework in Embed Frameworks */,
-				772B6BAC2CDD058100F1923A /* IDLiveFaceCamera.xcframework in Embed Frameworks */,
-				772B6BA62CDD058100F1923A /* IDLiveFaceIAD.xcframework in Embed Frameworks */,
-				77310F8928B923BF00BD2530 /* DaonFacePassiveLiveness.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		772B6BA12CDD058100F1923A /* IDLiveFaceIAD.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IDLiveFaceIAD.xcframework; path = ../../Frameworks/IDLiveFaceIAD.xcframework; sourceTree = "<group>"; };
-		772B6BA32CDD058100F1923A /* DaonFaceCapture.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFaceCapture.xcframework; path = ../../Frameworks/DaonFaceCapture.xcframework; sourceTree = "<group>"; };
-		772B6BA42CDD058100F1923A /* IDLiveFaceCamera.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = IDLiveFaceCamera.xcframework; path = ../../Frameworks/IDLiveFaceCamera.xcframework; sourceTree = "<group>"; };
 		772B6C5F2CDE40A300F1923A /* DASFaceIFPAuthenticatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DASFaceIFPAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFaceIFPAuthenticatorViewController.swift"; sourceTree = "<group>"; };
 		772B6C612CDE40BF00F1923A /* DASFaceIFPAuthenticatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DASFaceIFPAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASFaceIFPAuthenticatorViewController.xib"; sourceTree = "<group>"; };
-		772B6C632CDE411300F1923A /* DaonAuthenticatorFaceIFP.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonAuthenticatorFaceIFP.xcframework; path = ../../Frameworks/DaonAuthenticatorFaceIFP.xcframework; sourceTree = "<group>"; };
 		772B6C662CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DASFaceAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFaceAuthenticatorViewController.swift"; sourceTree = "<group>"; };
 		772B6C672CDE4E8A00F1923A /* DASFaceAuthenticatorViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DASFaceAuthenticatorViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASFaceAuthenticatorViewController.xib"; sourceTree = "<group>"; };
-		77310F7628B5600B00BD2530 /* DaonFacePassiveLiveness.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFacePassiveLiveness.xcframework; path = ../../Frameworks/DaonFacePassiveLiveness.xcframework; sourceTree = "<group>"; };
 		7772B25D2D79E55A0008F672 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ActivityIndicator.swift; path = ../../../Customization/SwiftUI/ActivityIndicator.swift; sourceTree = "<group>"; };
 		7772B25E2D79E55A0008F672 /* CustomUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomUIHostingController.swift; path = ../../Customization/SwiftUI/CustomUIHostingController.swift; sourceTree = SOURCE_ROOT; };
 		7772B25F2D79E55A0008F672 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorView.swift; path = ../../../Customization/SwiftUI/ErrorView.swift; sourceTree = "<group>"; };
@@ -166,14 +105,6 @@
 		C3721AAB2318129E0018A048 /* DASOrPolicyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DASOrPolicyViewController.xib; path = "../../../Customization/View-Controller-Samples/Resources/XIB/DASOrPolicyViewController.xib"; sourceTree = "<group>"; };
 		FB083676267CFBA900F124E8 /* DASCircularLevelMeter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASCircularLevelMeter.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/Controls/DASCircularLevelMeter.swift"; sourceTree = "<group>"; };
 		FB083677267CFBA900F124E8 /* DASFaceOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASFaceOverlayView.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/Controls/DASFaceOverlayView.swift"; sourceTree = "<group>"; };
-		FB0FA110265594C7005A4521 /* DaonFaceSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFaceSDK.xcframework; path = ../../Frameworks/DaonFaceSDK.xcframework; sourceTree = "<group>"; };
-		FB0FA111265594C7005A4521 /* DaonFaceQuality.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFaceQuality.xcframework; path = ../../Frameworks/DaonFaceQuality.xcframework; sourceTree = "<group>"; };
-		FB0FA112265594C7005A4521 /* DaonFaceLiveness.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DaonFaceLiveness.xcframework; path = ../../Frameworks/DaonFaceLiveness.xcframework; sourceTree = "<group>"; };
-		FB0FA113265594C7005A4521 /* DaonAuthenticatorFace.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonAuthenticatorFace.xcframework; path = ../../Frameworks/DaonAuthenticatorFace.xcframework; sourceTree = "<group>"; };
-		FB0FA114265594C7005A4521 /* DaonFaceLivenessBlink.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFaceLivenessBlink.xcframework; path = ../../Frameworks/DaonFaceLivenessBlink.xcframework; sourceTree = "<group>"; };
-		FB0FA12E265C1F93005A4521 /* DaonFaceMatcher.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFaceMatcher.xcframework; path = ../../Frameworks/DaonFaceMatcher.xcframework; sourceTree = "<group>"; };
-		FB0FA131265C1FA5005A4521 /* DaonFaceMaskDetector.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = DaonFaceMaskDetector.xcframework; path = ../../Frameworks/DaonFaceMaskDetector.xcframework; sourceTree = "<group>"; };
-		FB0FA134265C2005005A4521 /* DaonFaceDetector.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFaceDetector.xcframework; path = ../../Frameworks/DaonFaceDetector.xcframework; sourceTree = "<group>"; };
 		FB2CF51E22148C7600846C06 /* defaultPrefs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultPrefs.plist; sourceTree = "<group>"; };
 		FB2CF520221491F900846C06 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		FB2CF5222214924400846C06 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
@@ -201,11 +132,6 @@
 		FBF59807230B304C00D9AAA6 /* DASFingerprintAuthenticatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASFingerprintAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASFingerprintAuthenticatorViewController.swift"; sourceTree = "<group>"; };
 		FBF59809230B304C00D9AAA6 /* DASPasswordAuthenticatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASPasswordAuthenticatorViewController.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASPasswordAuthenticatorViewController.swift"; sourceTree = "<group>"; };
 		FBF5980B230B304C00D9AAA6 /* DASAuthenticatorViewControllerBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DASAuthenticatorViewControllerBase.swift; path = "../../../Customization/View-Controller-Samples/Code/Swift/DASAuthenticatorViewControllerBase.swift"; sourceTree = "<group>"; };
-		FBFCE69625DB07A00027E8B4 /* DaonAuthenticatorPasscode.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonAuthenticatorPasscode.xcframework; path = ../../Frameworks/DaonAuthenticatorPasscode.xcframework; sourceTree = "<group>"; };
-		FBFCE69725DB07A00027E8B4 /* DaonFIDOSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonFIDOSDK.xcframework; path = ../../Frameworks/DaonFIDOSDK.xcframework; sourceTree = "<group>"; };
-		FBFCE69825DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonAuthenticatorVoice.xcframework; path = ../../Frameworks/DaonAuthenticatorVoice.xcframework; sourceTree = "<group>"; };
-		FBFCE69925DB07A00027E8B4 /* DaonCryptoSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonCryptoSDK.xcframework; path = ../../Frameworks/DaonCryptoSDK.xcframework; sourceTree = "<group>"; };
-		FBFCE69A25DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:H8Y643WM3S:Daon, Inc"; lastKnownFileType = wrapper.xcframework; name = DaonAuthenticatorSDK.xcframework; path = ../../Frameworks/DaonAuthenticatorSDK.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,22 +139,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB0FA115265594C7005A4521 /* DaonFaceSDK.xcframework in Frameworks */,
-				FB0FA12F265C1F93005A4521 /* DaonFaceMatcher.xcframework in Frameworks */,
-				FBFCE6A325DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework in Frameworks */,
-				FB0FA11D265594C7005A4521 /* DaonFaceLivenessBlink.xcframework in Frameworks */,
-				772B6BA92CDD058100F1923A /* DaonFaceCapture.xcframework in Frameworks */,
-				FB0FA117265594C7005A4521 /* DaonFaceQuality.xcframework in Frameworks */,
-				FB0FA135265C2005005A4521 /* DaonFaceDetector.xcframework in Frameworks */,
-				772B6C6A2CDE4F3000F1923A /* DaonAuthenticatorFace.xcframework in Frameworks */,
-				FBFCE69F25DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework in Frameworks */,
-				772B6C832CDEB9CC00F1923A /* DaonAuthenticatorFaceIFP.xcframework in Frameworks */,
-				FBFCE69D25DB07A00027E8B4 /* DaonFIDOSDK.xcframework in Frameworks */,
-				7737B85628D4CACE00640C61 /* DaonAuthenticatorPasscode.xcframework in Frameworks */,
-				FBFCE6A125DB07A00027E8B4 /* DaonCryptoSDK.xcframework in Frameworks */,
-				772B6BAB2CDD058100F1923A /* IDLiveFaceCamera.xcframework in Frameworks */,
-				772B6BA52CDD058100F1923A /* IDLiveFaceIAD.xcframework in Frameworks */,
-				77310F8828B923BF00BD2530 /* DaonFacePassiveLiveness.xcframework in Frameworks */,
+				77E6165B2DC4F6BE006B1512 /* DaonAuthenticatorVoice in Frameworks */,
+				77E616572DC4F6BE006B1512 /* DaonAuthenticatorFaceIFP in Frameworks */,
+				77E616552DC4F6BE006B1512 /* DaonAuthenticatorFace in Frameworks */,
+				77E6165D2DC4F6BE006B1512 /* DaonFIDOSDK in Frameworks */,
+				77E616592DC4F6BE006B1512 /* DaonAuthenticatorPasscode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,24 +207,6 @@
 		FB1A4A822339246000864F5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				772B6C632CDE411300F1923A /* DaonAuthenticatorFaceIFP.xcframework */,
-				772B6BA32CDD058100F1923A /* DaonFaceCapture.xcframework */,
-				772B6BA42CDD058100F1923A /* IDLiveFaceCamera.xcframework */,
-				772B6BA12CDD058100F1923A /* IDLiveFaceIAD.xcframework */,
-				77310F7628B5600B00BD2530 /* DaonFacePassiveLiveness.xcframework */,
-				FB0FA134265C2005005A4521 /* DaonFaceDetector.xcframework */,
-				FB0FA131265C1FA5005A4521 /* DaonFaceMaskDetector.xcframework */,
-				FB0FA12E265C1F93005A4521 /* DaonFaceMatcher.xcframework */,
-				FB0FA113265594C7005A4521 /* DaonAuthenticatorFace.xcframework */,
-				FB0FA112265594C7005A4521 /* DaonFaceLiveness.xcframework */,
-				FB0FA114265594C7005A4521 /* DaonFaceLivenessBlink.xcframework */,
-				FB0FA111265594C7005A4521 /* DaonFaceQuality.xcframework */,
-				FB0FA110265594C7005A4521 /* DaonFaceSDK.xcframework */,
-				FBFCE69625DB07A00027E8B4 /* DaonAuthenticatorPasscode.xcframework */,
-				FBFCE69A25DB07A00027E8B4 /* DaonAuthenticatorSDK.xcframework */,
-				FBFCE69825DB07A00027E8B4 /* DaonAuthenticatorVoice.xcframework */,
-				FBFCE69925DB07A00027E8B4 /* DaonCryptoSDK.xcframework */,
-				FBFCE69725DB07A00027E8B4 /* DaonFIDOSDK.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -417,7 +314,6 @@
 				FB362635220B1E0300CB5C56 /* Sources */,
 				FB362636220B1E0300CB5C56 /* Frameworks */,
 				FB362637220B1E0300CB5C56 /* Resources */,
-				FB36265A220B2E3D00CB5C56 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -459,6 +355,9 @@
 				Base,
 			);
 			mainGroup = FB362630220B1E0300CB5C56;
+			packageReferences = (
+				77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */,
+			);
 			productRefGroup = FB36263A220B1E0300CB5C56 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -767,6 +666,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daoninc/fido-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.9.209;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		77E616542DC4F6BE006B1512 /* DaonAuthenticatorFace */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFace;
+		};
+		77E616562DC4F6BE006B1512 /* DaonAuthenticatorFaceIFP */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorFaceIFP;
+		};
+		77E616582DC4F6BE006B1512 /* DaonAuthenticatorPasscode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorPasscode;
+		};
+		77E6165A2DC4F6BE006B1512 /* DaonAuthenticatorVoice */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonAuthenticatorVoice;
+		};
+		77E6165C2DC4F6BE006B1512 /* DaonFIDOSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 77E616532DC4F6BE006B1512 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonFIDOSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB362631220B1E0300CB5C56 /* Project object */;
 }
