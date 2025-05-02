@@ -2,8 +2,7 @@
 //  DASPasswordAuthenticatorViewController.swift
 //  DaonAuthenticatorSDK
 //
-//  Created by Neil Johnston on 3/20/19.
-//  Copyright © 2019 Daon. All rights reserved.
+//  Copyright © 2019-25 Daon. All rights reserved.
 //
 import DaonAuthenticatorPasscode
 import DaonAuthenticatorSDK
@@ -16,8 +15,7 @@ import DaonCryptoSDK
  @constant DASPasscodeCaptureStateRegistration              User is being prompted to enter a new passcode for registration.
  @constant DASPasscodeCaptureStateRegistrationConfirmation  User is being prompted to confirm (re-enter) the new passcode for registration.
  */
-enum DASPasscodeCaptureState: Int
-{
+enum DASPasscodeCaptureState: Int {
     case preparing                  = -1
     case authentication             = 0
     case registration               = 1
@@ -28,8 +26,7 @@ enum DASPasscodeCaptureState: Int
  @brief View Controller for collecting a passcode.
  */
 @objc(DASPasswordAuthenticatorViewController)
-class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase, UITextFieldDelegate, DASDataControllerWrapperDelegate
-{
+class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase, UITextFieldDelegate, DASDataControllerWrapperDelegate {
     // MARK:- Controllers
     
     /*!
@@ -111,8 +108,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @param authenticatorContext The @link DASAuthenticatorContext @/link object with which this view controller can register or authenticate voice samples.
      @return A new @link DASPasswordAuthenticatorViewController @/link object.
      */
-    override init!(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, context authenticatorContext: DASAuthenticatorContext?)
-    {
+    override init!(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, context authenticatorContext: DASAuthenticatorContext?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, context: authenticatorContext)
 
         self.dataController    = DASPasscodeAuthenticatorFactory.createDataControllerWrapper(with: authenticatorContext, delegate: self)
@@ -135,8 +131,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
         self.determineInitialState()
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -146,8 +141,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief Called after view has been loaded. Sets up the initial UI state.
      */
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         // Configure the UI
@@ -162,10 +156,8 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
         self.resultImageView.isHidden     = true
         self.adosIndicatorView.isHidden   = true
         
-        if (DASUtils.isDarkModeEnabled())
-        {
-            if #available(iOS 13.0, *)
-            {
+        if DASUtils.isDarkModeEnabled() {
+            if #available(iOS 13.0, *) {
                 self.adosIndicatorView.style = .medium
                 self.adosIndicatorView.color = .white
             }
@@ -180,12 +172,10 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Called when the view is about to be made visible. We use this to reset the UI if capture was previously completed.
      @param animated YES if view appearance will be animated.
      */
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (self.captureCompleted)
-        {
+        if self.captureCompleted {
             self.captureCompleted = false
             
             // Capture has already completed successfully once. So if viewWillAppear is happening again
@@ -202,8 +192,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Called when the view has appeared. We use this to present the keyboard.
      @param animated YES if view appearance will be animated.
      */
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         entryTextField.becomeFirstResponder()
@@ -217,8 +206,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      happens when transitioning between authenticators in a multi-authenticator policy. Resetting ensures that when transitioning
      back to the authenticator that it is back in its default prepared state.
      */
-    override func authenticatorShouldReset()
-    {
+    override func authenticatorShouldReset() {
         super.authenticatorShouldReset()
         entryTextField.resignFirstResponder()
         resetWithError(nil)
@@ -228,8 +216,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Cancels the authenticator by telling the context which will dismiss the UI. Override in sub-classes
      in order to perform any authenticator specific cancellation before calling the base class.
      */
-    override func authenticatorIsCancelling()
-    {
+    override func authenticatorIsCancelling() {
         entryTextField.resignFirstResponder()
         super.authenticatorIsCancelling()
     }
@@ -240,14 +227,10 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief Determines what the current @link DASPasscodeCaptureState @/link is.
      */
-    fileprivate func determineInitialState()
-    {
-        if (singleAuthenticatorContext!.isRegistration)
-        {
+    fileprivate func determineInitialState() {
+        if singleAuthenticatorContext!.isRegistration {
             state = .registration
-        }
-        else
-        {
+        } else {
             state = .authentication
         }
     }
@@ -256,8 +239,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Switches to a new state and updates the UI.
      @param newState The new state to switch to.
      */
-    fileprivate func resetForNextInputState(_ newState:DASPasscodeCaptureState)
-    {
+    fileprivate func resetForNextInputState(_ newState:DASPasscodeCaptureState) {
         state = newState
     
         configureTextFieldWithAnimation(true)
@@ -272,35 +254,26 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief IBAction called when @link nextButton @/link is pressed.
      @param sender The control that sent this event.
      */
-    @IBAction func nextButtonPressed(_ sender: UIButton?)
-    {
+    @IBAction func nextButtonPressed(_ sender: UIButton?) {
         objc_sync_enter(self) // Combined with setting the submitting boolean, this prevents a race condition where the user presses the next button multiple times.
         
-        if (!submitting)
-        {
+        if !submitting {
             submitting = true
 
-            if (entryTextField.text?.count == 0)
-            {
+            if entryTextField.text?.count == 0 {
                 // Nothing entered, reset and show error.
                 resetWithError(string(forError: .passwordIsEmpty))
-            }
-            else
-            {
+            } else {
                 // We have a non-empty string, so store it and determine what should happen next based on the current state.
                 capturedPasscodes[state] = entryTextField.text
                 
-                switch (state)
-                {
+                switch (state) {
                     case .authentication:
-                        if (dataController!.isReenrollmentRequested())
-                        {
+                        if dataController!.isReenrollmentRequested() {
                             // Current passcode is collected, ADoS Reenroll is required so begin collecting the new (replacement) passcode.
                             resetForNextInputState(.registration)
                             submitting = false
-                        }
-                        else
-                        {
+                        } else {
                             // Current passcode is collected, attempt submission.
                             validateAndSubmit()
                         }
@@ -332,40 +305,29 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief Validates the inputted text then submits it to the @link dataController @/link.
      */
-    fileprivate func validateAndSubmit()
-    {
+    fileprivate func validateAndSubmit() {
         // Check that passcode is in the correct format.
-        if (!validatePasscodesEntered())
-        {
+        if !validatePasscodesEntered() {
             resetWithError(string(forError: .passwordIsEmpty))
-        }
-        else if (!validatePasscodesAreTheSame())
-        {
+        } else if !validatePasscodesAreTheSame() {
             resetWithError(string(forError: .passwordMismatch))
-        }        
-        else if (self.singleAuthenticatorContext!.isRegistration && !self.singleAuthenticatorContext!.isADoSRequired && !validatePasscodesAreTheCorrectLength())
-        {
+        } else if (self.singleAuthenticatorContext!.isRegistration &&
+                   !self.singleAuthenticatorContext!.isADoSRequired &&
+                   !validatePasscodesAreTheCorrectLength()) {
             var message : String?
             
-            if (minLength != NSNotFound && maxLength != NSNotFound)
-            {
+            if minLength != NSNotFound && maxLength != NSNotFound {
                 message = String(format: localise("Password Screen - Error - Wrong Lengths - Formatted"), minLength, maxLength)
-            }
-            else if (minLength != NSNotFound)
-            {
+            } else if minLength != NSNotFound {
                 // Only need to complain that the passcode is too short
                 message = String(format: localise("Password Screen - Error - Too short - Formatted"), minLength)
-            }
-            else
-            {
+            } else {
                 // Only need to complain that the passcode is too long
                 message = String(format: localise("Password Screen - Error - Too long - Formatted"), maxLength)
             }
             
             resetWithError(message)
-        }
-        else
-        {
+        } else {
             // Passcodes are in the correct format, transition to the processing UI, then begin the registration / authentication / reenrollment.
             
             hideCancelButton()
@@ -382,19 +344,14 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
                                             UIView.animate(withDuration: 0.25,
                                                            animations: { self.adosIndicatorView.alpha = 1 },
                                                            completion: { (finished) in
-                                                                            if (self.dataController!.isReenrollmentRequested())
-                                                                            {
+                                                                            if self.dataController!.isReenrollmentRequested() {
                                                                                 let existingPasscode        = self.capturedPasscodes[.authentication]
                                                                                 let newPasscodeToRegister   = self.capturedPasscodes[.registration]
                                                                                 self.dataController!.reenroll(withExistingPasscode: existingPasscode, andNewPasscode: newPasscodeToRegister)
-                                                                            }
-                                                                            else if (self.singleAuthenticatorContext!.isRegistration)
-                                                                            {
+                                                                            } else if self.singleAuthenticatorContext!.isRegistration {
                                                                                 let passcodeToRegister = self.capturedPasscodes[.registration]
                                                                                 self.dataController!.registerPasscode(passcodeToRegister)
-                                                                            }
-                                                                            else
-                                                                            {
+                                                                            } else {
                                                                                 let passcodeToAuthenticate = self.capturedPasscodes[.authentication]
                                                                                 self.dataController!.authenticatePasscode(passcodeToAuthenticate)
                                                                             }
@@ -410,33 +367,26 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Determines whether we have all the required passcodes.
      @return YES is all required passcodes have been collected.
      */
-    fileprivate func validatePasscodesEntered() -> Bool
-    {
+    fileprivate func validatePasscodesEntered() -> Bool {
         var passcodesArePresent = false
         
         let registrationPasscode                = capturedPasscodes[.registration]
         let registrationConfirmationPasscode    = capturedPasscodes[.registrationConfirmation]
         let authenticationPasscode              = capturedPasscodes[.authentication]
         
-        if (self.singleAuthenticatorContext!.isRegistration)
-        {
+        if self.singleAuthenticatorContext!.isRegistration {
             // We are collecting for registration so make sure we have the new passcode plus the re-entered passcode for confirmation.
             passcodesArePresent = registrationPasscode != nil && registrationPasscode!.count > 0
                                 && registrationConfirmationPasscode != nil && registrationConfirmationPasscode!.count > 0
-        }
-        else
-        {
+        } else {
             // We are collecting for authentication..
             
-            if (dataController!.isReenrollmentRequested())
-            {
+            if dataController!.isReenrollmentRequested() {
                 // ADoS reenroll is required, so make sure we have the current passcode, the new passcode, and the new re-entered passcode for confirmation.
                 passcodesArePresent = authenticationPasscode != nil && authenticationPasscode!.count > 0
                                     && registrationPasscode != nil && registrationPasscode!.count > 0
                                     && registrationConfirmationPasscode != nil && registrationConfirmationPasscode!.count > 0
-            }
-            else
-            {
+            } else {
                 // Only the authentication passcode is needed.
                 passcodesArePresent = authenticationPasscode != nil && authenticationPasscode!.count > 0
             }
@@ -449,25 +399,17 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Determines whether the collected registration passcodes are the same.
      @return YES if both registration passcodes are the same.
      */
-    fileprivate func validatePasscodesAreTheSame() -> Bool
-    {
+    fileprivate func validatePasscodesAreTheSame() -> Bool {
         var passcodesAreTheSame = true
         
-        if (self.singleAuthenticatorContext!.isRegistration || dataController!.isReenrollmentRequested())
-        {
-            if let passcode = capturedPasscodes[.registration], let confirmationPasscode = capturedPasscodes[.registrationConfirmation]
-            {
-                if (passcode.count > 0 && confirmationPasscode.count > 0)
-                {
+        if self.singleAuthenticatorContext!.isRegistration || dataController!.isReenrollmentRequested() {
+            if let passcode = capturedPasscodes[.registration], let confirmationPasscode = capturedPasscodes[.registrationConfirmation] {
+                if passcode.count > 0 && confirmationPasscode.count > 0 {
                     passcodesAreTheSame = passcode == confirmationPasscode
-                }
-                else
-                {
+                } else {
                     passcodesAreTheSame = false
                 }
-            }
-            else
-            {
+            } else {
                 passcodesAreTheSame = false
             }
         }
@@ -480,25 +422,19 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @discussion NSNotFound is returned from the @link dataController @/link for min and max lengths and means "no limit".
      @return YES if all collected passcodes are the correct length.
      */
-    fileprivate func validatePasscodesAreTheCorrectLength() -> Bool
-    {
+    fileprivate func validatePasscodesAreTheCorrectLength() -> Bool {
         var passcodesAreTheCorrectLength = true
         
-        for passcode in capturedPasscodes.values
-        {
-            if (minLength != NSNotFound)
-            {
-                if (passcode.count < minLength)
-                {
+        for passcode in capturedPasscodes.values {
+            if minLength != NSNotFound {
+                if passcode.count < minLength {
                     passcodesAreTheCorrectLength = false
                     break
                 }
             }
             
-            if (maxLength != NSNotFound)
-            {
-                if (passcode.count > maxLength)
-                {
+            if maxLength != NSNotFound {
+                if passcode.count > maxLength {
                     passcodesAreTheCorrectLength = false
                     break
                 }
@@ -512,25 +448,17 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Determines whether the current registered passcode and the one collected for reenrollment are different.
      @return YES if the current registered passcode and the one collected for reenrollment are different.
      */
-    fileprivate func validateCurrentAndReenrollPasscodesAreNotTheSame() -> Bool
-    {
+    fileprivate func validateCurrentAndReenrollPasscodesAreNotTheSame() -> Bool {
         var passcodesAreDifferent = true
         
-        if (dataController!.isReenrollmentRequested())
-        {
-            if let currentPasscode = capturedPasscodes[.authentication], let reenrollPasscode = capturedPasscodes[.registration]
-            {
-                if (currentPasscode.count > 0 && reenrollPasscode.count > 0)
-                {
+        if dataController!.isReenrollmentRequested() {
+            if let currentPasscode = capturedPasscodes[.authentication], let reenrollPasscode = capturedPasscodes[.registration] {
+                if currentPasscode.count > 0 && reenrollPasscode.count > 0 {
                     passcodesAreDifferent = currentPasscode != reenrollPasscode
-                }
-                else
-                {
+                } else {
                     passcodesAreDifferent = false
                 }
-            }
-            else
-            {
+            } else {
                 passcodesAreDifferent = false
             }
         }
@@ -544,8 +472,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief From the @link DASDataControllerWrapperDelegate @/link: Used to notify a conforming object that the controllers current task has completed successfully.
      */
-    func dataControllerCompletedSuccessfully()
-    {
+    func dataControllerCompletedSuccessfully() {
         self.hideCancelButton()
         
         UIView.animate(withDuration: 0.25,
@@ -562,10 +489,8 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
                                         UIView.animate(withDuration: 0.25,
                                                        animations: { self.resultImageView.alpha = 1 },
                                                        completion: { (finished) in
-                                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute:
-                                                                        {
-                                                                            if (!self.isCancelling)
-                                                                            {
+                                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                                                                            if !self.isCancelling {
                                                                                 self.captureCompleted = true
                                                                                 self.showCancelButton()
                                                                                 self.singleAuthenticatorContext?.completeCapture()
@@ -579,29 +504,23 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief From the @link DASDataControllerWrapperDelegate @/link: Used to notify a conforming object that the controllers current task has failed.
      @param error An error that caused the current task to fail, such as entering an incorrect passcode.
      */
-    func dataControllerFailedWithError(_ error: Error!)
-    {
+    func dataControllerFailedWithError(_ error: Error!) {
         //
         // We only need to check for lock errors if dataController!.delegateWillHandleLockEvents has previously been set to
         // YES (See the comments in initWithNibName:bundle:context:), otherwise the SDK will handle them (display an error
         // and terminate capture). Code is included here just for completeness.
         //
-        if (error._code == DASAuthenticatorError.authenticatorTooManyAttemptsTempLocked.rawValue
+        if error._code == DASAuthenticatorError.authenticatorTooManyAttemptsTempLocked.rawValue
             || error._code == DASAuthenticatorError.authenticatorTooManyAttemptsPermLocked.rawValue
-            || error._code == DASAuthenticatorError.serverTooManyAttempts.rawValue)
-        {
-            if let authenticatorError = DASAuthenticatorError(rawValue: error._code)
-            {
+            || error._code == DASAuthenticatorError.serverTooManyAttempts.rawValue {
+            
+            if let authenticatorError = DASAuthenticatorError(rawValue: error._code) {
                 self.singleAuthenticatorContext!.completeCapture(error: authenticatorError)
-            }
-            else
-            {
+            } else {
                 IXALog.logError(withTag: KDASPasscodeLoggingTag, message: String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error._code, error.localizedDescription))
                 self.singleAuthenticatorContext!.completeCapture(error: .authenticatorInconsistentState)
             }
-        }
-        else
-        {
+        } else {
             self.resetWithError(error.localizedDescription)
         }
     }
@@ -614,8 +533,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @param textField The UITextField that raised the event.
      */
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nextButtonPressed(nil)
         
         return true
@@ -628,8 +546,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Sets up the UITextField that is used for passcode entry.
      @param animate If YES we will show a transition as we move from passcode entry to passcode confirmation entry.
      */
-    fileprivate func configureTextFieldWithAnimation(_ animate: Bool)
-    {
+    fileprivate func configureTextFieldWithAnimation(_ animate: Bool) {
         // Set the primary properties
         self.entryTextField.text                            = ""
         self.entryTextField.autocapitalizationType          = .none
@@ -644,17 +561,13 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
         self.entryTextField.isSecureTextEntry               = true
         self.entryTextField.isEnabled                       = true
 
-        if (state == .registrationConfirmation)
-        {
+        if state == .registrationConfirmation {
             self.entryTextField.placeholder = localise("Password Screen - Text Field Place Holder - Confirmation")
-        }
-        else
-        {
+        } else {
             self.entryTextField.placeholder = localise("Password Screen - Text Field Place Holder")
         }
         
-        if (animate)
-        {
+        if animate {
             startAnimation(on: self.entryTextField, transition: .flipFromLeft)
         }
     }
@@ -662,39 +575,28 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief Update the on-screen instructions based on the current state.
      */
-    fileprivate func updateInstructions()
-    {
-        switch (state)
-        {
+    fileprivate func updateInstructions() {
+        switch (state) {
             case .authentication:
-                if (dataController!.isReenrollmentRequested())
-                {
+                if dataController!.isReenrollmentRequested() {
                     self.instructionsLabel.text = localise("Password Screen - Instructions - Authentication - Current")
-                }
-                else
-                {
+                } else {
                     self.instructionsLabel.text = localise("Password Screen - Instructions - Authentication")
                 }
                 break
             
             case .registration:
-                if (dataController!.isReenrollmentRequested())
-                {
+                if dataController!.isReenrollmentRequested() {
                     self.instructionsLabel.text = localise("Password Screen - Instructions - Reenroll")
-                }
-                else
-                {
+                } else {
                     self.instructionsLabel.text = localise("Password Screen - Instructions - Registration")
                 }
                 break
             
             case .registrationConfirmation:
-                if (dataController!.isReenrollmentRequested())
-                {
+                if dataController!.isReenrollmentRequested() {
                     self.instructionsLabel.text = localise("Password Screen - Instructions - Reenroll - Confirm")
-                }
-                else
-                {
+                } else {
                     self.instructionsLabel.text = localise("Password Screen - Instructions - Registration - Confirm")
                 }
                 break
@@ -711,8 +613,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Resets the UI to it's default state.
      @errorMessage An error that caused the reset. It will be displayed on screen.
      */
-    fileprivate func resetWithError(_ errorMessage: String?)
-    {
+    fileprivate func resetWithError(_ errorMessage: String?) {
         showCancelButton()
         determineInitialState()
         updateInstructions()
@@ -728,12 +629,9 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
         
         self.configureTextFieldWithAnimation(false)
         
-        if let message = errorMessage
-        {
-            if (message.count != 0)
-            {
-                self.showAlert(withTitle: localise("Alert - Title - Error"), message: message)
-                {
+        if let message = errorMessage {
+            if message.count != 0 {
+                self.showAlert(withTitle: localise("Alert - Title - Error"), message: message) {
                     self.entryTextField.becomeFirstResponder()
                 }
             }

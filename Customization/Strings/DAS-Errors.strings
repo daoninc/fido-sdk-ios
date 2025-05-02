@@ -245,6 +245,8 @@
 "10927" = "Passive liveness check has failed due to error specified in the error message";
 "10928" = "Service is unreachable";
 "10929" = "Liveness failed";
+"10980" = "Capture liveness check failed";
+"10981" = "Face image not of sufficient quality";
 "11001" = "An invalid passcode format has been provided";
 "11002" = "A match has been requested with no suitable live match data provided";
 "11003" = "A match has been requested with no suitable reference data provided";

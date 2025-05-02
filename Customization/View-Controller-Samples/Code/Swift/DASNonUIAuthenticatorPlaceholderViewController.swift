@@ -2,8 +2,7 @@
 //  DASNonUIAuthenticatorPlaceholderViewController.swift
 //  DaonAuthenticatorSDK
 //
-//  Created by Neil Johnston on 1/22/20.
-//  Copyright © 2020 Daon. All rights reserved.
+//  Copyright © 2020-25 Daon. All rights reserved.
 //
 
 import DaonAuthenticatorSDK
@@ -12,8 +11,7 @@ import DaonAuthenticatorSDK
  @brief A placeholder View Controller for registering or authenticating with authenticators that don't typically have a UI (Silent, OTP).
  */
 @objc(DASNonUIAuthenticatorPlaceholderViewController)
-class DASNonUIAuthenticatorPlaceholderViewController: DASAuthenticatorViewControllerBase
-{
+class DASNonUIAuthenticatorPlaceholderViewController: DASAuthenticatorViewControllerBase {
     // MARK:- IBOutlets
     
     /*!
@@ -31,23 +29,18 @@ class DASNonUIAuthenticatorPlaceholderViewController: DASAuthenticatorViewContro
      @param authenticatorContext The @link DASAuthenticatorContext @/link object with which this view controller can register or authenticate.
      @return A new @link DASNonUIAuthenticatorPlaceholderViewController @/link object.
      */
-    override init!(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, context authenticatorContext: DASAuthenticatorContext?)
-    {
+    override init!(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, context authenticatorContext: DASAuthenticatorContext?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, context: authenticatorContext)
 
         // Set the tabBarItem in case this view controller is being displayed in a UITabBarController
-        if (self.singleAuthenticatorContext?.authenticatorInfo?.authenticatorFactor == .offlineOTP)
-        {
+        if self.singleAuthenticatorContext?.authenticatorInfo?.authenticatorFactor == .offlineOTP {
             self.tabBarItem.title = localise("Offline OTP Screen - Title")
-        }
-        else
-        {
+        } else {
             self.tabBarItem.title = localise("Silent Screen - Title")
         }
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -57,25 +50,18 @@ class DASNonUIAuthenticatorPlaceholderViewController: DASAuthenticatorViewContro
     /*!
      @brief Called after view has been loaded. Sets up the initial UI state.
      */
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (self.singleAuthenticatorContext?.authenticatorInfo?.authenticatorFactor == .offlineOTP)
-        {
+        if self.singleAuthenticatorContext?.authenticatorInfo?.authenticatorFactor == .offlineOTP {
             self.title = localise("Offline OTP Screen - Title") + " (Swift)"
-        }
-        else
-        {
+        } else {
             self.title = localise("Silent Screen - Title") + " (Swift)"
         }
         
-        if (self.singleAuthenticatorContext!.isRegistration)
-        {
+        if self.singleAuthenticatorContext!.isRegistration {
             self.continueButton.setTitle(localise("Register"), for: .normal)
-        }
-        else
-        {
+        } else {
             self.continueButton.setTitle(localise("Authenticate"), for: .normal)
         }
     }
@@ -86,8 +72,7 @@ class DASNonUIAuthenticatorPlaceholderViewController: DASAuthenticatorViewContro
     /*!
      @brief IBAction called when @link continueButton @/link is pressed.
      */
-    @IBAction func continueButtonPressed(_ sender: UIButton?)
-    {
+    @IBAction func continueButtonPressed(_ sender: UIButton?) {
         self.singleAuthenticatorContext?.completeCapture()
     }
 }

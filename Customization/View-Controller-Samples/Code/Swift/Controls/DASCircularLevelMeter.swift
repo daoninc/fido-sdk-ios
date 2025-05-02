@@ -2,8 +2,7 @@
 //  DASCircularLevelMeter.swift
 //  DaonAuthenticatorSDK
 //
-//  Created by Neil Johnston on 7/17/19.
-//  Copyright © 2019 Daon. All rights reserved.
+//  Copyright © 2019-25 Daon. All rights reserved.
 //
 
 import UIKit
@@ -22,8 +21,7 @@ typealias ButtonModeActionBlock = () -> Void
 
 // Enums
 
-enum DASCircularLevelMeterState : Int
-{
+enum DASCircularLevelMeterState : Int {
     case ready      = 0
     case active     = 1
     case processing = 2
@@ -33,8 +31,7 @@ enum DASCircularLevelMeterState : Int
 /*!
  @brief A LevelMeter which is used specifically for generic decibel datasources
  */
-class DASCircularLevelMeter: UIView
-{
+class DASCircularLevelMeter: UIView {
     // MARK:- Constants
     private let animationDuration = 0.25
     
@@ -79,18 +76,13 @@ class DASCircularLevelMeter: UIView
     /*!
      @brief Delegate object which provides the current audio level for display.
      */
-    unowned var audioMeterDataSource : DASAudioMeterDataSource?
-    {
-        get
-        {
+    unowned var audioMeterDataSource : DASAudioMeterDataSource? {
+        get {
             return audioMeterDataSourcePrivate
         }
-        set
-        {
-            if (audioMeterDataSourcePrivate == nil)
-            {
-                if (updateTimer != nil)
-                {
+        set {
+            if audioMeterDataSourcePrivate == nil {
+                if updateTimer != nil {
                     updateTimer!.invalidate()
                 }
                 
@@ -153,14 +145,10 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- Initialisation
     
-    required init?(coder aDecoder: NSCoder)
-    {
-        if #available(iOS 13.0, *)
-        {
+    required init?(coder aDecoder: NSCoder) {
+        if #available(iOS 13.0, *) {
             processingIndicatorStyle = .large
-        }
-        else
-        {
+        } else {
             processingIndicatorStyle = .whiteLarge
         }
         
@@ -225,8 +213,7 @@ class DASCircularLevelMeter: UIView
     func enableButtonMode(startText: String,
                           stopText: String,
                           retryModeEnabled: Bool,
-                          action: @escaping ButtonModeActionBlock)
-    {
+                          action: @escaping ButtonModeActionBlock) {
         self.buttonModeEnabled  = true
         self.buttonStartText    = startText
         self.buttonStopText     = stopText
@@ -240,10 +227,8 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- View Lifecycle
     
-    override func layoutSubviews()
-    {
-        if (!addedLayoutConstraints)
-        {
+    override func layoutSubviews() {
+        if !addedLayoutConstraints {
             addedLayoutConstraints = true
             
             staticCircleView!.backgroundColor    = self.inactiveColor
@@ -254,8 +239,7 @@ class DASCircularLevelMeter: UIView
             addConstraints(fromView:resultImageView!, toSuperView:self, addTop:true, addBottom:true, addLeading:true, addTrailing:true, padding:0)
             addCenterConstraints(forSubview: dynamicCircleView!, xOffset: 0, yOffset: 0)
             
-            if (buttonModeEnabled)
-            {
+            if buttonModeEnabled {
                 addCenterConstraints(forSubview: actionLabel!, xOffset: 0, yOffset: 20)
                 addCenterConstraints(forSubview: processingIndicator!, xOffset: 0, yOffset: 0)
                 
@@ -263,9 +247,7 @@ class DASCircularLevelMeter: UIView
                 backgroundImageView!.addConstraint(createEqualRelationConstraint(forView: backgroundImageView!, attribute: .width, constant: Float(self.frame.size.width / 3))!)
                 
                 addCenterConstraints(forSubview: backgroundImageView!, xOffset: 0, yOffset:Float(-self.frame.size.width / 6))
-            }
-            else
-            {
+            } else {
                 addConstraints(fromView:backgroundImageView!, toSuperView:self, addTop:true, addBottom:true, addLeading:true, addTrailing:true, padding:20)
             }
             
@@ -276,9 +258,8 @@ class DASCircularLevelMeter: UIView
             // Updating the cornerRadius in layoutSubviews, didMoveToSuperview or willMoveToSuperview does not work
             // so we add an async call here to do it after layout completes.
             
-            DispatchQueue.main.async
-                {
-                    self.staticCircleView!.layer.cornerRadius = self.staticCircleView!.bounds.size.width / 2.0
+            DispatchQueue.main.async {
+                self.staticCircleView!.layer.cornerRadius = self.staticCircleView!.bounds.size.width / 2.0
             }
         }
         
@@ -288,12 +269,9 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- Touch Events
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
-    {
-        if (buttonModeEnabled)
-        {
-            switch (state)
-            {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if buttonModeEnabled {
+            switch (state) {
                 case .ready:
                     staticCircleView!.backgroundColor = self.inactiveSelectedColor
                     break;
@@ -308,12 +286,9 @@ class DASCircularLevelMeter: UIView
         }
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?)
-    {
-        if (buttonModeEnabled)
-        {
-            switch (state)
-            {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if buttonModeEnabled {
+            switch (state) {
                 case .ready:
                     staticCircleView!.backgroundColor = self.inactiveColor
                     break;
@@ -331,12 +306,9 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- Actions
     
-    @objc func actionButtonPressed()
-    {
-        if (buttonModeEnabled && state != .processing)
-        {
-            switch (state)
-            {
+    @objc func actionButtonPressed() {
+        if buttonModeEnabled && state != .processing {
+            switch (state) {
                 case .ready:
                     buttonAction?() // Call immediately to reduce button press to recording start time. Then do the UI transition.
                     
@@ -358,8 +330,7 @@ class DASCircularLevelMeter: UIView
                     break;
                     
                 case .active:
-                    if (!retryModeEnabled)
-                    {
+                    if !retryModeEnabled {
                         showProcessing()
                     }
                     
@@ -376,8 +347,7 @@ class DASCircularLevelMeter: UIView
      @brief Move the UI to its success mode. In this mode the start/stop label will disappear and be replaced with a success icon.
      @param reset Whether or not to call reset: after the success state has been displayed for a second.
      */
-    func showSuccess(reset: Bool)
-    {
+    func showSuccess(reset: Bool) {
         showResult(resultImage: "LevelMeterSuccess", thenReset: reset)
     }
     
@@ -385,18 +355,15 @@ class DASCircularLevelMeter: UIView
      @brief Move the UI to its failure mode. In this mode the start/stop label will disappear and be replaced with an error icon.
      @param reset Whether or not to call reset: after the error state has been displayed for a second.
      */
-    func showFailure(reset: Bool)
-    {
+    func showFailure(reset: Bool) {
         showResult(resultImage: "LevelMeterFailure", thenReset: reset)
     }
     
     /*!
      @brief Move the UI to its processing mode. In this mode the start/stop label will disappear and be replaced with a UIActivityIndicatorView.
      */
-    func showProcessing()
-    {
-        if (state != .processing)
-        {
+    func showProcessing() {
+        if state != .processing {
             state                               = .processing
             processingIndicator!.isHidden       = false
             processingIndicator!.alpha          = 0
@@ -429,40 +396,35 @@ class DASCircularLevelMeter: UIView
      @brief Determine whether the UI is currently in processing mode (start/stop label is not visible, UIActivityIndicatorView is visible).
      @return YES if the @link processingIndicatorStyle @/link control is visible.
      */
-    func isShowingProcessing() -> Bool
-    {
+    func isShowingProcessing() -> Bool {
         return state == .processing
     }
     
     /*!
      @brief Reset the UI to its original state.
      */
-    func reset()
-    {
-        DispatchQueue.main.async
-            {
-                self.state                              = .ready
-                self.actionLabel!.text                  = self.buttonStartText
-                self.processingIndicator!.isHidden      = true
-                self.processingIndicator!.alpha         = 1
-                self.actionLabel!.alpha                 = 1
-                self.backgroundImageView!.alpha         = 1
-                self.resultImageView!.alpha             = 0
-                self.staticCircleView!.backgroundColor  = self.inactiveColor
-                self.dynamicCircleView!.backgroundColor = self.recordingPulseColor
-                
-                self.updatePulseRadius(Float(self.staticCircleView!.frame.size.width))
-                
-                self.stopStaticCirclePulse()
-                self.startStaticCirclePulse()
+    func reset() {
+        DispatchQueue.main.async {
+            self.state                              = .ready
+            self.actionLabel!.text                  = self.buttonStartText
+            self.processingIndicator!.isHidden      = true
+            self.processingIndicator!.alpha         = 1
+            self.actionLabel!.alpha                 = 1
+            self.backgroundImageView!.alpha         = 1
+            self.resultImageView!.alpha             = 0
+            self.staticCircleView!.backgroundColor  = self.inactiveColor
+            self.dynamicCircleView!.backgroundColor = self.recordingPulseColor
+            
+            self.updatePulseRadius(Float(self.staticCircleView!.frame.size.width))
+            
+            self.stopStaticCirclePulse()
+            self.startStaticCirclePulse()
         }
         
     }
     
-    @objc func refresh()
-    {
-        if (self.audioMeterDataSource != nil && (!buttonModeEnabled || state == .active))
-        {
+    @objc func refresh() {
+        if self.audioMeterDataSource != nil && (!buttonModeEnabled || state == .active) {
             let value = self.audioMeterDataSource!.audioMeterLevel()
             
             self.updatePulseRadius(Float(staticCircleView!.bounds.size.width) + (value * Float(self.maxPulseWidth)))
@@ -472,8 +434,7 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- Animation
     
-    func startStaticCirclePulse()
-    {
+    func startStaticCirclePulse() {
         //    CABasicAnimation *scaleAnimation    = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
         //    scaleAnimation.duration             = 0.5;
         //    scaleAnimation.repeatCount          = HUGE_VAL;
@@ -484,13 +445,11 @@ class DASCircularLevelMeter: UIView
         //    [staticCircleView.layer addAnimation:scaleAnimation forKey:@"scale"];
     }
     
-    func stopStaticCirclePulse()
-    {
+    func stopStaticCirclePulse() {
         //   [staticCircleView.layer removeAnimationForKey:@"scale"];
     }
     
-    func updatePulseRadius(_ radius: Float)
-    {
+    func updatePulseRadius(_ radius: Float) {
         dynamicViewWidthConstraint!.constant    = CGFloat(radius)
         dynamicViewHeightConstraint!.constant   = dynamicViewWidthConstraint!.constant
         dynamicCircleView!.layer.cornerRadius   = dynamicViewWidthConstraint!.constant / 2.0
@@ -498,12 +457,10 @@ class DASCircularLevelMeter: UIView
         setNeedsDisplay()
     }
     
-    func showResult(resultImage: String, thenReset: Bool)
-    {
+    func showResult(resultImage: String, thenReset: Bool) {
         resultImageView!.image = DASUtils.loadImageNamed(resultImage)
         
-        if (thenReset)
-        {
+        if thenReset {
             resultImageView!.alpha   = 0
             actionLabel!.alpha       = 0
             actionLabel!.text        = buttonStartText
@@ -534,9 +491,7 @@ class DASCircularLevelMeter: UIView
                                 })
                 })
             }
-        }
-        else
-        {
+        } else {
             UIView.animate(withDuration: 0.5,
                            animations: {
                             self.processingIndicator!.alpha = 0
@@ -554,10 +509,8 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- Autolayout
     
-    func addConstraints(fromView: UIView, toSuperView: UIView, addTop: Bool, addBottom: Bool, addLeading: Bool, addTrailing: Bool, padding: CGFloat)
-    {
-        if (addTop)
-        {
+    func addConstraints(fromView: UIView, toSuperView: UIView, addTop: Bool, addBottom: Bool, addLeading: Bool, addTrailing: Bool, padding: CGFloat) {
+        if addTop {
             toSuperView.addConstraint(NSLayoutConstraint(item: fromView,
                                                          attribute: .top,
                                                          relatedBy: .equal,
@@ -567,8 +520,7 @@ class DASCircularLevelMeter: UIView
                                                          constant: padding))
         }
         
-        if (addBottom)
-        {
+        if addBottom {
             toSuperView.addConstraint(NSLayoutConstraint(item: fromView,
                                                          attribute: .bottom,
                                                          relatedBy: .equal,
@@ -578,8 +530,7 @@ class DASCircularLevelMeter: UIView
                                                          constant: -padding))
         }
         
-        if (addLeading)
-        {
+        if addLeading {
             toSuperView.addConstraint(NSLayoutConstraint(item: fromView,
                                                          attribute: .leading,
                                                          relatedBy: .equal,
@@ -589,8 +540,7 @@ class DASCircularLevelMeter: UIView
                                                          constant: padding))
         }
         
-        if (addTrailing)
-        {
+        if addTrailing {
             toSuperView.addConstraint(NSLayoutConstraint(item: fromView,
                                                          attribute: .trailing,
                                                          relatedBy: .equal,
@@ -601,8 +551,7 @@ class DASCircularLevelMeter: UIView
         }
     }
     
-    func addCenterConstraints(forSubview: UIView, xOffset: Float, yOffset: Float)
-    {
+    func addCenterConstraints(forSubview: UIView, xOffset: Float, yOffset: Float) {
         let centerXConstraint = NSLayoutConstraint(item: forSubview,
                                                    attribute: .centerX,
                                                    relatedBy: .equal,
@@ -622,8 +571,7 @@ class DASCircularLevelMeter: UIView
         self.addConstraints([centerXConstraint, centerYConstraint])
     }
     
-    func createEqualRelationConstraint(forView: UIView, attribute: NSLayoutConstraint.Attribute, constant: Float) -> NSLayoutConstraint?
-    {
+    func createEqualRelationConstraint(forView: UIView, attribute: NSLayoutConstraint.Attribute, constant: Float) -> NSLayoutConstraint? {
         return NSLayoutConstraint(item: forView,
                                   attribute: attribute,
                                   relatedBy: .equal,
@@ -636,10 +584,8 @@ class DASCircularLevelMeter: UIView
     
     // MARK:- Memory Management
     
-    deinit
-    {
-        if (updateTimer != nil)
-        {
+    deinit {
+        if updateTimer != nil {
             updateTimer!.invalidate()
             updateTimer = nil
         }

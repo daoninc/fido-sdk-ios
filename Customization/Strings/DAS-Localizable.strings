@@ -69,9 +69,8 @@
 // DAON AUTHENTICATOR SDK - FACE IFP SCREEN STRINGS
 //////////////////////////////////////////////////////////////////////
 
-"Face Screen - Accept - Registration" = "Register";
-
-"Face Screen - Accept - Authentication" = "Authenticate";
+"Face Screen - Accept - Registration" = "Press button to register";
+"Face Screen - Accept - Authentication" = "Press button to authenticate";
 
 
 //////////////////////////////////////////////////////////////////////

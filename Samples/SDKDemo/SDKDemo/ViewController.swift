@@ -2,10 +2,11 @@
 //  ViewController.swift
 //  SingleShot-Swift
 //
-//  Copyright © 2019 Daon. All rights reserved.
+//  Copyright © 2019-25 Daon. All rights reserved.
 //
 
 import UIKit
+import SwiftUI
 import DaonFIDOSDK
 
 class ViewController: UIViewController, IXUAFDelegate {
@@ -14,8 +15,10 @@ class ViewController: UIViewController, IXUAFDelegate {
     var username : String?
     
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var infoLabel: UILabel!
+    
+    var optionSwiftUI: Bool = false
     
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self,
@@ -57,9 +60,11 @@ class ViewController: UIViewController, IXUAFDelegate {
                 IXAKeychain.setKey(serverUsername, value: serverPassword)
                 
                 fido = IXUAF(service:IXUAFRESTService(url: server, application: application, username:serverUsername))
-                
-                let params = ["com.daon.sdk.ados.enabled" : "true"];
-                
+                                
+                let params = ["com.daon.sdk.ados.enabled" : "true"]
+                                
+                // If the license is provided as an extension uncomment this line and set the license string.
+//                params["com.daon.sdk.license"] = #"{"signature":"dWVBSGegPDsnVr6yN97\/FKNRunGp0eCF2b+\/UCEsbPAgKvEB34BqkZZ82MVptijn2CwCdMx2fZ0hY5eoVM13Zf8McwLr2B5pLHM0qrLCRjl8aO2BA+wXi1rILIsasJHzBmNyx8aBy62sF9yBooesYq36lDmNcZNGed1EkT1cYlCz\/nMUxUvBaoW5RIzOJBe92591XchbSW5VUwZW2DHznelWkCL7ofVKC0+U0zlI685J3D21+zabN4FovxX8ZLa6ADHnyiF\/oA97xNxaryczpev3R5g65RYvceA3v\/Z0lu0+Jco4UVBP6Z+Ongru\/FCp+ecvsUlw6Ccj+KzzO7RCEA==","organization":"DAON","signed":{"features":["ALL"],"expiry":"2030-12-24 00:00:00","applicationIdentifier":"com.daon.*"},"version":"2.1"}"#
                 
                 fido?.logging = true
                 fido?.delegate = self
@@ -79,7 +84,7 @@ class ViewController: UIViewController, IXUAFDelegate {
                             self.show(title: "Initialize", message: "\(code.rawValue)")
                         }
                         
-                        self.checkRemoteNotification()                        
+                        self.checkRemoteNotification()
                     }
                     
                     self.show(warnings: warnings)
@@ -154,7 +159,7 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         fido?.register(username: username) { (res, error) in
             if let e = error {
-                self.show(error: e);                
+                self.show(error: e);
             } else {
                 self.show(title: "Register", response:res);
             }
@@ -183,7 +188,7 @@ class ViewController: UIViewController, IXUAFDelegate {
         var message = ""
         
         fido?.deregister(username: username!) { (aaid, error) in
-            if aaid == nil {                
+            if aaid == nil {
                 self.show(title: "De-register", message: message);
             } else {
                 if let e = error {
@@ -253,6 +258,22 @@ class ViewController: UIViewController, IXUAFDelegate {
                 exit(0)
             }
         }
+    }
+    
+    @IBAction func optionsButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+        
+        let on = optionSwiftUI ? "On" : "Off"
+        let swiftUIAction = UIAlertAction(title: "SwiftUI (iOS15): \(on)", style: .default) { _ in
+            if #available(iOS 15.0, *) {
+                self.optionSwiftUI = !self.optionSwiftUI
+            }
+        }
+                
+        alertController.addAction(swiftUIAction)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(alertController, animated: true)
     }
     
     func deleteUser(completion: @escaping (Error?) -> (Void)) {
@@ -387,7 +408,9 @@ class ViewController: UIViewController, IXUAFDelegate {
     
     // Delegate
     
-    func operation(_ operation: IXUAFOperation, attemptFailedWithInfo info: [String : Any]) {
+    func operation(
+        _ operation: IXUAFOperation,
+        attemptFailedWithInfo info: [String : Any]) {
         
         Logging.log(string:"***\nAttempt: \(info)\n***")
         
@@ -401,6 +424,91 @@ class ViewController: UIViewController, IXUAFDelegate {
             }
         }
     }
+    
+    // Use the following to enable replacement of default authenticator screens.
+    //
+    // By default, just including one of the Daon provided sample classes referenced below in your project is enough to direct the
+    // FIDO SDK to use those classes. However we also still provide this existing mechanism for you to return
+    // your own custom view controllers to the FIDO SDK. The use of the classes here is only to provide
+    
+    func operation(
+        _ operation: IXUAFOperation,
+        shouldUseCollectionViewControllerForUserVerification method: Int,
+        context: DASAuthenticatorContext) -> DASAuthenticatorCollectorInfo? {
+        
+            if optionSwiftUI {
+                if #available(iOS 15.0, *) {
+                    let viewController = customSwiftUIView(method: method, context: context)
+                    
+                    // If you wish to control the presentation of the authentication view controller yourself, pass in true here.
+                    // Please note that you will also be responsible for dismissing it when authentication has completed.
+                    return DASAuthenticatorCollectorInfo(viewController: viewController, clientWillPresent: false)
+                }
+            }
+            return nil
+    }
+    
+    // Use the following to enable replacement of default AND / OR screens.
+    //
+    // By default, just including one of the Daon provided sample classes referenced below in your project is enough to direct the
+    // FIDO SDK to use those classes. However we also still provide this existing mechanism for you to return
+    // your own custom view controllers to the FIDO SDK.
+    
+    func operation(
+        _ operation: IXUAFOperation,
+        shouldUseViewControllerForAuthenticatorType type: DASAuthenticatorPolicyType,
+        context: DASMultiAuthenticatorContext) -> DASMultiAuthenticatorCollectorInfo? {
+        
+            if optionSwiftUI {
+                if #available(iOS 15.0, *) {
+                    if let viewController = customSwiftUIView(policyType: type, context: context) {
+                        let collectorInfo = DASMultiAuthenticatorCollectorInfo()
+                        collectorInfo.collectionViewController = viewController
+                        return collectorInfo
+                    }
+                }
+            }
+            return nil
+    }
+    
+    
+    @available(iOS 15.0, *)
+    func customSwiftUIView(method: Int, context: DASAuthenticatorContext) -> UIViewController {
+        switch method {
+            case USER_VERIFY_PASSCODE:
+                return CustomUIHostingController(rootView: AnyView(PasscodeView(context: context)), context: context)
+            
+            case USER_VERIFY_FACEPRINT:
+                if let info = context.authenticatorInfo {
+                    if (DASUtils.isLocalAuthenticatorFactor(info.authenticatorFactor, version: info.authenticatorVersion)) {
+                        return CustomUIHostingController(rootView: AnyView(LocalAuthenticationView(context: context)), context: context)
+                    }
+                }
+            
+                return CustomUIHostingController(rootView: AnyView(FaceView(context: context)), context: context)
+                            
+            case USER_VERIFY_FINGERPRINT:
+                return CustomUIHostingController(rootView: AnyView(LocalAuthenticationView(context: context)), context: context)
+            
+            case USER_VERIFY_VOICEPRINT:
+                return CustomUIHostingController(rootView: AnyView(VoiceView(context: context)), context: context)
+            
+            default:
+                return CustomUIHostingController(rootView: AnyView(ErrorView(context: context, error: "Not Implemented")), context: context)
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    func customSwiftUIView(policyType: DASAuthenticatorPolicyType, context: DASMultiAuthenticatorContext) -> UIViewController? {
+        switch policyType {
+            case .OR:
+                return CustomUIHostingController(rootView: AnyView(ORView(context: context)), multiAuthenticatorContext: context)
+            default:
+                return nil
+        }
+    }
+    
+    // Alerts and dialogs
 
     func show(error: Error) {
         show(title: "Error", message: "\(error._code): \(error.localizedDescription)")

@@ -2,8 +2,7 @@
 //  DASFaceOverlayView.swift
 //  DaonAuthenticatorSDK
 //
-//  Created by Neil Johnston on 9/6/18.
-//  Copyright © 2018 Daon. All rights reserved.
+//  Copyright © 2018-25 Daon. All rights reserved.
 //
 
 import DaonAuthenticatorFace

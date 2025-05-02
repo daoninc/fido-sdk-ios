@@ -2,8 +2,7 @@
 //  DASFaceIdAuthenticatorViewController.swift
 //  DaonAuthenticatorSDK
 //
-//  Created by Neil Johnston on 3/22/19.
-//  Copyright © 2019 Daon. All rights reserved.
+//  Copyright © 2019-25 Daon. All rights reserved.
 //
 
 import DaonAuthenticatorSDK
@@ -13,8 +12,7 @@ import DaonCryptoSDK
  @brief View Controller for presenting the Face ID dialog.
  */
 @objc(DASFaceIdAuthenticatorViewController)
-class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
-{
+class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
     // MARK:- Controllers
     
     /*!
@@ -58,8 +56,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @param authenticatorContext The @link DASAuthenticatorContext @/link object with which this view controller can register or authenticate Face ID.
      @return A new @link DASFaceIdAuthenticatorViewController @/link object.
      */
-    override init!(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, context authenticatorContext: DASAuthenticatorContext?)
-    {
+    override init!(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?, context authenticatorContext: DASAuthenticatorContext?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil, context: authenticatorContext)
         
         // Instantiate the face controller.
@@ -73,8 +70,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
         self.tabBarItem.title = localise("Face ID Screen - Title")
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -84,8 +80,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief Called after view has been loaded. Sets up the initial UI state.
      */
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         // Configure the UI
@@ -104,12 +99,10 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Called when the view is about to be made visible. We use this to reset the UI if capture was previously completed.
      @param animated YES if view appearance will be animated.
      */
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (self.captureCompleted)
-        {
+        if self.captureCompleted {
             self.captureCompleted = false
             
             // Capture has already completed successfully once. So if viewWillAppear is happening again
@@ -126,14 +119,12 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
      @brief Called when the view has appeared. We use this to automatically present the Face ID dialog.
      @param animated YES if view appearance will be animated.
      */
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // The first time the view appears, automatically present
         // the Face ID dialog.
-        if (!autoPresentedOnce)
-        {
+        if !autoPresentedOnce {
             autoPresentedOnce   = true
             self.isCancelling   = false
             
@@ -149,8 +140,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
      happens when transitioning between authenticators in a multi-authenticator policy. Resetting ensures that when transitioning
      back to the authenticator that it is back in its default prepared state.
      */
-    override func authenticatorShouldReset()
-    {
+    override func authenticatorShouldReset() {
         super.authenticatorShouldReset()
         
         self.isCancelling   = true
@@ -165,8 +155,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief IBAction called when @link retryButton @/link is pressed.
      */
-    @IBAction func retry(_ sender: UIButton?)
-    {
+    @IBAction func retry(_ sender: UIButton?) {
         self.isCancelling = false
         
         performFaceIDAuthentication()
@@ -178,22 +167,17 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
     /*!
      @brief Uses the @link faceController @/link to bring up the Face ID dialog and handle its response.
      */
-    fileprivate func performFaceIDAuthentication()
-    {
-        if (!self.isCancelling)
-        {
+    fileprivate func performFaceIDAuthentication() {
+        if !self.isCancelling {
             var localizedReason = localise("Face ID Screen - Reason - Authentication")
             
-            if (self.singleAuthenticatorContext!.isRegistration)
-            {
+            if self.singleAuthenticatorContext!.isRegistration {
                 localizedReason = localise("Face ID Screen - Reason - Registration")
             }
             
             faceController!.performAuthentication(withReason: localizedReason) { (error) in
-                if (!self.isCancelling)
-                {
-                    if (error == nil)
-                    {
+                if !self.isCancelling {
+                    if error == nil {
                         self.retryButton.isHidden       = true
                         self.resultImageView.alpha      = 0
                         self.resultImageView.isHidden   = false
@@ -212,28 +196,21 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase
                                             }
                                         })
                         })
-                    }
-                    else
-                    {
+                    } else {
                         self.retryButton.isHidden = false
                         
-                        if let authenticatorError = DASAuthenticatorError(rawValue: error!._code)
-                        {
-                            if (authenticatorError != .cancelled)
-                            {
+                        if let authenticatorError = DASAuthenticatorError(rawValue: error!._code) {
+                            if authenticatorError != .cancelled {
                                 var message = self.string(forError: authenticatorError)
                                 
-                                if (message == "UNKNOWN")
-                                {
+                                if message == "UNKNOWN" {
                                     message = self.string(forError: .faceIdFailedToVerify)
                                 }
                                 
                                 self.showAlert(withTitle: self.localise("Alert - Title - Error"),
                                                message: message)
                             }
-                        }
-                        else
-                        {
+                        } else {
                             IXALog.logError(withTag: KDASLocalAuthenticationLoggingTag, message: String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error!._code, error!.localizedDescription))
                             self.singleAuthenticatorContext!.completeCapture(error: .authenticatorInconsistentState)
                         }

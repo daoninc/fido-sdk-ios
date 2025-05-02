@@ -31,7 +31,7 @@ import DaonFIDOSDK
     }
     
     // Called by IXUAF requestServiceAccessWithUsername:parameters:completion
-    public func serviceRequestAccess(parameters params: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceRequestAccess(parameters params: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         // Nothing to do at the moment
         
@@ -41,7 +41,7 @@ import DaonFIDOSDK
         // combination as long as a user is also submitted as part of the registration.
         //
         // If a userId is used and the user does not exist then a user will be created.
-        handler(nil, nil)
+        handler(nil, nil, nil)
     }
     
     // Called by IXUAF revokeServiceAccessWithParameters:completion
