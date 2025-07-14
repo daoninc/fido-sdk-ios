@@ -1,6 +1,5 @@
 //
 //  ViewController.swift
-//  SingleShot-Swift
 //
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
@@ -14,11 +13,14 @@ class ViewController: UIViewController, IXUAFDelegate {
     var fido : IXUAF?
     var username : String?
     
+    var params = ["com.daon.sdk.ados.enabled" : "true"]
+    
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var infoLabel: UILabel!
     
     var optionSwiftUI: Bool = false
+    var optionInjectionAttackDetection: Bool = true
     
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self,
@@ -60,9 +62,7 @@ class ViewController: UIViewController, IXUAFDelegate {
                 IXAKeychain.setKey(serverUsername, value: serverPassword)
                 
                 fido = IXUAF(service:IXUAFRESTService(url: server, application: application, username:serverUsername))
-                                
-                let params = ["com.daon.sdk.ados.enabled" : "true"]
-                                
+                                                                
                 // If the license is provided as an extension uncomment this line and set the license string.
 //                params["com.daon.sdk.license"] = #"{"signature":"dWVBSGegPDsnVr6yN97\/FKNRunGp0eCF2b+\/UCEsbPAgKvEB34BqkZZ82MVptijn2CwCdMx2fZ0hY5eoVM13Zf8McwLr2B5pLHM0qrLCRjl8aO2BA+wXi1rILIsasJHzBmNyx8aBy62sF9yBooesYq36lDmNcZNGed1EkT1cYlCz\/nMUxUvBaoW5RIzOJBe92591XchbSW5VUwZW2DHznelWkCL7ofVKC0+U0zlI685J3D21+zabN4FovxX8ZLa6ADHnyiF\/oA97xNxaryczpev3R5g65RYvceA3v\/Z0lu0+Jco4UVBP6Z+Ongru\/FCp+ecvsUlw6Ccj+KzzO7RCEA==","organization":"DAON","signed":{"features":["ALL"],"expiry":"2030-12-24 00:00:00","applicationIdentifier":"com.daon.*"},"version":"2.1"}"#
                 
@@ -210,14 +210,15 @@ class ViewController: UIViewController, IXUAFDelegate {
             // Example.
             // Delete ALL local authenticator information without talking to the server
             //
-//            let request = IXUAFMessageWriter.deregistrationRequest(withAaid: "", application: fidoAppID)
-//            self.fido?.deregister(withMessage: request, handler: { (error) in
-//                if let e = error {
-//                    Logging.log(string: "Deregister: \(e.localizedDescription)");
-//                } else {
-//                    Logging.log(string: "Deregister: Done");
-//                }
-//            })
+//            if let request = IXUAFMessageWriter.deregistrationRequest(withAaid: "", application: nil) {
+//                self.fido?.deregister(message: request, handler: { (error) in
+//                    if let e = error {
+//                        Logging.log(string: "Deregister: \(e.localizedDescription)");
+//                    } else {
+//                        Logging.log(string: "Deregister: Done");
+//                    }
+//                })
+//            }
             
             self.deleteUser() { (error) -> (Void) in
                 DispatchQueue.main.async {
@@ -231,7 +232,7 @@ class ViewController: UIViewController, IXUAFDelegate {
         }
     }
     
-    @IBAction func resetButtonPressed(_ sender: Any) {
+    func reset() {
         
         confirm(title: "Reset", message: "Are you sure?") { action in
             
@@ -269,8 +270,28 @@ class ViewController: UIViewController, IXUAFDelegate {
                 self.optionSwiftUI = !self.optionSwiftUI
             }
         }
-                
+        
+        let iad = optionInjectionAttackDetection ? "On" : "Off"
+        let injectionAttackDetectionAction = UIAlertAction(title: "Face Injection Attack Detection: \(iad)", style: .default) { _ in
+            self.optionInjectionAttackDetection = !self.optionInjectionAttackDetection
+                        
+            self.params["com.daon.face.liveness.ifp"] = self.optionInjectionAttackDetection.description
+            
+            self.show(title: "Face Injection Attack Detection",
+                    message: "If the injection attack detection extension is provided in the server policy, this setting has no effect. The server policy takes precedence.")
+            self.busy(on: true)
+            self.fido?.initialize(parameters: self.params) { (error, warnings) in
+                self.busy(on: false)
+            }
+        }
+        
+        let resetAction = UIAlertAction(title: "Reset", style: .destructive) { _ in
+            self.reset()
+        }
+        
         alertController.addAction(swiftUIAction)
+        alertController.addAction(injectionAttackDetectionAction)
+        alertController.addAction(resetAction)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         self.present(alertController, animated: true)

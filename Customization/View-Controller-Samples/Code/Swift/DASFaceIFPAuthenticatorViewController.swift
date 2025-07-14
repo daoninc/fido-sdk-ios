@@ -36,7 +36,7 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = localise("Face Screen - Title")  + " (Swift)"
+        self.title = "\(singleAuthenticatorContext?.authenticatorInfo?.authenticatorName ?? "Face") (Swift)"
     }
     
     @IBAction func startCaptureButtonClicked(_ sender: UIButton?) {
@@ -175,7 +175,7 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
                                      color: .systemGray,
                                      x: Int(view.frame.minX) + buttonXOffset,
                                      y: buttonHeight,
-                                     width: buttonWidth/2,
+                                     width: buttonWidth / 2,
                                      height: buttonHeight)
         cancelButton.addTarget(self, action: #selector(cancelButtonClicked), for: .touchUpInside)
 
@@ -200,11 +200,11 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
         let button = UIButton(frame: CGRect(x: x, y: y, width: width, height: height))
         button.setTitle(title, for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = color
+        button.backgroundColor = .black.withAlphaComponent(0.5)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.borderColor = color.cgColor
         
         return button
     }
@@ -253,6 +253,15 @@ final class OvalMaskView: UIView {
     private var ovalLayer = CAShapeLayer()
     private let tagMask = 409
     
+    var color: UIColor = .white
+    
+    func color(_ color: UIColor) {
+        if color != self.color {
+            self.color = color
+            self.setNeedsDisplay()
+        }
+    }
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
 
@@ -260,7 +269,7 @@ final class OvalMaskView: UIView {
         ovalLayer = CAShapeLayer()
         ovalLayer.path = ovalPath.cgPath
         ovalLayer.fillColor = UIColor.clear.cgColor
-        ovalLayer.strokeColor = UIColor.white.withAlphaComponent(0.5).cgColor
+        ovalLayer.strokeColor = color.withAlphaComponent(0.8).cgColor
         ovalLayer.lineWidth = 5
                 
         layer.addSublayer(ovalLayer)
@@ -290,6 +299,16 @@ extension DASFaceIFPAuthenticatorViewController : DASFaceCaptureDelegate {
     func faceCaptureDidUpdate(message: String, image: UIImage?) {
         // Custom view status messages
         statusLabel?.text = message
+    }
+    
+    func faceCaptureDidUpdate(result: Result, image: UIImage) {
+        DispatchQueue.main.async {
+            if result.hasAcceptableQuality && result.isFaceCentered {
+                self.oval.color(.systemGreen)
+            } else {
+                self.oval.color(.systemRed)
+            }
+        }
     }
     
     func faceCaptureDidFail(error: Error) {

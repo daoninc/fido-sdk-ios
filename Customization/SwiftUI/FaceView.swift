@@ -28,7 +28,7 @@ struct FaceView: View {
         
     var body: some View {
         Group {
-            Text("A face authenticator with server based liveness and injection attack detection. Press START to begin capture.").italic()
+            Text("A face authenticator with support for client and server based matching. Server matching provides optional liveness and injection attack detection. Press START to begin capture.").italic()
                 .padding(50)
                 .multilineTextAlignment(.center)
                 .background(.gray.opacity(0.1))

@@ -77,7 +77,6 @@ class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase, D
                         
         // Set the tabBarItem in case this view controller is being displayed in a UITabBarController
         tabBarItem.title = localise("Voice Screen - Title")
-                
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -95,7 +94,7 @@ class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase, D
         
         backgroundImageView.image = loadImageNamed("Voice-Collection-Background")
         
-        title = localise("Voice Screen - Title") + " (Swift)"
+        self.title = "\(singleAuthenticatorContext?.authenticatorInfo?.authenticatorName ?? "Voice") (Swift)"
         
         if let context = singleAuthenticatorContext {
             registration = context.isRegistration

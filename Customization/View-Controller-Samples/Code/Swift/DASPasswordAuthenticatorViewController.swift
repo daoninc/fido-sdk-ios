@@ -147,7 +147,7 @@ class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase
         // Configure the UI
         self.backgroundImageView.image = loadImageNamed("Password-Collection-Background")
         
-        self.title = localise("Password Screen - Title") + " (Swift)"
+        self.title = "\(singleAuthenticatorContext?.authenticatorInfo?.authenticatorName ?? "Password") (Swift)"
         
         updateInstructions()
         
