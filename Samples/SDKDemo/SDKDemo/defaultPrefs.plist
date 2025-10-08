@@ -2,23 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>com.daon.server.application</key>
+	<key>com.daon.rest.application</key>
 	<string>fido</string>
-	<key>com.daon.server.policy.auth</key>
+	<key>com.daon.rest.policy.auth</key>
 	<string>auth</string>
-	<key>com.daon.server.policy.reg</key>
+	<key>com.daon.rest.policy.reg</key>
 	<string>reg</string>
-	<key>com.daon.server.password</key>
+	<key>com.daon.rest.password</key>
 	<string>Password</string>
-	<key>com.daon.server.port</key>
-	<integer>443</integer>
-	<key>com.daon.server.secure</key>
-	<true/>
-	<key>com.daon.server.address</key>
+	<key>com.daon.rest</key>
 	<string>acme.com/tenant</string>
-	<key>com.daon.server.username</key>
+	<key>com.daon.rest.username</key>
 	<string>Username</string>
-	<key>com.daon.username</key>
+	<key>com.daon.rest.account</key>
 	<string>email</string>
+	<key>com.daon.rpsa.account</key>
+	<string>email</string>
+	<key>com.daon.rpsa</key>
+	<string>https://us-dev-rp.identityx-cloud.com/env4-rp3</string>
+	<key>com.daon.service.type</key>
+	<string>REST</string>
 </dict>
 </plist>

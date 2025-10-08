@@ -21,14 +21,25 @@ struct LocalAuthenticationView: View {
     }
     
     var body: some View {
-        Text(model.info)
-            .navigationBarTitle(model.info)
-            .background(Color(.systemBackground))
-            .onAppear { model.performAuthentication() }
-            .onDisappear { model.dismiss() }
-            .alert(model.error, isPresented: $model.alert) {
-                Button("OK", role: .cancel) { model.cancel() }
+        Group {
+            Text("Apple Biometric authenticator. Face ID or Touch ID depending on device.").italic()
+                .padding(50)
+                .multilineTextAlignment(.center)
+                .background(.gray.opacity(0.1))
+                        
+            Spacer()
+            
+            Button("START") {
+                model.performAuthentication()
             }
+            .buttonStyle(.bordered)
+        }
+        .navigationBarTitle(model.info)
+        .background(Color(.systemBackground))
+        .onDisappear { model.dismiss() }
+        .alert(model.error, isPresented: $model.alert) {
+            Button("OK", role: .cancel) { model.cancel() }
+        }
     }
 }
 

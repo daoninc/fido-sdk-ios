@@ -47,6 +47,7 @@ class IdentityX {
         static let score                      = "score"        
         static let fi                         = "FI"
         static let pending                    = "PENDING"
+        static let confirmationOTP            = "oneTimePasswordEnabled"
 
     }
     
@@ -157,7 +158,7 @@ class IdentityX {
      *
      * @return AuthenticationRequest
      */
-    func authenticationRequest(username: String?, policyID: String, description: String, completion: @escaping (Error?, AuthenticationRequest?) -> (Void)) {
+    func authenticationRequest(username: String?, policyID: String, description: String, otp: Bool, completion: @escaping (Error?, AuthenticationRequest?) -> (Void)) {
         
         let applicationId   = serverApplicationID
         let policyID        = policyID
@@ -174,6 +175,9 @@ class IdentityX {
         if username != nil {
             request[JSON.user] = [JSON.userId : username]
         }
+        
+        request[JSON.confirmationOTP] = otp
+        
 
         HTTP.post(url: url(entity:Entity.authenticationRequests), username: serverUsername, payload: request) { (error, response) -> (Void) in
             if let err = error {

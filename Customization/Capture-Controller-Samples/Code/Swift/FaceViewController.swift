@@ -148,12 +148,8 @@ class FaceViewController: DASFaceAuthenticatorViewController, AVCaptureVideoData
             previewLayer!.videoGravity                  = .resizeAspectFill
             previewLayer!.bounds                        = previewLayerRect
             previewLayer!.position                      = CGPoint(x: previewLayerRect.midX, y: previewLayerRect.midY)
-                        
-            if #available(iOS 17.0, *) {
-                previewLayer!.connection?.videoRotationAngle = DASUtils.videoRotationAngle()
-            } else {
-                previewLayer!.connection?.videoOrientation = DASUtils.videoOrientation()
-            }
+                                    
+            setPortraitOrientation()
             
             self.videoLivefeedView.layer.addSublayer(previewLayer!)
             
@@ -163,6 +159,13 @@ class FaceViewController: DASFaceAuthenticatorViewController, AVCaptureVideoData
             } else {
                 update(state:.collectingForAuthentication)
             }
+        }
+    }
+
+    private func setPortraitOrientation() {
+        if let connection = previewLayer?.connection,
+           connection.isVideoOrientationSupported {
+            connection.videoOrientation = .portrait
         }
     }
 

@@ -46,7 +46,6 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
        return "\(context.authenticatorInfo?.authenticatorName ?? "Face") (SwiftUI)"
     }
     
-    // Daon Face IFP
     // Use the Face Capture API to capture and submit an image to the server
     func startCapture() {
         

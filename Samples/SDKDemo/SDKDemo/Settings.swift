@@ -8,17 +8,24 @@ import Foundation
 
 class Settings {
 
+    static let RPSA = "RPSA"
+    static let REST = "REST"
+    
     public struct Key {
-        static let serverAddress    = "com.daon.server.address"        
-        static let serverUsername   = "com.daon.server.username"
-        static let serverPassword   = "com.daon.server.password"
+        static let restUrl = "com.daon.rest"
+        static let restAccount = "com.daon.rest.account"
+        static let restUsername = "com.daon.rest.username"
+        static let restPassword = "com.daon.rest.password"
+        static let restApplicationID = "com.daon.rest.application"
+        static let restRegistrationPolicyID = "com.daon.rest.policy.reg"
+        static let restAuthenticationPolicyID = "com.daon.rest.policy.auth"
         
-        static let serverApplicationID          = "com.daon.server.application"
-        static let serverRegistrationPolicyID   = "com.daon.server.policy.reg"
-        static let serverAuthenticationPolicyID = "com.daon.server.policy.auth"
+        static let rpsaUrl = "com.daon.rpsa"
+        static let rpsaAccount = "com.daon.rpsa.account"
+        
+        static let serviceType = "com.daon.service.type"
         
         static let notification = "com.daon.notification"
-        static let username = "com.daon.username"
     }
     
     static let shared = Settings()
@@ -45,11 +52,12 @@ class Settings {
         UserDefaults.standard.synchronize()
     }
     
-    public func getString(key: String) -> String {
-        if let value = UserDefaults.standard.string(forKey: key) {
-            return value
+    public func getString(key: String?) -> String {
+        if let key {            
+            if let value = UserDefaults.standard.string(forKey: key) {
+                return value
+            }
         }
-        
         return "NA"
     }
     

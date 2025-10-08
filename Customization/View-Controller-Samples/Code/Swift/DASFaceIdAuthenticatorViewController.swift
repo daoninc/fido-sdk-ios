@@ -21,13 +21,6 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
     fileprivate var faceController: DASFaceIdControllerProtocol?
     
     
-    // MARK:- State
-    
-    /*!
-     @brief A flag used to keep track of whether the Face ID dialog has been presented once. We do this automatically in viewDidAppear.
-     */
-    fileprivate var autoPresentedOnce = false
-    
     
     // MARK:- IBOutlets
     
@@ -39,7 +32,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
     /*!
      @brief A UIButton which when pressed allows the user to attempt Face ID registration / authentication again if it was previously cancelled.
      */
-    @IBOutlet var retryButton: UIButton!
+    @IBOutlet var startButton: UIButton!
     
     /*!
      @brief A UIImageView which displays a success icon after registration / authentication is complete.
@@ -88,8 +81,8 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
         
         self.title = localise("Face ID Screen - Title") + " (Swift)"
         
-        self.retryButton.setTitle(localise("Face ID Screen - Button - Retry"), for: .normal)
-        self.retryButton.isHidden = true
+        self.startButton.setTitle(localise("Face ID Screen - Button - Start"), for: .normal)
+        self.startButton.isHidden = false
         
         self.resultImageView.isHidden = true
         self.resultImageView.image = loadImageNamed("Passed-Indicator")
@@ -110,7 +103,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
             //
             // Reset the UI, so that the user may capture again.
             //
-            self.retryButton.isHidden       = false
+            self.startButton.isHidden       = false
             self.resultImageView.isHidden   = true
         }
     }
@@ -122,14 +115,6 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // The first time the view appears, automatically present
-        // the Face ID dialog.
-        if !autoPresentedOnce {
-            autoPresentedOnce   = true
-            self.isCancelling   = false
-            
-            performFaceIDAuthentication()
-        }
     }
     
     
@@ -144,18 +129,12 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
         super.authenticatorShouldReset()
         
         self.isCancelling   = true
-        autoPresentedOnce   = false
         
         faceController!.cancel()
     }
 
-    
-    // MARK:- Actions
-    
-    /*!
-     @brief IBAction called when @link retryButton @/link is pressed.
-     */
-    @IBAction func retry(_ sender: UIButton?) {
+
+    @IBAction func start(_ sender: UIButton?) {
         self.isCancelling = false
         
         performFaceIDAuthentication()
@@ -178,7 +157,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
             faceController!.performAuthentication(withReason: localizedReason) { (error) in
                 if !self.isCancelling {
                     if error == nil {
-                        self.retryButton.isHidden       = true
+                        self.startButton.isHidden       = true
                         self.resultImageView.alpha      = 0
                         self.resultImageView.isHidden   = false
                         
@@ -197,7 +176,7 @@ class DASFaceIdAuthenticatorViewController: DASAuthenticatorViewControllerBase {
                                         })
                         })
                     } else {
-                        self.retryButton.isHidden = false
+                        self.startButton.isHidden = false
                         
                         if let authenticatorError = DASAuthenticatorError(rawValue: error!._code) {
                             if authenticatorError != .cancelled {

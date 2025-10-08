@@ -11,9 +11,12 @@ import DaonFIDOSDK
 class ViewController: UIViewController, IXUAFDelegate {
 
     var fido : IXUAF?
-    var username : String?
+    var username : String = "email"
     
-    var params = ["com.daon.sdk.ados.enabled" : "true"]
+    var extensions = ["com.daon.sdk.ados.enabled" : "true",
+                      "com.daon.sdk.keys.access.biometry" : "true",
+                      "com.daon.sdk.exclude.invalidAuthenticators" : "true",
+                      "com.daon.sdk.operation.wait.timeout" : "0"] // Default to no timeout
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -21,6 +24,7 @@ class ViewController: UIViewController, IXUAFDelegate {
     
     var optionSwiftUI: Bool = false
     var optionInjectionAttackDetection: Bool = true
+    var optionConfirmationOTP: Bool = false
     
     override func viewDidLoad() {
         NotificationCenter.default.addObserver(self,
@@ -34,15 +38,20 @@ class ViewController: UIViewController, IXUAFDelegate {
         if DASUtils.isDarkModeEnabled() {
             activityIndicator.color = .white
         }
+                
+        let serviceType = Settings.shared.getString(key: Settings.Key.serviceType)
         
-        username = Settings.shared.getString(key: Settings.Key.username)
+        let url = Settings.shared.getString(key: serviceType == Settings.REST
+                                                           ? Settings.Key.restUrl
+                                                           : Settings.Key.rpsaUrl)
         
-        let server = Settings.shared.getString(key: Settings.Key.serverAddress)
-        let serverUsername = Settings.shared.getString(key: Settings.Key.serverUsername)
-        let serverPassword = Settings.shared.getString(key: Settings.Key.serverPassword)
-        let application = Settings.shared.getString(key: Settings.Key.serverApplicationID)
+        self.title = "IdentityX FIDO (\(serviceType))"
         
-        if server.contains("acme.com") {
+        username = Settings.shared.getString(key: serviceType == Settings.REST
+                                             ? Settings.Key.restAccount
+                                             : Settings.Key.rpsaAccount)
+        
+        if url.contains("acme.com") {
             
             performSegue(withIdentifier: "Settings", sender: self)
             
@@ -53,45 +62,65 @@ class ViewController: UIViewController, IXUAFDelegate {
             }
             
         } else {
-                        
-            if fido == nil {
+            busy(on: true)
+            
+            // If the license is provided as an extension uncomment this line and set the license string.
+//                extensions["com.daon.sdk.license"] = #"license string"#
+            
+            if serviceType == Settings.RPSA {
+                fido = IXUAF(service:IXUAFRPSAService(url: url))
                 
-                busy(on: true)
+                let account = [kIXUAFServiceParameterAccountNameFirst : "first",
+                               kIXUAFServiceParameterAccountNameLast : "last",
+                               kIXUAFServiceParameterAccountPassword : "password",
+                    kIXUAFServiceParameterAccountRegistrationRequest : false] as [String : Any]
+                
+                fido?.requestServiceAccess(username: username, parameters: account) { (token, error) in
+                    if let e = error {
+                        self.show(error: e)
+                    } else {
+                        self.initialize(parameters: self.extensions)
+                    }
+                }
+            } else {
+                let restUsername = Settings.shared.getString(key: Settings.Key.restUsername)
+                let restPassword = Settings.shared.getString(key: Settings.Key.restPassword)
+                let application = Settings.shared.getString(key: Settings.Key.restApplicationID)
                 
                 // Store server credentials username and password in key chain
-                IXAKeychain.setKey(serverUsername, value: serverPassword)
+                IXAKeychain.setKey(restUsername, value: restPassword)
                 
-                fido = IXUAF(service:IXUAFRESTService(url: server, application: application, username:serverUsername))
-                                                                
-                // If the license is provided as an extension uncomment this line and set the license string.
-//                params["com.daon.sdk.license"] = #"{"signature":"dWVBSGegPDsnVr6yN97\/FKNRunGp0eCF2b+\/UCEsbPAgKvEB34BqkZZ82MVptijn2CwCdMx2fZ0hY5eoVM13Zf8McwLr2B5pLHM0qrLCRjl8aO2BA+wXi1rILIsasJHzBmNyx8aBy62sF9yBooesYq36lDmNcZNGed1EkT1cYlCz\/nMUxUvBaoW5RIzOJBe92591XchbSW5VUwZW2DHznelWkCL7ofVKC0+U0zlI685J3D21+zabN4FovxX8ZLa6ADHnyiF\/oA97xNxaryczpev3R5g65RYvceA3v\/Z0lu0+Jco4UVBP6Z+Ongru\/FCp+ecvsUlw6Ccj+KzzO7RCEA==","organization":"DAON","signed":{"features":["ALL"],"expiry":"2030-12-24 00:00:00","applicationIdentifier":"com.daon.*"},"version":"2.1"}"#
-                
-                fido?.logging = true
-                fido?.delegate = self
-                
-                fido?.initialize(parameters: params) { (code, warnings) in
-                    
-                    self.busy(on: false)
-                    
-                    if code == .licenseExpired {
-                        self.show(title: "Initialize failed", message: "License expired")
-                    } else if code == .licenseNotVerified {
-                        self.show(title: "Initialize failed", message: "License not verified")
-                    } else if code == .licenseNoAuthenticators {
-                        self.show(title: "Initialize failed", message: "No licensed authenticators")
-                    } else {
-                        if code != .noError {
-                            self.show(title: "Initialize", message: "\(code.rawValue)")
-                        }
-                        
-                        self.checkRemoteNotification()
-                    }
-                    
-                    self.show(warnings: warnings)
-                }
+                fido = IXUAF(service:IXUAFRESTService(url: url, application: application, username:restUsername))
+                initialize(parameters: self.extensions)
             }
             
             IXUAFLocator.sharedInstance().locate()
+        }
+    }
+
+    func initialize(parameters: [String : String]) {
+        fido?.logging = true
+        fido?.delegate = self
+        
+        fido?.initialize(parameters: extensions) { (code, warnings) in
+            
+            self.busy(on: false)
+            
+            if code == .licenseExpired {
+                self.show(title: "Initialize failed", message: "License expired")
+            } else if code == .licenseNotVerified {
+                self.show(title: "Initialize failed", message: "License not verified")
+            } else if code == .licenseNoAuthenticators {
+                self.show(title: "Initialize failed", message: "No licensed authenticators")
+            } else {
+                if code != .noError {
+                    self.show(title: "Initialize", message: "\(code.rawValue)")
+                }
+                
+                self.checkRemoteNotification()
+            }
+            
+            self.show(warnings: warnings)
         }
     }
 
@@ -101,15 +130,15 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         for warning in warnings {
             if warning == IXUAFWarningDeviceDebug {
-                message = "Application is running in debug mode"
+                message = "\(message)\nApplication is running in debug mode"
             } else if warning == IXUAFWarningDeviceSimulator {
-                message = "Application is running in a simulator"
+                message = "\(message)\nApplication is running in a simulator"
             } else if warning == IXUAFWarningDeviceSecurityDisabled {
-                message = "Device passcode/Touch ID/Face ID is not enabled"
+                message = "\(message)\nDevice passcode/Touch ID/Face ID is not enabled"
             } else if warning == IXUAFWarningDeviceCompromised {
-                message = "Device is jailbroken"
+                message = "\(message)\nDevice is jailbroken"
             } else if warning == IXUAFWarningKeyMigrationFailed {
-                message = "Touch ID/Face ID. One or more keys failed to migrate and has been invalidated."
+                message = "\(message)\nTouch ID/Face ID. One or more keys failed to migrate and has been invalidated."
             }
         }
         
@@ -126,10 +155,11 @@ class ViewController: UIViewController, IXUAFDelegate {
     }
     
     func busy(on: Bool) {
-        self.activityIndicator.isHidden = !on
-        self.stackView.isHidden = on
+        DispatchQueue.main.async {
+            self.activityIndicator.isHidden = !on
+            self.stackView.isHidden = on
+        }
     }
-        
     
     @objc func didReceiveNotification(notification : Notification?) {
         checkRemoteNotification()
@@ -170,7 +200,9 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         busy(on: true)
         
-        fido?.authenticate(username:username, description: "Login") { (res, error) in
+        fido?.authenticate(username:username,
+                           description: "Login",
+                           parameters: [kIXUAFServiceParameterOTP : optionConfirmationOTP]) { (res, error) in
             if let e = error {
                 self.show(error: e);
             } else {
@@ -187,7 +219,7 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         var message = ""
         
-        fido?.deregister(username: username!) { (aaid, error) in
+        fido?.deregister(username: username) { (aaid, error) in
             if aaid == nil {
                 self.show(title: "De-register", message: message);
             } else {
@@ -250,11 +282,11 @@ class ViewController: UIViewController, IXUAFDelegate {
                 
                 // Testing: Just to make sure that everything is gone
                 if let keys = IXAKeychain.allKeys() {
-                    print("All keys (reset): ", keys)
+                    Logging.log(string:"All keys (reset): \(keys)")
                 }
                 
                 // Check user defaults
-                print("User Defaults (standard): ", UserDefaults.standard.dictionaryRepresentation())
+                Logging.log(string:"User Defaults (standard): \(UserDefaults.standard.dictionaryRepresentation())")
                 
                 exit(0)
             }
@@ -271,16 +303,21 @@ class ViewController: UIViewController, IXUAFDelegate {
             }
         }
         
+        let cotp = optionConfirmationOTP ? "On" : "Off"
+        let cotpAction = UIAlertAction(title: "Confirmation OTP: \(cotp)", style: .default) { _ in
+            self.optionConfirmationOTP = !self.optionConfirmationOTP
+        }
+        
         let iad = optionInjectionAttackDetection ? "On" : "Off"
         let injectionAttackDetectionAction = UIAlertAction(title: "Face Injection Attack Detection: \(iad)", style: .default) { _ in
             self.optionInjectionAttackDetection = !self.optionInjectionAttackDetection
                         
-            self.params["com.daon.face.liveness.ifp"] = self.optionInjectionAttackDetection.description
+            self.extensions["com.daon.face.liveness.ifp"] = self.optionInjectionAttackDetection.description
             
             self.show(title: "Face Injection Attack Detection",
                     message: "If the injection attack detection extension is provided in the server policy, this setting has no effect. The server policy takes precedence.")
             self.busy(on: true)
-            self.fido?.initialize(parameters: self.params) { (error, warnings) in
+            self.fido?.initialize(parameters: self.extensions) { (error, warnings) in
                 self.busy(on: false)
             }
         }
@@ -290,6 +327,7 @@ class ViewController: UIViewController, IXUAFDelegate {
         }
         
         alertController.addAction(swiftUIAction)
+        alertController.addAction(cotpAction)
         alertController.addAction(injectionAttackDetectionAction)
         alertController.addAction(resetAction)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -299,20 +337,18 @@ class ViewController: UIViewController, IXUAFDelegate {
     
     func deleteUser(completion: @escaping (Error?) -> (Void)) {
                 
-        if let username = username {
-            fido?.deregister(username: username) { [self] (aaid, error) in
-                if aaid == nil {
-                    Logging.log(string: "De-register: complete");
-                    
-                    // Archive user
-                    fido?.delete(username: username, parameters: nil, completion: completion)
-                    
+        fido?.deregister(username: username) { [self] (aaid, error) in
+            if aaid == nil {
+                Logging.log(string: "De-register: complete");
+                
+                // Archive user
+                fido?.delete(username: username, parameters: nil, completion: completion)
+                
+            } else {
+                if let e = error {
+                    Logging.log(string: "De-register: \(e.localizedDescription)")
                 } else {
-                    if let e = error {
-                        Logging.log(string: "De-register: \(e.localizedDescription)")
-                    } else {
-                        Logging.log(string: "De-register: \(aaid!)")
-                    }
+                    Logging.log(string: "De-register: \(aaid!)")
                 }
             }
         }
@@ -339,7 +375,11 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         busy(on: true)
         
-        fido?.authenticate(aaid: aaid, username: username, data:data, description: "Authenticate", parameters: nil) { (res, error) in
+        fido?.authenticate(aaid: aaid,
+                           username: username,
+                           data:data,
+                           description: "Authenticate",
+                           parameters: [kIXUAFServiceParameterOTP : optionConfirmationOTP]) { (res, error) in
             if let e = error {
                 self.show(error: e)
             } else {
@@ -372,7 +412,7 @@ class ViewController: UIViewController, IXUAFDelegate {
                 if let authenticators = data?.availableAuthenticators {
                     for authenticator in authenticators {
                                                 
-                        if !authenticator.registered && self.supported(aaid: authenticator.aaid) {
+                        if !authenticator.registered(withUsername: self.username, appId: self.fido?.application) && self.supported(aaid: authenticator.aaid) {
                             let action = UIAlertAction(title: authenticator.title, style: .default) { action in
                                 
                                 // HACK: Hard code data for password. This only makes sense for a

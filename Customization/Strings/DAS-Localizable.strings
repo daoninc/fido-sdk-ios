@@ -113,6 +113,8 @@
 
 "Face ID Screen - Title" = "Face ID";
 
+"Face ID Screen - Button - Start" = "START";
+
 "Face ID Screen - Button - Retry" = "Retry";
 
 "Face ID Screen - Reason - Registration" = "Verify your face to continue registration.";

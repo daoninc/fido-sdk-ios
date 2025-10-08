@@ -91,10 +91,11 @@ import DaonFIDOSDK
     public func serviceRequestAuthentication(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         let username = parameters?[kIXUAFServiceParameterUsername] as? String
-        let description = parameters?[kIXUAFServiceParameterDescription] as? String
+        let description = parameters?[kIXUAFServiceParameterDescription] as? String ?? "Authentication"
         let policy = parameters?[kIXUAFServiceParameterPolicyAuthentication] as? String ?? "auth"
+        let otp = parameters?[kIXUAFServiceParameterOTP] as? Bool ?? false
         
-        idx?.authenticationRequest(username: username, policyID: policy, description: description ?? "NA") { (error, request) -> (Void) in
+        idx?.authenticationRequest(username: username, policyID: policy, description: description, otp: otp) { (error, request) -> (Void) in
             
             let customData = ["custom1":"1"];
             
