@@ -58,8 +58,10 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
         capture?.messages = useCustomView ? false : true
         capture?.captureMode = .manual
         capture?.delegate = self
-        
-        capture?.start(controller: DASUtils.determineHostViewController())
+        capture?.setParameters([kDFSConfigQualityThresholdEyesOpenKey: 0.65])
+        capture?.start(controller: DASUtils.determineHostViewController()) {
+            print("CAPTURE DONE")
+        }
     }
     
     private func showButtonBar(state: State, error: String = "") {
@@ -67,8 +69,9 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
         self.busy = false
         self.state = state
         self.error = error
+        self.color = .clear
     }
-    
+        
     private func hideButtonBar() {
         self.buttons = false
     }
@@ -127,6 +130,12 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
         // Capture failed and retry is allowed.
         DispatchQueue.main.async {
             self.showButtonBar(state: .error, error: error.localizedDescription)
+        }
+        
+        if error._code == DASAuthenticatorError.authenticatorAuthTokenMismatch.rawValue {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.cancel()
+            }
         }
     }
     

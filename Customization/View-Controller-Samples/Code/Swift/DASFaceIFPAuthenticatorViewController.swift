@@ -53,11 +53,16 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
         capture?.captureMode = .manual
         capture?.messages = !useCustomView
         capture?.style = .fullScreen
+        
+        // if capture?.style != .fullScreen the true will disable drag to dismiss
+//        capture?.modalInPresentation = false
                         
         capture?.enhancedDetection = isRegistration ? true : false
         capture?.assessmentDelay = 0.75
                         
-        capture?.start(controller: self)
+        capture?.start(controller: self) {
+            print("CAPTURE DONE")
+        }
     }
             
     /*!
@@ -322,6 +327,11 @@ extension DASFaceIFPAuthenticatorViewController : DASFaceCaptureDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.statusLabel?.isHidden = true
                 self.retryButton?.isHidden = false
+                if error._code == DASAuthenticatorError.authenticatorAuthTokenMismatch.rawValue {
+                    self.capture?.cancel() {
+                        self.singleAuthenticatorContext?.completeCapture(error: .cancelled)
+                    }
+                }
             }
         }
     }

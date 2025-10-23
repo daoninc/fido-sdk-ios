@@ -16,7 +16,7 @@ class ViewController: UIViewController, IXUAFDelegate {
     var extensions = ["com.daon.sdk.ados.enabled" : "true",
                       "com.daon.sdk.keys.access.biometry" : "true",
                       "com.daon.sdk.exclude.invalidAuthenticators" : "true",
-                      "com.daon.sdk.operation.wait.timeout" : "0"] // Default to no timeout
+                      "com.daon.sdk.operation.wait.timeout" : "10"] 
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
