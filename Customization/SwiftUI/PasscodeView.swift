@@ -8,7 +8,7 @@
 import SwiftUI
 
 import DaonAuthenticatorPasscode
-import DaonAuthenticatorSDK
+@preconcurrency import DaonAuthenticatorSDK
 import DaonCryptoSDK
 
 #Preview {
@@ -82,7 +82,7 @@ struct PasscodeView: View {
     
 }
 
-class PasscodeViewModel : ObservableObject, DASDataControllerWrapperDelegate {
+class PasscodeViewModel : ObservableObject, @MainActor DASDataControllerWrapperDelegate {
         
     private var context: DASAuthenticatorContext?
     private var inputs: [String] = []
@@ -105,7 +105,10 @@ class PasscodeViewModel : ObservableObject, DASDataControllerWrapperDelegate {
        return "\(context.authenticatorInfo?.authenticatorName ?? "Passcode") (SwiftUI)"
     }
     
+    @MainActor
     private var _controller: DASDataControllerWrapperProtocol?
+    
+    @MainActor
     private var controller : DASDataControllerWrapperProtocol {
         if _controller == nil {
             _controller = DASPasscodeAuthenticatorFactory.createDataControllerWrapper(with: context, delegate: self)
@@ -115,7 +118,7 @@ class PasscodeViewModel : ObservableObject, DASDataControllerWrapperDelegate {
         return _controller!
     }
     
-    func buttonPressed(input: String) {
+    @MainActor func buttonPressed(input: String) {
         
         guard let context = context else {
             return
@@ -167,15 +170,13 @@ class PasscodeViewModel : ObservableObject, DASDataControllerWrapperDelegate {
     func reset(error: String? = nil) {
         inputs.removeAll()
         
-        DispatchQueue.main.async {
-            self.busy = false
-            self.done = false
-            self.info = "Enter passcode"
-            
-            if let e = error {
-                self.alert = true
-                self.error = e
-            }
+        self.busy = false
+        self.done = false
+        self.info = "Enter passcode"
+        
+        if let e = error {
+            self.alert = true
+            self.error = e
         }
     }
     
@@ -193,10 +194,11 @@ class PasscodeViewModel : ObservableObject, DASDataControllerWrapperDelegate {
         }
     }
     
-    func keyboardType() -> UIKeyboardType {
+    @MainActor func keyboardType() -> UIKeyboardType {
         return controller.passcodeKeyboardType()
     }
 
+    @MainActor
     func dataControllerCompletedSuccessfully() {
         
         self.busy = false

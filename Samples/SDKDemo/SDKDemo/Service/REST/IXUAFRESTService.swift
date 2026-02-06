@@ -8,22 +8,18 @@
 // TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import Foundation
-import DaonFIDOSDK
+@preconcurrency import DaonFIDOSDK
 
 
 @objc public class IXUAFRESTService : NSObject, IXUAFServiceDelegate {
     
     var idx : IdentityX?
-    
-    var registrationChallenge : RegistrationChallenge?
-    var authenticationRequest : AuthenticationRequest?
-        
-    // TODO use Dictionary
+            
     public init(url: String, application: String, username: String) {
         idx = IdentityX(url:url , application: application, username: username);
     }
     
-    func error(code: Int, message: String?) -> NSError {
+    static func error(code: Int, message: String?) -> NSError {
         if let msg = message {
             return NSError(domain: "Server", code: code, userInfo: [NSLocalizedDescriptionKey : msg])
         }
@@ -51,7 +47,7 @@ import DaonFIDOSDK
     }
     
     // Called by IXUAF deleteUser:parameters:completion
-    public func serviceDeleteUser(parameters: [String : Any]?, handler: @escaping (Error?) -> Void) {
+    public func serviceDeleteUser(parameters: [String : Any]?, handler: @escaping @Sendable (Error?) -> Void) {
         if let username = parameters?[kIXUAFServiceParameterUsername] as? String {
             idx?.archive(username: username, completion: handler)
         } else {
@@ -61,21 +57,21 @@ import DaonFIDOSDK
     
 
     // Request a FIOD registration challenge
-    public func serviceRequestRegistration(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    public func serviceRequestRegistration(parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
         
         if let user = parameters?[kIXUAFServiceParameterUsername] as? String {
 
             let policy = parameters?[kIXUAFServiceParameterPolicyRegistration] as? String ?? "reg"
             
             idx?.registrationChallenge(username: user, policyID: policy) { (error, challenge) -> (Void) in
-                
-                self.registrationChallenge = challenge
-                
                 if let e = error {
                     handler(e.localizedDescription, [:], e)
+                } else if let id = challenge?.id {
+                    handler(challenge?.fidoRegistrationRequest, ["request.id" : id], nil)
                 } else {
-                    handler(challenge?.fidoRegistrationRequest, [:], nil)
+                    handler(nil, [:], IXUAFError.protocolError())
                 }
+                
             }
         } else {
             handler(nil, [:], IXUAFError.protocolError())
@@ -83,12 +79,12 @@ import DaonFIDOSDK
     }
     
     // Submit the provided FIDO registration message to the server
-    public func serviceRegister(message: String, parameters params: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
-        register(message: message, handler: handler)
+    public func serviceRegister(message: String, parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
+        register(message: message, parameters: parameters, handler: handler)
     }
     
     // Request a FIDO authentication
-    public func serviceRequestAuthentication(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    public func serviceRequestAuthentication(parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
         
         let username = parameters?[kIXUAFServiceParameterUsername] as? String
         let description = parameters?[kIXUAFServiceParameterDescription] as? String ?? "Authentication"
@@ -96,54 +92,51 @@ import DaonFIDOSDK
         let otp = parameters?[kIXUAFServiceParameterOTP] as? Bool ?? false
         
         idx?.authenticationRequest(username: username, policyID: policy, description: description, otp: otp) { (error, request) -> (Void) in
-            
-            let customData = ["custom1":"1"];
-            
-            self.authenticationRequest = request
-            
             if let e = error {
-                handler(e.localizedDescription, customData, e)
+                handler(e.localizedDescription, [:], e)
+            } else if let id = request?.id {
+                handler(request?.fidoAuthenticationRequest, ["request.id": id, "custom1":"1"], nil)
             } else {
-                handler(request?.fidoAuthenticationRequest, customData, nil)
+                handler(nil, [:], IXUAFError.protocolError())
             }
         }
         
     }
     
     // Submit the provided FIDO authentication message to the server
-    public func serviceAuthenticate(message: String, parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    public func serviceAuthenticate(message: String, parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
         
-        authenticate(message: message, handler: handler)
+        authenticate(message: message, parameters: parameters, handler: handler)
     }
     
     // Submit updated FIDO message to the server. This would be an ADoS message with user data
     
-    public func serviceUpdate(message: String, username: String?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    public func serviceUpdate(message: String, username: String?, parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
         
         // If this is a registration request we have to use a different server call
         let operation = IXUAFMessageReader.init(message: message)
         if operation.isRegistration() {
-            register(message: message, handler: handler)
+            register(message: message, parameters:parameters, handler: handler)
         } else {
-            authenticate(message: message, handler: handler)
+            authenticate(message: message, parameters:parameters, handler: handler)
         }
     
     }
     
     // Request a deregistration message
-    public func serviceRequestDeregistration(aaid: String, parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceRequestDeregistration(aaid: String, parameters: [String : Any]?, handler: @escaping @Sendable (String?, Error?) -> Void) {
         
         // The application is the FIDO application ID, not the IdentityX application
         //let request = IXUAFMessageWriter.deregistrationRequest(withAaid: aaid, application: application)
         //handler(request, nil)
         
         if let user = parameters?[kIXUAFServiceParameterUsername] as? String {
-            idx?.authenticators(username: user) { [self] (error, authenticators) -> (Void) in
+            let idx = self.idx
+            idx?.authenticators(username: user) { (error, authenticators) -> (Void) in
                 if let e = error {
                     handler(e.localizedDescription, e)
                 } else {
-                    
-                    if let authenticator = self.findActive(authenticators: authenticators, aaid: aaid) {
+                    if let authenticator = IXUAFRESTService.findActive(authenticators: authenticators, aaid: aaid) {
                         idx?.archive(authenticator: authenticator.id!, username: user, completion: { (error, res) in
                             if let e = error {
                                 handler(e.localizedDescription, e)
@@ -156,14 +149,15 @@ import DaonFIDOSDK
                     }
                 }
             }
+        } else {
+            handler(nil, IXUAFError.error(withCode: IXUAFErrorCode.protocolError.rawValue))
         }
     }
     
     // Get the registration policy
-    public func serviceRequestRegistrationPolicy(parameters: [String : String]?, handler: @escaping (String?, Error?) -> Void) {
+    public func serviceRequestRegistrationPolicy(parameters: [String : String]?, handler: @escaping @Sendable (String?, Error?) -> Void) {
      
         let policy = parameters?[kIXUAFServiceParameterPolicyAuthentication] as? String ?? "reg"
-        
         idx?.policy(id: policy) { (error, policy) -> (Void) in
             if let e = error {
                 handler(e.localizedDescription, e)
@@ -174,11 +168,10 @@ import DaonFIDOSDK
     }
     
     // Submit failed attempt data to the server
-    public func serviceUpdate(attempt info: [String : Any], handler: @escaping (String?, Error?) -> Void) {
+    public func serviceUpdate(attempt info: [String : Any], parameters: [String : Any]?, handler: @escaping @Sendable (String?, Error?) -> Void) {
         
-        if let authentication = authenticationRequest {
-            
-            idx?.update(withAttempt: info, authenticationRequest: authentication) { (error, response) -> (Void) in
+        if let id = parameters?["request.id"] as? String {
+            idx?.update(withAttempt: info, requestId: id) { (error, response) -> (Void) in
                 if let e = error {
                     handler(response?.fidoAuthenticationResponse, e)
                 } else {
@@ -192,12 +185,10 @@ import DaonFIDOSDK
     // Helper methods
     //
     
-    private func register(message: String, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    private func register(message: String, parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
         
-        if let challenge = registrationChallenge {
-            challenge.fidoRegistrationResponse = message
-            
-            idx?.update(registrationChallenge: challenge) { (error, challenge) -> (Void) in
+        if let id = parameters?["request.id"] as? String  {
+            idx?.update(registrationId: id, registrationResponse: message) { (error, challenge) -> (Void) in
                 if let e = error {
                     handler(e.localizedDescription, [:], e)
                 } else {
@@ -205,7 +196,7 @@ import DaonFIDOSDK
                         if code == IXUAFServerErrorCode.noError.rawValue {
                             handler(challenge?.fidoRegistrationResponse, [:], nil)
                         } else {
-                            handler(challenge?.fidoRegistrationResponse, [:], self.error(code: code, message: challenge?.fidoResponseMsg))
+                            handler(challenge?.fidoRegistrationResponse, [:], IXUAFRESTService.error(code: code, message: challenge?.fidoResponseMsg))
                         }
                     }
                 }
@@ -215,12 +206,11 @@ import DaonFIDOSDK
         }
     }
     
-    private func authenticate(message: String, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    private func authenticate(message: String, parameters: [String : Any]?, handler: @escaping @Sendable (String?, [String : Any]?, Error?) -> Void) {
         
-        if let authentication = authenticationRequest {
-            authentication.fidoAuthenticationResponse = message
+        if let id = parameters?["request.id"] as? String {
             
-            idx?.update(authenticationRequest: authentication) { (error, reponse) -> (Void) in
+            idx?.update(authenticationId: id, authenticationResponse: message) { (error, reponse) -> (Void) in
                 
                 let customData = ["custom2":"2"];
                 
@@ -231,7 +221,7 @@ import DaonFIDOSDK
                         if code == IXUAFServerErrorCode.noError.rawValue {
                             handler(reponse?.fidoAuthenticationResponse, customData, nil)
                         } else {
-                            handler(reponse?.fidoAuthenticationResponse, customData, self.error(code: code, message: reponse?.fidoResponseMsg))
+                            handler(reponse?.fidoAuthenticationResponse, customData, IXUAFRESTService.error(code: code, message: reponse?.fidoResponseMsg))
                         }
                     }
                 }
@@ -241,7 +231,7 @@ import DaonFIDOSDK
         }
     }
     
-    private func findActive(authenticators:[Authenticator]?, aaid: String) -> Authenticator? {
+    nonisolated static private func findActive(authenticators:[Authenticator]?, aaid: String) -> Authenticator? {
         
         if let list = authenticators {
             for authenticator in list {

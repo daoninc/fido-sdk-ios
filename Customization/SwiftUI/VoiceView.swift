@@ -8,7 +8,7 @@
 import SwiftUI
 
 import DaonAuthenticatorVoice
-import DaonAuthenticatorSDK
+@preconcurrency import DaonAuthenticatorSDK
 
 
 #Preview {
@@ -73,7 +73,8 @@ struct VoiceView: View {
     
 }
 
-class VoiceViewModel : NSObject, ObservableObject, DASVoiceControllerDelegate {
+@MainActor
+class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceControllerDelegate {
     
     private var context: DASAuthenticatorContext?
     
@@ -94,6 +95,7 @@ class VoiceViewModel : NSObject, ObservableObject, DASVoiceControllerDelegate {
     private var voiceSamples = [Data]()
     
     private var _controller: DASVoiceControllerProtocol?
+    
     private var controller : DASVoiceControllerProtocol {
         
         if context != nil {
@@ -132,32 +134,34 @@ class VoiceViewModel : NSObject, ObservableObject, DASVoiceControllerDelegate {
         
         if controller.isRecording() {
             controller.stopRecording() { [self] error, data in
-                              
-                state = .start
-                
-                if let sample = data {
-                    if context.isRegistration {
-                        voiceSamples.append(sample)
-                                                
-                        if voiceSampleIndex < expectedVoiceSamples {
+                Task { @MainActor in
+                    
+                    state = .start
+                    
+                    if let sample = data {
+                        if context.isRegistration {
+                            voiceSamples.append(sample)
                             
-                            voiceSampleIndex += 1
-                            updateProgress()
+                            if voiceSampleIndex < expectedVoiceSamples {
+                                
+                                voiceSampleIndex += 1
+                                updateProgress()
+                            } else {
+                                state = .processing
+                                controller.register(samples: self.voiceSamples)
+                            }
                         } else {
                             state = .processing
-                            controller.register(samples: self.voiceSamples)
+                            controller.authenticate(sample: sample)
                         }
                     } else {
-                        state = .processing
-                        controller.authenticate(sample: sample)
+                        fail(error: error ?? DASUtils.error(forError: .voiceUnknownError))
                     }
-                } else {
-                    fail(error: error ?? DASUtils.error(forError: .voiceUnknownError))
                 }
             }
         } else {
             AVCaptureDevice.requestAccess(for: AVMediaType.audio) { granted in
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     if granted {
                         self.state = .recording
                         self.controller.startRecording()
@@ -172,22 +176,18 @@ class VoiceViewModel : NSObject, ObservableObject, DASVoiceControllerDelegate {
     func updateProgress() {
         if let context = context {
             if context.isRegistration {
-                DispatchQueue.main.async {
-                    self.info = String(format: "%d of %d", self.voiceSampleIndex, self.expectedVoiceSamples)
-                }
+                self.info = String(format: "%d of %d", self.voiceSampleIndex, self.expectedVoiceSamples)
             }
         }
     }
     
     func controllerDidCompleteSuccessfully() {
-        DispatchQueue.main.async {
-         
-            self.state = .success
-            
-            // Pause a bit
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.context?.completeCapture()
-            }
+        self.state = .success
+        
+        // Pause a bit
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            self.context?.completeCapture()
         }
     }
     
@@ -242,17 +242,18 @@ class VoiceViewModel : NSObject, ObservableObject, DASVoiceControllerDelegate {
             return
         }
         
-        context.incrementFailures(error: error._code, score: score) { (lockError) in
-            
-            if let e = lockError  {
-                // We are locked
-                self.fail(error: e)
-            } else {
-                // We are not locked, so check for too many attempts
-                if context.haveEnoughFailedAttemptsForWarning() {
-                    self.fail(error: DASUtils.error(forError: DASAuthenticatorError.voiceMultipleFailedAttempts))
+        context.incrementFailures(error: error._code, score: score) { lockError in
+            Task { @MainActor in
+                if let e = lockError  {
+                    // We are locked
+                    self.fail(error: e)
                 } else {
-                    self.fail(error: error)
+                    // We are not locked, so check for too many attempts
+                    if context.haveEnoughFailedAttemptsForWarning() {
+                        self.fail(error: DASUtils.error(forError: DASAuthenticatorError.voiceMultipleFailedAttempts))
+                    } else {
+                        self.fail(error: error)
+                    }
                 }
             }
         }
@@ -261,19 +262,17 @@ class VoiceViewModel : NSObject, ObservableObject, DASVoiceControllerDelegate {
     func reset(error: Error?, recaptureAllSamples: Bool) {
         
         if recaptureAllSamples {
-            controller.cancel()
-            voiceSampleIndex = 1
-            voiceSamples.removeAll()
-            updateProgress()
+            self.controller.cancel()
+            self.voiceSampleIndex = 1
+            self.voiceSamples.removeAll()
+            self.updateProgress()
         }
-                    
-        DispatchQueue.main.async {
-            self.state = .start
-            
-            if let e = error {
-                self.alert = true
-                self.error = e.localizedDescription
-            }
+                            
+        self.state = .start
+        
+        if let e = error {
+            self.alert = true
+            self.error = e.localizedDescription
         }
     }
 }

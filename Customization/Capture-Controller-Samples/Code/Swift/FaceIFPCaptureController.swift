@@ -8,11 +8,10 @@
 import DaonAuthenticatorSDK
 import DaonAuthenticatorFaceIFP
 
-
 class FaceIFPCaptureController: DASCaptureControllerProtocol {
     
     private let context : DASAuthenticatorContext
-    
+    private var capture : DASFaceCapture?
     
     init(context: DASAuthenticatorContext) {
         //
@@ -24,21 +23,23 @@ class FaceIFPCaptureController: DASCaptureControllerProtocol {
     
     func execute() {
         
-        let registration = context.isRegistration
-        
-        // Configure the face controller
-        let capture = DASFaceCapture(context: self.context)
-        capture?.deviceUprightDetection = false
-        capture?.medicalMaskDetection = false
-        capture?.allowConfirmation = registration ? true : false
-        capture?.quality = .low
-        capture?.overlay = true
-        
-                        
-        capture?.enhancedDetection = registration ? true : false
-        capture?.assessmentDelay = 0.75
-        
-        capture?.start(controller: DASUtils.determineHostViewController())
+        DispatchQueue.main.async {
+            let registration = self.context.isRegistration
+            
+            // Configure the face controller
+            self.capture = DASFaceCapture(context: self.context)
+            self.capture?.deviceUprightDetection = false
+            self.capture?.medicalMaskDetection = false
+            self.capture?.allowConfirmation = registration ? true : false
+            self.capture?.quality = .low
+            self.capture?.overlay = true
+            
+                            
+            self.capture?.enhancedDetection = registration ? true : false
+            self.capture?.assessmentDelay = 0.75
+            
+            self.capture?.start(controller: DASUtils.determineHostViewController())
+        }
     }
     
 }

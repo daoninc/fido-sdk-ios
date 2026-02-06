@@ -46,7 +46,7 @@ class PasscodeCaptureController: DASCaptureControllerProtocol, DASDataController
                 //
                 // On successful registration, dataControllerCompletedSuccessfully will be called.
                 //
-                controller.registerPasscode("1234")
+                controller.registerPasscode("Pw11@")
             } else {
                 //
                 // AUTHENTICATION

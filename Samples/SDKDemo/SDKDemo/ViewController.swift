@@ -6,9 +6,9 @@
 
 import UIKit
 import SwiftUI
-import DaonFIDOSDK
+@preconcurrency import DaonFIDOSDK
 
-class ViewController: UIViewController, IXUAFDelegate {
+class ViewController: UIViewController, @MainActor IXUAFDelegate {
 
     var fido : IXUAF?
     var username : String = "email"
@@ -75,11 +75,15 @@ class ViewController: UIViewController, IXUAFDelegate {
                                kIXUAFServiceParameterAccountPassword : "password",
                     kIXUAFServiceParameterAccountRegistrationRequest : false] as [String : Any]
                 
-                fido?.requestServiceAccess(username: username, parameters: account) { (token, error) in
-                    if let e = error {
-                        self.show(error: e)
-                    } else {
-                        self.initialize(parameters: self.extensions)
+                fido?.requestServiceAccess(username: username, parameters: account) { [weak self] (token, error) in
+                    Task { @MainActor in
+                        if let e = error {
+                            self?.show(error: e)
+                        } else {
+                            if let extensions = self?.extensions {
+                                self?.initialize(parameters: extensions)
+                            }
+                        }
                     }
                 }
             } else {
@@ -102,43 +106,55 @@ class ViewController: UIViewController, IXUAFDelegate {
         fido?.logging = true
         fido?.delegate = self
         
-        fido?.initialize(parameters: extensions) { (code, warnings) in
+        fido?.initialize(parameters: extensions) { [weak self] (code, warnings) in
             
-            self.busy(on: false)
-            
-            if code == .licenseExpired {
-                self.show(title: "Initialize failed", message: "License expired")
-            } else if code == .licenseNotVerified {
-                self.show(title: "Initialize failed", message: "License not verified")
-            } else if code == .licenseNoAuthenticators {
-                self.show(title: "Initialize failed", message: "No licensed authenticators")
-            } else {
-                if code != .noError {
-                    self.show(title: "Initialize", message: "\(code.rawValue)")
-                }
+            Task { @MainActor in
+                self?.busy(on: false)
                 
-                self.checkRemoteNotification()
+                if code == .licenseExpired {
+                    self?.show(title: "Initialize failed", message: "License expired")
+                } else if code == .licenseNotVerified {
+                    self?.show(title: "Initialize failed", message: "License not verified")
+                } else if code == .licenseNoAuthenticators {
+                    self?.show(title: "Initialize failed", message: "No licensed authenticators")
+                } else {
+                    if code != .noError {
+                        self?.show(title: "Initialize", message: "\(code.rawValue)")
+                    }
+                    
+                    self?.checkRemoteNotification()
+                }
+
+                self?.show(warnings: warnings)
             }
-            
-            self.show(warnings: warnings)
         }
     }
-
+    
     func show(warnings: [NSNumber]) {
         
         var message = ""
         
         for warning in warnings {
-            if warning == IXUAFWarningDeviceDebug {
+            let code = IXUAFWarningCode(rawValue: warning.intValue)
+            switch code {
+            case .deviceDebug:
                 message = "\(message)\nApplication is running in debug mode"
-            } else if warning == IXUAFWarningDeviceSimulator {
+            case .deviceSimulator:
                 message = "\(message)\nApplication is running in a simulator"
-            } else if warning == IXUAFWarningDeviceSecurityDisabled {
+            case .deviceSecurityDisabled:
                 message = "\(message)\nDevice passcode/Touch ID/Face ID is not enabled"
-            } else if warning == IXUAFWarningDeviceCompromised {
+            case .deviceCompromised:
                 message = "\(message)\nDevice is jailbroken"
-            } else if warning == IXUAFWarningKeyMigrationFailed {
+            case .keyMigrationFailed:
                 message = "\(message)\nTouch ID/Face ID. One or more keys failed to migrate and has been invalidated."
+            case .deviceNoHardwareKeystore:
+                message = "\(message)\nDevice does not have a hardware keystore."
+            case .keyPendingRegistrationsRemoved:
+                message = "\(message)\nOne or more pending registrations were removed."
+            case .none:
+                break
+            case .some(_):
+                break
             }
         }
         
@@ -155,10 +171,8 @@ class ViewController: UIViewController, IXUAFDelegate {
     }
     
     func busy(on: Bool) {
-        DispatchQueue.main.async {
-            self.activityIndicator.isHidden = !on
-            self.stackView.isHidden = on
-        }
+        self.activityIndicator.isHidden = !on
+        self.stackView.isHidden = on
     }
     
     @objc func didReceiveNotification(notification : Notification?) {
@@ -173,11 +187,11 @@ class ViewController: UIViewController, IXUAFDelegate {
             
             Settings.shared.remove(key: Settings.Key.notification)
             
-            fido?.authenticate(notification: notification, username: username, parameters: nil) { (res, error) in
+            fido?.authenticate(notification: notification, username: username, parameters: nil) { [weak self] (res, error) in
                 if let e = error {
-                    self.show(error: e);
+                    self?.show(error: e);
                 } else {
-                    self.show(title: "Notification", message: "Authenticate complete");
+                    self?.show(title: "Notification", message: "Authenticate complete");
                 }
             }
         }
@@ -187,11 +201,11 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         busy(on: true)
         
-        fido?.register(username: username) { (res, error) in
+        fido?.register(username: username) { [weak self] (res, error) in
             if let e = error {
-                self.show(error: e);
+                self?.show(error: e);
             } else {
-                self.show(title: "Register", response:res);
+                self?.show(title: "Register", response:res);
             }
         }
     }
@@ -202,13 +216,11 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         fido?.authenticate(username:username,
                            description: "Login",
-                           parameters: [kIXUAFServiceParameterOTP : optionConfirmationOTP]) { (res, error) in
+                           parameters: [kIXUAFServiceParameterOTP : optionConfirmationOTP]) { [weak self] (res, error) in
             if let e = error {
-                self.show(error: e);
+                self?.show(error: e);
             } else {
-                self.show(title: "Authenticate", response:res?.filter({ (k,v) in
-                    return k != "request";
-                }));
+                self?.show(title: "Authenticate", response:res);
             }
         }
     }
@@ -219,9 +231,9 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         var message = ""
         
-        fido?.deregister(username: username) { (aaid, error) in
+        fido?.deregister(username: username) { [weak self] (aaid, error) in
             if aaid == nil {
-                self.show(title: "De-register", message: message);
+                self?.show(title: "De-register", message: message);
             } else {
                 if let e = error {
                     message.append("Error: \(aaid!): \(e.localizedDescription)\n")
@@ -235,9 +247,9 @@ class ViewController: UIViewController, IXUAFDelegate {
     
     @IBAction func deleteUserButtonPressed(_ sender: Any) {
         
-        confirm(title: "Delete user", message: "Are you sure?") { action in
+        confirm(title: "Delete user", message: "Are you sure?") { [weak self] action in
             
-            self.busy(on: true)
+            self?.busy(on: true)
             
             // Example.
             // Delete ALL local authenticator information without talking to the server
@@ -245,19 +257,19 @@ class ViewController: UIViewController, IXUAFDelegate {
 //            if let request = IXUAFMessageWriter.deregistrationRequest(withAaid: "", application: nil) {
 //                self.fido?.deregister(message: request, handler: { (error) in
 //                    if let e = error {
-//                        Logging.log(string: "Deregister: \(e.localizedDescription)");
+//                        Logging.shared.log(string: "Deregister: \(e.localizedDescription)");
 //                    } else {
-//                        Logging.log(string: "Deregister: Done");
+//                        Logging.shared.log(string: "Deregister: Done");
 //                    }
 //                })
 //            }
             
-            self.deleteUser() { (error) -> (Void) in
+            self?.deleteUser() { (error) -> (Void) in
                 DispatchQueue.main.async {
                     if let e = error {
-                        self.show(error: e);
+                        self?.show(error: e);
                     } else {
-                        self.show(title: "User", message: "User archived");
+                        self?.show(title: "User", message: "User archived");
                     }
                 }
             }
@@ -266,29 +278,33 @@ class ViewController: UIViewController, IXUAFDelegate {
     
     func reset() {
         
-        confirm(title: "Reset", message: "Are you sure?") { action in
+        confirm(title: "Reset", message: "Are you sure?") { [weak self] action in
             
-            self.busy(on: true)
+            self?.busy(on: true)
             
-            self.deleteUser() { (error) -> (Void) in
-                if let e = error {
-                    Logging.log(string: "Delete user: \(e.localizedDescription)");
-                } else {
-                    Logging.log(string: "User deleted");
+            self?.deleteUser() { error -> (Void) in
+                
+                Task { @MainActor in
+                    if let e = error {
+                        Logging.shared.log(string: "Delete user: \(e.localizedDescription)");
+                    } else {
+                        Logging.shared.log(string: "User deleted");
+                    }
+                    
+                    self?.fido?.reset()
+                    
+                    Settings.shared.reset()
+                    
+                    // Testing: Just to make sure that everything is gone
+                    if let keys = IXAKeychain.allKeys() {
+                        Logging.shared.log(string:"All keys (reset): \(keys)")
+                    }
+                    
+                    // Check user defaults
+                    Logging.shared.log(string:"User Defaults (standard): \(UserDefaults.standard.dictionaryRepresentation())")
+                    
+                    exit(0)
                 }
-                
-                self.fido?.reset()
-                Settings.shared.reset()
-                
-                // Testing: Just to make sure that everything is gone
-                if let keys = IXAKeychain.allKeys() {
-                    Logging.log(string:"All keys (reset): \(keys)")
-                }
-                
-                // Check user defaults
-                Logging.log(string:"User Defaults (standard): \(UserDefaults.standard.dictionaryRepresentation())")
-                
-                exit(0)
             }
         }
     }
@@ -309,21 +325,25 @@ class ViewController: UIViewController, IXUAFDelegate {
         }
         
         let iad = optionInjectionAttackDetection ? "On" : "Off"
-        let injectionAttackDetectionAction = UIAlertAction(title: "Face Injection Attack Detection: \(iad)", style: .default) { _ in
-            self.optionInjectionAttackDetection = !self.optionInjectionAttackDetection
+        let injectionAttackDetectionAction = UIAlertAction(title: "Face Injection Attack Detection: \(iad)", style: .default) { [weak self] _ in
+            self?.optionInjectionAttackDetection = !(self?.optionInjectionAttackDetection ?? false)
                         
-            self.extensions["com.daon.face.liveness.ifp"] = self.optionInjectionAttackDetection.description
+            self?.extensions["com.daon.face.liveness.ifp"] = self?.optionInjectionAttackDetection.description
             
-            self.show(title: "Face Injection Attack Detection",
+            self?.show(title: "Face Injection Attack Detection",
                     message: "If the injection attack detection extension is provided in the server policy, this setting has no effect. The server policy takes precedence.")
-            self.busy(on: true)
-            self.fido?.initialize(parameters: self.extensions) { (error, warnings) in
-                self.busy(on: false)
+            self?.busy(on: true)
+            if let extensions = self?.extensions {
+                self?.fido?.initialize(parameters: extensions) { (error, warnings) in
+                    Task { @MainActor in
+                        self?.busy(on: false)
+                    }
+                }
             }
         }
         
-        let resetAction = UIAlertAction(title: "Reset", style: .destructive) { _ in
-            self.reset()
+        let resetAction = UIAlertAction(title: "Reset", style: .destructive) { [weak self] _ in
+            self?.reset()
         }
         
         alertController.addAction(swiftUIAction)
@@ -335,20 +355,22 @@ class ViewController: UIViewController, IXUAFDelegate {
         self.present(alertController, animated: true)
     }
     
-    func deleteUser(completion: @escaping (Error?) -> (Void)) {
+    func deleteUser(completion: @escaping @Sendable (Error?) -> (Void)) {
                 
-        fido?.deregister(username: username) { [self] (aaid, error) in
+        fido?.deregister(username: username) { [weak self] (aaid, error) in
             if aaid == nil {
-                Logging.log(string: "De-register: complete");
+                Logging.shared.log(string: "De-register: complete");
                 
                 // Archive user
-                fido?.delete(username: username, parameters: nil, completion: completion)
+                if let username = self?.username {
+                    self?.fido?.delete(username: username, parameters: nil, completion: completion)
+                }
                 
             } else {
                 if let e = error {
-                    Logging.log(string: "De-register: \(e.localizedDescription)")
+                    Logging.shared.log(string: "De-register: \(e.localizedDescription)")
                 } else {
-                    Logging.log(string: "De-register: \(aaid!)")
+                    Logging.shared.log(string: "De-register: \(aaid!)")
                 }
             }
         }
@@ -362,11 +384,11 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         busy(on: true)
         
-        fido?.register(aaid: aaid, username: username, data:data, parameters: nil) { (res, error) in
+        fido?.register(aaid: aaid, username: username, data:data, parameters: nil) { [weak self] (res, error) in
             if let e = error {
-                self.show(error: e)
+                self?.show(error: e)
             } else {
-                self.show(title: "Register", response:res);
+                self?.show(title: "Register", response:res);
             }
         }
     }
@@ -379,11 +401,11 @@ class ViewController: UIViewController, IXUAFDelegate {
                            username: username,
                            data:data,
                            description: "Authenticate",
-                           parameters: [kIXUAFServiceParameterOTP : optionConfirmationOTP]) { (res, error) in
+                           parameters: [kIXUAFServiceParameterOTP : optionConfirmationOTP]) { [weak self] (res, error) in
             if let e = error {
-                self.show(error: e)
+                self?.show(error: e)
             } else {
-                self.show(title: "Authenticate", response:res)
+                self?.show(title: "Authenticate", response:res)
             }
         }
     }
@@ -400,33 +422,42 @@ class ViewController: UIViewController, IXUAFDelegate {
         let alertController = UIAlertController(title: "Register", message: "Note. Passcode is hardcoded to \"1234\"", preferredStyle: .actionSheet)
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) )
-        
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = .zero
-        
-        fido?.discover() { (data, error) in
+                
+        fido?.discover() { [weak self] (data, error) in
+            guard let self = self else {
+                return
+            }
+            
             if let e = error {
-                self.show(error: e)
+                Task { @MainActor in
+                    self.show(error: e)
+                }
             } else {
                 
                 if let authenticators = data?.availableAuthenticators {
                     for authenticator in authenticators {
-                                                
-                        if !authenticator.registered(withUsername: self.username, appId: self.fido?.application) && self.supported(aaid: authenticator.aaid) {
-                            let action = UIAlertAction(title: authenticator.title, style: .default) { action in
+                        Task { @MainActor in
+                            if !authenticator.registered(withUsername: self.username, appId: self.fido?.application) && self.supported(aaid: authenticator.aaid) {
                                 
-                                // HACK: Hard code data for password. This only makes sense for a
-                                // password authenticator, it is ignored otherwise.
-                                self.register(aaid: authenticator.aaid, data:"1234")
+                                let action = UIAlertAction(title: authenticator.title, style: .default) { action in
+                                    
+                                    // HACK: Hard code data for password. This only makes sense for a
+                                    // password authenticator, it is ignored otherwise.
+                                    self.register(aaid: authenticator.aaid, data:"1234")
+                                }
+                                alertController.addAction(action)
                             }
-                            alertController.addAction(action)
                         }
                     }
                     
-                    self.present(alertController, animated: true)
+                    Task { @MainActor in
+                        self.present(alertController, animated: true)
+                    }
                     
                 } else {
-                    self.show(title:"Register", message:"No authenticators")
+                    Task { @MainActor in
+                        self.show(title:"Register", message:"No authenticators")
+                    }
                 }
             }
         }
@@ -438,34 +469,36 @@ class ViewController: UIViewController, IXUAFDelegate {
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) )
         
-        alertController.popoverPresentationController?.sourceView = self.view
-        alertController.popoverPresentationController?.sourceRect = .zero
-        
         fido?.discover() { (data, error) in
             if let e = error {
-                self.show(error: e)
+                Task { @MainActor in
+                    self.show(error: e)
+                }
             } else {
                 if let authenticators = data?.availableAuthenticators {
                     for authenticator in authenticators {
-                        
-                        if self.supported(aaid: authenticator.aaid) &&
-                            authenticator.registered(withUsername: self.username, appId: self.fido?.application) {
-                            let action = UIAlertAction(title: authenticator.title, style: .default) { action in
-                                self.authenticate(aaid: authenticator.aaid, data:"1234") // HACK: Hard code data for password
+                        Task { @MainActor in
+                            if self.supported(aaid: authenticator.aaid) &&
+                                authenticator.registered(withUsername: self.username, appId: self.fido?.application) {
+                                let action = UIAlertAction(title: authenticator.title, style: .default) { action in
+                                    self.authenticate(aaid: authenticator.aaid, data:"1234") // HACK: Hard code data for password
+                                }
+                                alertController.addAction(action)
                             }
-                            alertController.addAction(action)
                         }
                     }
                     
-                    self.present(alertController, animated: true)
-                    
+                    Task { @MainActor in
+                        self.present(alertController, animated: true)
+                    }
                 } else {
-                    self.show(title:"Authenticate", message:"No authenticators")
+                    Task { @MainActor in
+                        self.show(title:"Authenticate", message:"No authenticators")
+                    }
                 }
             }
         }
     }
-
     
     // Delegate
     
@@ -473,11 +506,11 @@ class ViewController: UIViewController, IXUAFDelegate {
         _ operation: IXUAFOperation,
         attemptFailedWithInfo info: [String : Any]) {
         
-        Logging.log(string:"***\nAttempt: \(info)\n***")
+            Logging.shared.log(string:"***\nAttempt: \(info)\n***")
         
         let remaining = info["com.daon.user.retriesRemaining"] as! Int
         if remaining == 1 {
-            Logging.log(string:"***\nAttempt: Warning. Only one attempt left until user is locked\n***");
+            Logging.shared.log(string:"***\nAttempt: Warning. Only one attempt left until user is locked\n***");
             
             // Add a delay, so that we can update an existing dialog instead of blocking it
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -485,6 +518,14 @@ class ViewController: UIViewController, IXUAFDelegate {
             }
         }
     }
+    
+//    func operation(_ operation: IXUAFOperation, willAllowAuthenticators authenticators: [[IXUAFAuthenticator]]) -> [[IXUAFAuthenticator]]? {
+//        
+//        
+//        // Return all available authenticators. Authenticators can be removed from the list for
+//        // additional filtering.
+//        return authenticators
+//    }
     
     // Use the following to enable replacement of default authenticator screens.
     //
@@ -577,7 +618,8 @@ class ViewController: UIViewController, IXUAFDelegate {
 
     func show(title: String, response:[String : Any]?) {
         if let res = response {
-            show(title:title, message:res.filter({ (k, v) in return k != "request"}).description)
+            show(title:title, message:res.filter({ (k, v) in
+                return k != "request" && k != "application" && k != "request.id"}).description)
         } else {
             show(title:title, message:"Success!")
         }
@@ -592,7 +634,7 @@ class ViewController: UIViewController, IXUAFDelegate {
 
         busy(on: false)
         
-        Logging.log(string:"***\n\(title): \(message)\n***")
+        Logging.shared.log(string:"***\n\(title): \(message)\n***")
 
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {

@@ -31,6 +31,7 @@ enum DASCircularLevelMeterState : Int {
 /*!
  @brief A LevelMeter which is used specifically for generic decibel datasources
  */
+@MainActor
 class DASCircularLevelMeter: UIView {
     // MARK:- Constants
     private let animationDuration = 0.25
@@ -62,7 +63,7 @@ class DASCircularLevelMeter: UIView {
     
     // MARK:- State
     
-    var updateTimer: Timer?
+    private var updateTimer: Timer?
     private var state = DASCircularLevelMeterState.ready
     private var buttonModeEnabled = false
     private var addedLayoutConstraints = false
@@ -583,7 +584,7 @@ class DASCircularLevelMeter: UIView {
     
     
     // MARK:- Memory Management
-    
+    @MainActor
     deinit {
         if updateTimer != nil {
             updateTimer!.invalidate()

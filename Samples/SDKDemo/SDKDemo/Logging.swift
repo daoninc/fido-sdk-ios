@@ -6,11 +6,13 @@
 import Foundation
 
 class Logging {
-    static let max = 20000;
+    @MainActor static let shared = Logging()
     
-    public static var content = String()
+    let max = 20000
+    
+    public var content = String()
         
-    class func log(string : String) {
+    func log(string: String) {
         print("Daon - ", string)
         
         if content.count > max {

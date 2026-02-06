@@ -45,7 +45,8 @@ struct LocalAuthenticationView: View {
 
 
 /// The model class from which the LocalAuthenticationView determines it's state.
-/// 
+///
+@MainActor
 private class LocalAuthenticationViewModel : ObservableObject {
     
     @Published var info : String = ""
@@ -53,6 +54,7 @@ private class LocalAuthenticationViewModel : ObservableObject {
     @Published var error : String = ""
     
     private var context: DASAuthenticatorContext
+    private var started: Bool = false
     
     /// A @link DASAppleBiometricsControllerProtocol @/link object used for registering and authenticating Touch ID / Face ID.
     private var _controller: DASAppleBiometricsControllerProtocol?
@@ -77,7 +79,10 @@ private class LocalAuthenticationViewModel : ObservableObject {
     }
     
     func cancel() {
-        context.cancelCapture()
+        // Only cancel if started otherwise switching tabs will cancel the transaction
+        if started {
+            context.cancelCapture()
+        }
     }
     
     func dismiss() {
@@ -87,24 +92,25 @@ private class LocalAuthenticationViewModel : ObservableObject {
     }
     
     func performAuthentication() {
+        started = true
+        
         let reason = context.isRegistration ? "Register" : "Authenticate"
         
         controller.performAuthentication(withReason: reason) { (error) in
-            
-            guard let err = error else {
-                self.context.completeCapture()
-                return
-            }
-            
-            // Show an error
-            if let authenticatorError = DASAuthenticatorError(rawValue: err._code) {
-                if authenticatorError != .cancelled {
-                    DispatchQueue.main.async { // Published properties should be updated on the main thread.
+            Task { @MainActor in
+                guard let err = error else {
+                    self.context.completeCapture()
+                    return
+                }
+                
+                // Show an error
+                if let authenticatorError = DASAuthenticatorError(rawValue: err._code) {
+                    if authenticatorError != .cancelled {
                         self.error = DASUtils.string(forError: authenticatorError) ?? DASUtils.string(forError: .faceIdFailedToVerify)
                         self.alert = true
+                    } else {
+                        self.cancel()
                     }
-                } else {
-                    self.cancel()
                 }
             }
         }

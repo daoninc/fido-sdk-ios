@@ -28,7 +28,7 @@ class Settings {
         static let notification = "com.daon.notification"
     }
     
-    static let shared = Settings()
+    @MainActor static let shared = Settings()
     
     init() {
         if let initialDefaultsPath = Bundle.main.path(forResource: "defaultPrefs", ofType: "plist") {

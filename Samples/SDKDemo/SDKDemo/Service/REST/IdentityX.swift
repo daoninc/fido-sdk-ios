@@ -9,12 +9,16 @@
 
 import UIKit
 
-class IdentityX {
+
+final class IdentityX: Sendable {
         
-    var url = "https://us-dev-env4.identityx-cloud.com/unittests"
-    var serverApplicationID = "unittests"
-    var serverUsername = "admin2"
+//    var url = "https://us-dev-env4.identityx-cloud.com/unittests"
+//    var serverApplicationID = "unittests"
+//    var serverUsername = "admin2"
     
+    let url: String?
+    let serverApplicationID: String?
+    let serverUsername: String?
     let RESTPath = "IdentityXServices/rest/v1"
     
     internal struct Entity {
@@ -68,7 +72,7 @@ class IdentityX {
      * @param policyId - Registration policy ID
      * @return
      */
-    func registrationChallenge(username: String, policyID: String, completion: @escaping (Error?, RegistrationChallenge?) -> (Void)) {
+    func registrationChallenge(username: String, policyID: String, completion: @escaping @Sendable (Error?, RegistrationChallenge?) -> (Void)) {
         
         // NOTE
         // ====
@@ -123,29 +127,24 @@ class IdentityX {
      * @param registrationChallenge - the registration challenge
      * @return Updated RegistrationChallenge
      */
-    func update(registrationChallenge: RegistrationChallenge, completion: @escaping (Error?, RegistrationChallenge?) -> (Void)) {
+    func update(registrationId: String, registrationResponse: String, completion: @escaping @Sendable (Error?, RegistrationChallenge?) -> (Void)) {
+                        
+        let challenge   = [JSON.id                       : registrationId,
+                           JSON.status                   : JSON.pending,
+                           JSON.fidoRegistrationResponse : registrationResponse]
         
-        if let id = registrationChallenge.id, let fidoRegistrationResponse = registrationChallenge.fidoRegistrationResponse {
-            
-            let challenge   = [JSON.id                       : id,
-                               JSON.status                   : JSON.pending,
-                               JSON.fidoRegistrationResponse : fidoRegistrationResponse]
-            
-            HTTP.post(url: url(entity:Entity.registrationChallenges + "/" + id), username: serverUsername, payload: challenge) { (error, response) -> (Void) in
-                if let err = error {
-                    completion(err, nil)
-                } else {
-                    do {
-                        let jsonResponseData = response!.data(using: String.Encoding.utf8)
-                        let regChallengeObject = try JSONDecoder().decode(RegistrationChallenge.self, from: jsonResponseData!)
-                        completion(nil, regChallengeObject)
-                    } catch (_) {
-                        completion(HTTPError.updateRegistrationChallengeCantDecode, nil)
-                    }
+        HTTP.post(url: url(entity:Entity.registrationChallenges + "/" + registrationId), username: serverUsername, payload: challenge) { (error, response) -> (Void) in
+            if let err = error {
+                completion(err, nil)
+            } else {
+                do {
+                    let jsonResponseData = response!.data(using: String.Encoding.utf8)
+                    let regChallengeObject = try JSONDecoder().decode(RegistrationChallenge.self, from: jsonResponseData!)
+                    completion(nil, regChallengeObject)
+                } catch (_) {
+                    completion(HTTPError.updateRegistrationChallengeCantDecode, nil)
                 }
             }
-        } else {
-            completion(HTTPError.updateRegistrationChallengeServerError, nil)
         }
     }
     
@@ -158,7 +157,7 @@ class IdentityX {
      *
      * @return AuthenticationRequest
      */
-    func authenticationRequest(username: String?, policyID: String, description: String, otp: Bool, completion: @escaping (Error?, AuthenticationRequest?) -> (Void)) {
+    func authenticationRequest(username: String?, policyID: String, description: String, otp: Bool, completion: @escaping @Sendable (Error?, AuthenticationRequest?) -> (Void)) {
         
         let applicationId   = serverApplicationID
         let policyID        = policyID
@@ -201,14 +200,61 @@ class IdentityX {
      *
      * @return AuthenticationRequest
      */
-    func update(authenticationRequest: AuthenticationRequest, completion: @escaping (Error?, AuthenticationRequest?) -> (Void)) {
+    func update(authenticationId: String, authenticationResponse: String, completion: @escaping @Sendable (Error?, AuthenticationRequest?) -> (Void)) {
+                    
+        let request = [JSON.id                           : authenticationId,
+                       JSON.fidoAuthenticationResponse   : authenticationResponse]
         
-        if let id = authenticationRequest.id, let fidoAuthenticationResponse = authenticationRequest.fidoAuthenticationResponse {
+        HTTP.post(url: url(entity: Entity.authenticationRequests + "/" + authenticationId), username: serverUsername, payload: request) { (error, response) -> (Void) in
+            if let err = error {
+                completion(err, nil)
+            } else {
+                do {
+                    let jsonResponseData = response!.data(using: String.Encoding.utf8)
+                    let authRequestObject = try JSONDecoder().decode(AuthenticationRequest.self, from: jsonResponseData!)
+                    completion(nil, authRequestObject)
+                } catch _ {
+                    completion(HTTPError.updateAuthenticationRequestDecodeError, nil)
+                }
+            }
+        }
+    }
+    
+    /**
+     * Update an failed attempts
+     *
+     * @param info - failed attempt data
+     * @param authenticationRequest - authentication request to update
+     *
+     * @return AuthenticationRequest
+     */
+    func update(withAttempt info: [String : Any], requestId: String, completion: @escaping @Sendable  (Error?, AuthenticationRequest?) -> (Void)) {
+        
+        var attempt = [String : Any]()
+        
+        if let authKeyId = info["userAuthKeyId"] {
             
-            let request = [JSON.id                           : id,
-                           JSON.fidoAuthenticationResponse   : fidoAuthenticationResponse]
+            // Note
+            // Only works if we have a key id
+            //
             
-            HTTP.post(url: url(entity: Entity.authenticationRequests + "/" + id), username: serverUsername, payload: request) { (error, response) -> (Void) in
+            attempt[JSON.authKeyId] = authKeyId as? String
+            
+            if let errorCode = info["errorCode"] {
+                attempt[JSON.errorCode] = errorCode as? Int
+            }
+            
+            if let score = info["score"] {
+                attempt[JSON.score] = score as? Double
+            }
+            
+            let request = [JSON.id                  : requestId,
+                           JSON.failedClientAttempt : attempt] as [String : Any]
+            
+            
+            HTTP.post(url: url(entity: Entity.authenticationRequests + "/" + requestId + "/appendFailedAttempt"),
+                      username: serverUsername,
+                      payload: request) { (error, response) -> (Void) in
                 if let err = error {
                     completion(err, nil)
                 } else {
@@ -221,63 +267,6 @@ class IdentityX {
                     }
                 }
             }
-        } else {
-            completion(HTTPError.updateAuthenticationRequestServerError, nil)
-        }
-    }
-    
-    /**
-     * Update an failed attempts
-     *
-     * @param info - failed attempt data
-     * @param authenticationRequest - authentication request to update
-     *
-     * @return AuthenticationRequest
-     */
-    func update(withAttempt info: [String : Any], authenticationRequest: AuthenticationRequest, completion: @escaping (Error?, AuthenticationRequest?) -> (Void)) {
-        
-        if let id = authenticationRequest.id {
-            
-            var attempt = [String : Any]()
-            
-            if let authKeyId = info["userAuthKeyId"] {
-                
-                // Note
-                // Only works if we have a key id
-                //
-                
-                attempt[JSON.authKeyId] = authKeyId as? String
-                
-                if let errorCode = info["errorCode"] {
-                    attempt[JSON.errorCode] = errorCode as? Int
-                }
-                
-                if let score = info["score"] {
-                    attempt[JSON.score] = score as? Double
-                }
-                
-                let request = [JSON.id                  : id,
-                               JSON.failedClientAttempt : attempt] as [String : Any]
-                
-                
-                HTTP.post(url: url(entity: Entity.authenticationRequests + "/" + id + "/appendFailedAttempt"),
-                          username: serverUsername,
-                          payload: request) { (error, response) -> (Void) in
-                    if let err = error {
-                        completion(err, nil)
-                    } else {
-                        do {
-                            let jsonResponseData = response!.data(using: String.Encoding.utf8)
-                            let authRequestObject = try JSONDecoder().decode(AuthenticationRequest.self, from: jsonResponseData!)
-                            completion(nil, authRequestObject)
-                        } catch _ {
-                            completion(HTTPError.updateAuthenticationRequestDecodeError, nil)
-                        }
-                    }
-                }
-            }
-        } else {
-            completion(HTTPError.updateAuthenticationRequestServerError, nil)
         }
     }
     
@@ -286,7 +275,7 @@ class IdentityX {
      *
      * @param policyId - IdentityX policyID
      */
-    func policy(id: String, completion: @escaping (Error?, String?) -> (Void)) {
+    func policy(id: String, completion: @escaping @Sendable (Error?, String?) -> (Void)) {
         
         let policyId = id
         
@@ -329,7 +318,7 @@ class IdentityX {
      *
      * @param id - IdentityX policy entity ID
      */
-    private func policyContent(id: String, completion: @escaping (Error?, String?) -> (Void)) {
+    private func policyContent(id: String, completion: @escaping @Sendable (Error?, String?) -> (Void)) {
         
         HTTP.get(url: url(entity: Entity.policies + "/" + id), username: serverUsername) { (error, response) -> (Void) in
             if let e = error {
@@ -361,7 +350,7 @@ class IdentityX {
      *
      * @param username - IdentityX userId / username
      */
-    private func user(username: String, completion: @escaping (Error?, User?) -> (Void)) {
+    private func user(username: String, completion: @escaping @Sendable (Error?, User?) -> (Void)) {
         
         HTTP.get(url: url(entity: Entity.users + "?userId=" + username), username: serverUsername) { (error, response) -> (Void) in
             if let e = error {
@@ -405,14 +394,15 @@ class IdentityX {
      *
      * @param username - IdentityX userId / username
      */
-    func archive(username: String, completion: @escaping (Error?) -> (Void)) {
+    func archive(username: String, completion: @escaping @Sendable (Error?) -> (Void)) {
         
-        user(username: username) { [self] (error, user) -> (Void) in
+        user(username: username) { (error, user) -> (Void) in
             if let e = error {
                 completion(e)
             } else {
-                if let id = user?.id {                    
-                    HTTP.post(url: self.url(entity: Entity.users + "/" + id + "/archived"), username: serverUsername, payload: [:]) { (error, response) in
+                if let id = user?.id {
+                    let url = self.url(entity: Entity.users + "/" + id + "/archived")
+                    HTTP.post(url: url, username: self.serverUsername, payload: [:]) { (error, response) in
                         completion(error)
                     }
                 } else {
@@ -428,7 +418,7 @@ class IdentityX {
      *
      * @param username - IdentityX userId / username
      */
-    func authenticators(username: String, completion: @escaping (Error?, [Authenticator]?) -> (Void)) {
+    func authenticators(username: String, completion: @escaping @Sendable (Error?, [Authenticator]?) -> (Void)) {
         
         user(username: username) { (error, user) -> (Void) in
             if let e = error {
@@ -449,7 +439,7 @@ class IdentityX {
      *
      * @param id - IdentityX user entity ID
      */
-    private func authenticators(userid: String, completion: @escaping (Error?, [Authenticator]?) -> (Void)) {
+    private func authenticators(userid: String, completion: @escaping @Sendable (Error?, [Authenticator]?) -> (Void)) {
         
         HTTP.get(url: url(entity: Entity.users + "/" + userid + "/authenticators?limit=1000"), username: serverUsername) { (error, response)  in
             if let e = error {
@@ -475,7 +465,7 @@ class IdentityX {
      * @param id - Authenticator ID
      * @param username - Username
      */
-    func archive(authenticator id: String, username: String, completion: @escaping (Error?, String?) -> (Void)) {
+    func archive(authenticator id: String, username: String, completion: @escaping @Sendable (Error?, String?) -> (Void)) {
         
         HTTP.post(url: url(entity: Entity.authenticators + "/" + id + "/archived"), username: serverUsername, payload: [:]) { (error, response) in
             if let err = error {
@@ -494,6 +484,6 @@ class IdentityX {
     
 
     private func url(entity: String) -> String {
-        return url + "/" + RESTPath + "/" + entity
+        return "\(url ?? "NA")/\(RESTPath)/\(entity)"
     }
 }

@@ -10,7 +10,8 @@ import DaonAuthenticatorFaceIFP
 import DaonAuthenticatorSDK
 import DaonFaceSDK
 
-class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
+
+class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDelegate {
     
     private var context: DASAuthenticatorContext?
     
@@ -31,6 +32,7 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
     @Published var state : State = .start
     @Published var color : Color = .gray
     
+    @MainActor
     init(context: DASAuthenticatorContext?, useCustomView: Bool = false) {
         self.context = context
         self.useCustomView = useCustomView
@@ -47,7 +49,10 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
     }
     
     // Use the Face Capture API to capture and submit an image to the server
+    @MainActor
     func startCapture() {
+        
+        showButtonBar(state: .start)
         
         // Configure the face controller
         capture?.deviceUprightDetection = true
@@ -81,26 +86,28 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
         hideButtonBar()
     }
     
-    func start() {
+    @MainActor func start() {
         hideButtonBar()
         capture?.reset()
     }
     
-    func confirm() {
+    @MainActor func confirm() {
         setBusy()
                 
         capture?.submit()
     }
     
-    func retry() {
+    @MainActor func retry() {
         hideButtonBar()
         self.message = "Get ready to capture your face again"
         capture?.reset()
     }
     
-    func cancel() {
+    @MainActor func cancel() {
         capture?.cancel() {
-            self.context?.completeCapture(error: .cancelled)
+            if self.state != .start {
+                self.context?.completeCapture(error: .cancelled)
+            }
         }
     }
     
@@ -109,28 +116,24 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
     //
     
     func faceCaptureDidUpdate(message: String, image: UIImage?) {
-        DispatchQueue.main.async {
-            self.message = message
-        }
+        self.message = message
     }
     
     func faceCaptureDidUpdate(result: Result, image: UIImage) {
         // Don't stay in this delegate too long.
         
-        DispatchQueue.main.async {
-            if result.hasAcceptableQuality && result.isDeviceUpright {
-                self.color = .green
-            } else {
-                self.color = .red
-            }
+        if result.hasAcceptableQuality && result.isDeviceUpright {
+            self.color = .green
+        } else {
+            self.color = .red
         }
     }
     
+    @MainActor
     func faceCaptureDidFail(error: Error) {
         // Capture failed and retry is allowed.
-        DispatchQueue.main.async {
-            self.showButtonBar(state: .error, error: error.localizedDescription)
-        }
+        
+        self.showButtonBar(state: .error, error: error.localizedDescription)
         
         if error._code == DASAuthenticatorError.authenticatorAuthTokenMismatch.rawValue {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -140,6 +143,7 @@ class FaceViewModel : NSObject, ObservableObject,  DASFaceCaptureDelegate {
     }
     
     // Custom view and overlay
+    @MainActor
     func faceCaptureShouldUseView(frame: CGRect) -> UIView? {
         
         if #available(iOS 15.0, *) {

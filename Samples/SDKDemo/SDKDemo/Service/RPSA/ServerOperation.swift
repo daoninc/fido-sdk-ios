@@ -18,7 +18,7 @@ private enum ServerOperationType : String {
     case DELETE = "DELETE"
 }
 
-class ServerOperation: NSObject, URLSessionDataDelegate {
+class ServerOperation: NSObject, URLSessionDataDelegate, @unchecked Sendable {
     // MARK:- Properties
     private var operationType : ServerOperationType
     private var url: String

@@ -75,6 +75,7 @@ class CustomUIHostingController: UIHostingController<AnyView>, UIAdaptivePresent
         
         self.context?.cancelCapture()
         self.multiAuthenticatorContext?.cancelCapture()
+        self.dismiss(animated: false)
     }
 }
 

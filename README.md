@@ -62,20 +62,6 @@ fido?.initialize(parameters: params) { (code, warnings) in
             self.show(title: "Initialize", message: "\(code.rawValue)")
         }
     }
-    
-    for warning in warnings {
-        if warning == IXUAFWarningDeviceDebug {
-            self.updateInfo(message: "Application is running in debug mode")
-        } else if warning == IXUAFWarningDeviceSimulator {
-            self.updateInfo(message: "Application is running in a simulator")
-        } else if warning == IXUAFWarningDeviceSecurityDisabled {
-            self.updateInfo(message: "Device passcode/Touch ID/Face ID is not enabled")
-        } else if warning == IXUAFWarningDeviceCompromised {
-            self.updateInfo(message: "Device is jailbroken")
-        } else if warning == IXUAFWarningKeyMigrationFailed {
-            self.updateInfo(message: "Touch ID/Face ID. One or more keys failed to migrate and has been invalidated.")
-        }
-    }
 }
 
 

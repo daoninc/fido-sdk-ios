@@ -15,14 +15,13 @@ class StatusViewController: UIViewController {
     
     @IBAction func indexChanged(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
-            case 0: textView.text = info()
-            case 1: textView.text = Logging.content
-            default: break
+        case 0: textView.text = info()
+        case 1: textView.text = Logging.shared.content
+        default: break
         }
     }
     
     override func viewDidLoad() {
-        
         textView.text = info()
     }
     

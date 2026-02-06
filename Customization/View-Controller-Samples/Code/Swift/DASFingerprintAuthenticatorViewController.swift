@@ -167,7 +167,8 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
     /*!
      @brief Uses the @link fingerprintController @/link to bring up the Touch ID dialog and handle its response.
      */
-    fileprivate func performTouchIDAuthentication() {
+    
+    private func performTouchIDAuthentication() {
         if !self.isCancelling {
             var localizedReason = localise("Fingerprint Screen - Reason - Authentication")
             
@@ -175,42 +176,45 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
                 localizedReason = localise("Fingerprint Screen - Reason - Registration")
             }
             
-            fingerprintController!.performAuthentication(withReason: localizedReason) { (error) in
-                if !self.isCancelling {
-                    if error == nil {
-                        self.retryButton.isHidden       = true
-                        self.resultImageView.alpha      = 0
-                        self.resultImageView.isHidden   = false
-                        
-                        UIView.animate(withDuration: 0.25,
-                                       animations: { self.resultImageView.alpha = 1 },
-                                       completion: { (finished) in
-                                        
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                                            if !self.isCancelling {
-                                                self.captureCompleted = true
-                                                self.showCancelButton()
-                                                self.singleAuthenticatorContext?.completeCapture()
+            fingerprintController!.performAuthentication(withReason: localizedReason) { error in
+                Task { @MainActor in
+                    if !self.isCancelling {
+                        if error == nil {
+                            self.retryButton.isHidden       = true
+                            self.resultImageView.alpha      = 0
+                            self.resultImageView.isHidden   = false
+                            
+                            UIView.animate(withDuration: 0.25,
+                                           animations: { self.resultImageView.alpha = 1 },
+                                           completion: { (finished) in
+                                            
+                                            Task { @MainActor in
+                                                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                                                if !self.isCancelling {
+                                                    self.captureCompleted = true
+                                                    self.showCancelButton()
+                                                    self.singleAuthenticatorContext?.completeCapture()
+                                                }
                                             }
-                                        })
-                        })
-                    } else {
-                        self.retryButton.isHidden = false
-                        
-                        if let authenticatorError = DASAuthenticatorError(rawValue: error!._code) {
-                            if authenticatorError != .cancelled {
-                                var message = self.string(forError: authenticatorError)
-                                
-                                if message == "UNKNOWN" {
-                                    message = self.string(forError: .fingerprintFailedToVerify)
-                                }
-                                
-                                self.showAlert(withTitle: self.localise("Alert - Title - Error"),
-                                               message: message)
-                            }
+                            })
                         } else {
-                            IXALog.logError(withTag: KDASLocalAuthenticationLoggingTag, message: String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error!._code, error!.localizedDescription))
-                            self.singleAuthenticatorContext!.completeCapture(error: .authenticatorInconsistentState)
+                            self.retryButton.isHidden = false
+                            
+                            if let authenticatorError = DASAuthenticatorError(rawValue: error!._code) {
+                                if authenticatorError != .cancelled {
+                                    var message = self.string(forError: authenticatorError)
+                                    
+                                    if message == "UNKNOWN" {
+                                        message = self.string(forError: .fingerprintFailedToVerify)
+                                    }
+                                    
+                                    self.showAlert(withTitle: self.localise("Alert - Title - Error"),
+                                                   message: message)
+                                }
+                            } else {
+                                IXALog.logError(withTag: KDASLocalAuthenticationLoggingTag, message: String(format: "Could not convert error to DASAuthenticatorError: %d - %@", error!._code, error!.localizedDescription))
+                                self.singleAuthenticatorContext!.completeCapture(error: .authenticatorInconsistentState)
+                            }
                         }
                     }
                 }

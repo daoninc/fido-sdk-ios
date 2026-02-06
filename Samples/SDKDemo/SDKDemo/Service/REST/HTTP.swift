@@ -10,7 +10,7 @@
 import UIKit
 import DaonCryptoSDK
 
-typealias CompletionHandler = (Error?, String?) -> (Void)
+typealias CompletionHandler = @Sendable (Error?, String?) -> (Void)
 
 class HTTP: NSObject {
     
@@ -92,9 +92,8 @@ class HTTP: NSObject {
     }
    
     // MARK:- Helper Methods
-    
     private class func execute(request: URLRequest, completion: @escaping CompletionHandler) {
-        
+                
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let responseError = error {

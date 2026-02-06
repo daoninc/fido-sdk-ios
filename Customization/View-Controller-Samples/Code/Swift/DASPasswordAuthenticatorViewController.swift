@@ -26,7 +26,7 @@ enum DASPasscodeCaptureState: Int {
  @brief View Controller for collecting a passcode.
  */
 @objc(DASPasswordAuthenticatorViewController)
-class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase, UITextFieldDelegate, DASDataControllerWrapperDelegate {
+class DASPasswordAuthenticatorViewController: DASAuthenticatorViewControllerBase, UITextFieldDelegate, @MainActor DASDataControllerWrapperDelegate {
     // MARK:- Controllers
     
     /*!

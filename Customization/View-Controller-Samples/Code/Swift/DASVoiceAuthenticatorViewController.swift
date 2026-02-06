@@ -6,7 +6,7 @@
 //
 
 import DaonAuthenticatorVoice
-import DaonAuthenticatorSDK
+@preconcurrency import DaonAuthenticatorSDK
 import DaonCryptoSDK
 
 
@@ -14,7 +14,7 @@ import DaonCryptoSDK
  @brief View Controller for collecting one or more voice samples.
  */
 @objc(DASVoiceAuthenticatorViewController)
-class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase, DASVoiceControllerDelegate {
+class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase, @MainActor DASVoiceControllerDelegate {
     
     /*!
      @brief The duration of the fade in/out animation for the @link utteranceLabel @/link control.
@@ -185,31 +185,33 @@ class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase, D
         if voiceController.isRecording() {
             voiceController.stopRecording() { [self] error, data in
               
-                if let sample = data {
-                    if registration {
-                        voiceSamples.append(sample)
-                                                
-                        if voiceSampleIndex < expectedVoiceSamples {
+                Task { @MainActor in                    
+                    if let sample = data {
+                        if registration {
+                            voiceSamples.append(sample)
                             
-                            voiceSampleIndex += 1
-                            
-                            showCancelButton()
-                            showUtteranceLabel()
-                            
-                            levelMeter.showSuccess(reset: true)
-                            updateProgress()
+                            if voiceSampleIndex < expectedVoiceSamples {
+                                
+                                voiceSampleIndex += 1
+                                
+                                showCancelButton()
+                                showUtteranceLabel()
+                                
+                                levelMeter.showSuccess(reset: true)
+                                updateProgress()
+                            } else {
+                                levelMeter.showProcessing()
+                                hideUtteranceLabel()
+                                voiceController.register(samples: self.voiceSamples)
+                            }
                         } else {
                             levelMeter.showProcessing()
                             hideUtteranceLabel()
-                            voiceController.register(samples: self.voiceSamples)
+                            voiceController.authenticate(sample: sample)
                         }
                     } else {
-                        levelMeter.showProcessing()
-                        hideUtteranceLabel()
-                        voiceController.authenticate(sample: sample)
+                        fail(error: error ?? DASUtils.error(forError: .voiceUnknownError))
                     }
-                } else {
-                    fail(error: error ?? DASUtils.error(forError: .voiceUnknownError))
                 }
             }
         } else {
@@ -291,16 +293,17 @@ class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase, D
         }
         
         context.incrementFailures(error: error._code, score: score) { (lockError) in
-            
-            if let e = lockError  {
-                // We are locked
-                self.fail(error: e)
-            } else {
-                // We are not locked, so check for too many attempts
-                if context.haveEnoughFailedAttemptsForWarning() {
-                    self.fail(error: DASUtils.error(forError: DASAuthenticatorError.voiceMultipleFailedAttempts))
+            Task { @MainActor in
+                if let e = lockError  {
+                    // We are locked
+                    self.fail(error: e)
                 } else {
-                    self.fail(error: error)
+                    // We are not locked, so check for too many attempts
+                    if context.haveEnoughFailedAttemptsForWarning() {
+                        self.fail(error: DASUtils.error(forError: DASAuthenticatorError.voiceMultipleFailedAttempts))
+                    } else {
+                        self.fail(error: error)
+                    }
                 }
             }
         }

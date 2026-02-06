@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:">
+      location = "self:/Users/jmortensen/Documents/Source/GitHub/identityx-ios-sdk-fido/Samples/IdentityX-Swift/SDKDemo.xcodeproj">
    </FileRef>
 </Workspace>

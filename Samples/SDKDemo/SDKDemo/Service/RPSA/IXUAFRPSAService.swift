@@ -12,7 +12,7 @@
 //
 //  Implements the IXUAFServiceDelegate protocol used by IXUAF()
 //
-//  Copyright © 2018-22 Daon. All rights reserved.
+//  Copyright © 2018-26 Daon. All rights reserved.
 //
 
 import SystemConfiguration
@@ -27,81 +27,9 @@ import DaonFIDOSDK
     @objc public static let noSession : Int = 203
 }
 
-@objc public class IXUAFRPSAService : NSObject, IXUAFServiceDelegate {
-    
-    public init(url: String) {
-        RPSAService.shared.server = url
-    }
-    
-    public func serviceRequestAccess(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+
+internal class IXUAFRPSAService : NSObject, IXUAFServiceDelegate {
         
-        if let username = parameters?[kIXUAFServiceParameterUsername] as? String {
-
-            let first = parameters?[kIXUAFServiceParameterAccountNameFirst] as? String ?? "first name"
-            let last = parameters?[kIXUAFServiceParameterAccountNameFirst] as? String ?? "last name"
-            let password = parameters?[kIXUAFServiceParameterAccountPassword] as? String
-            let registration = parameters?[kIXUAFServiceParameterAccountRegistrationRequest] as? Bool ?? true
-            
-            RPSAService.shared.account(first: first,
-                                       last: last,
-                                       username: username,
-                                       password: password,
-                                       registration: registration) { (token, error) in
-                if let e = error {
-                    handler(nil, nil, e)
-                } else {
-                    handler(token, nil, nil)
-                }
-            }
-        }
-    }
-    
-    public func serviceRevokeAccess(parameters params: [String : Any]?, handler: @escaping (Error?) -> Void) {
-        RPSAService.shared.deleteSession(completion: handler)
-    }
-
-    public func serviceDeleteUser(parameters params: [String : Any]?, handler: @escaping (Error?) -> Void) {
-        RPSAService.shared.deleteAccount(completion:handler)
-    }
-    
-    public func serviceRequestRegistration(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
-        RPSAService.shared.serviceRequestRegistration(parameters: parameters, handler: handler)
-    }
-        
-    public func serviceRegister(message: String, parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
-        RPSAService.shared.serviceRegister(message: message, parameters: parameters, handler: handler)
-    }
-    
-    public func serviceRequestAuthentication(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
-        RPSAService.shared.serviceRequestAuthentication(parameters: parameters, handler: handler)
-    }
-    
-    public func serviceAuthenticate(message: String, parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
-        RPSAService.shared.serviceAuthenticate(message: message, parameters: parameters, handler: handler)
-    }
-    
-    public func serviceUpdate(message: String, username: String?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
-        RPSAService.shared.serviceUpdate(message: message, username: username, handler: handler)
-    }
-    
-    public func serviceRequestDeregistration(aaid: String, parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
-        RPSAService.shared.serviceRequestDeregistration(aaid: aaid, parameters: parameters, handler: handler)
-    }
-    
-    public func serviceRequestRegistrationPolicy(parameters: [String : String]?, handler: @escaping (String?, Error?) -> Void) {
-        RPSAService.shared.serviceRequestRegistrationPolicy(parameters: parameters, handler: handler)
-    }
-    
-    public func serviceUpdate(attempt info: [String : Any], handler: @escaping (String?, Error?) -> Void) {
-        RPSAService.shared.serviceUpdate(attempt: info, handler: handler)
-    }
-}
-
-
-internal class RPSAService : NSObject {
-    
-    static let shared: RPSAService = RPSAService()
-    
     var server = "https://emea-rp.identityx-cloud.com/daonfuda-fido/"
     
     // Resources
@@ -174,6 +102,41 @@ internal class RPSAService : NSObject {
         
         return (isReachable && !needsConnection)
     }
+    
+    public init(url: String) {
+        server = url
+    }
+    
+    public func serviceRequestAccess(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+        
+        if let username = parameters?[kIXUAFServiceParameterUsername] as? String {
+
+            let first = parameters?[kIXUAFServiceParameterAccountNameFirst] as? String ?? "first name"
+            let last = parameters?[kIXUAFServiceParameterAccountNameFirst] as? String ?? "last name"
+            let password = parameters?[kIXUAFServiceParameterAccountPassword] as? String
+            let registration = parameters?[kIXUAFServiceParameterAccountRegistrationRequest] as? Bool ?? true
+            
+            account(first: first,
+                                       last: last,
+                                       username: username,
+                                       password: password,
+                                       registration: registration) { (token, error) in
+                if let e = error {
+                    handler(nil, nil, e)
+                } else {
+                    handler(token, nil, nil)
+                }
+            }
+        }
+    }
+    
+    public func serviceRevokeAccess(parameters params: [String : Any]?, handler: @escaping (Error?) -> Void) {
+        deleteSession(completion: handler)
+    }
+
+    public func serviceDeleteUser(parameters params: [String : Any]?, handler: @escaping (Error?) -> Void) {
+        deleteAccount(completion:handler)
+    }
         
     // Get Registration Request message from server
     public func serviceRequestRegistration(parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
@@ -187,10 +150,10 @@ internal class RPSAService : NSObject {
             self.cachedRegistrationRequest = nil
             
         } else {
-            get(resource: KServerResourceRegRequests, completion: { (json, raw) in
+            get(resource: KServerResourceRegRequests, completion: { [weak self] (json, raw) in
                 
                 let response = RequestRegistrationResponse(json: json)
-                self.requestId = response.registrationRequestId
+                self?.requestId = response.registrationRequestId
                 
                 handler(response.fidoRegistrationRequest, [:], nil)
                 
@@ -292,10 +255,10 @@ internal class RPSAService : NSObject {
                         }
                     }
 
-                    post(resource: KServerResourceTransactionAuthRequests, body: body, completion: { (json, raw) in
+                    post(resource: KServerResourceTransactionAuthRequests, body: body, completion: { [weak self] (json, raw) in
             
                         let response = RequestAuthenticationResponse(json: json)
-                        self.requestId = response.authenticationRequestId
+                        self?.requestId = response.authenticationRequestId
             
                         handler(response.fidoAuthenticationRequest, [:], nil)
             
@@ -331,7 +294,7 @@ internal class RPSAService : NSObject {
         }
     }
     
-    public func serviceUpdate(message: String, username: String?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
+    public func serviceUpdate(message: String, username: String?, parameters: [String : Any]?, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
         
         // If this is a registration request we have to use a different server call
         let reader = IXUAFMessageReader.init(message: message)            
@@ -345,7 +308,11 @@ internal class RPSAService : NSObject {
     public func serviceRequestDeregistration(aaid: String, parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
         
         // Get the list of authenticators from the server to get the authenticator id
-        listAuthenticators() { (response) in
+        listAuthenticators() { [weak self] (response) in
+            guard let self = self else {
+                handler(nil, ServerOperationError(errorCode: -1, msg: "Service deallocated"))
+                return
+            }
             
             if let error = response.error {
                 handler(nil, error)
@@ -400,7 +367,7 @@ internal class RPSAService : NSObject {
         }
     }
     
-    public func serviceUpdate(attempt info: [String : Any], handler: @escaping (String?, Error?) -> Void) {
+    public func serviceUpdate(attempt info: [String : Any], parameters: [String : Any]?, handler: @escaping (String?, Error?) -> Void) {
                 
         if info["userAuthKeyId"] != nil {
             
@@ -430,10 +397,10 @@ internal class RPSAService : NSObject {
 
     private func requestAuthentication(resource: String, handler: @escaping (String?, [String : Any]?, Error?) -> Void) {
 
-        get(resource: resource, completion: { (json, raw) in
+        get(resource: resource, completion: { [weak self] (json, raw) in
 
             let response = RequestAuthenticationResponse(json: json)
-            self.requestId = response.authenticationRequestId
+            self?.requestId = response.authenticationRequestId
 
             handler(response.fidoAuthenticationRequest, [:], nil)
 
@@ -452,10 +419,10 @@ internal class RPSAService : NSObject {
         body[jsonFidoAuthenticationResponseKey] = message
         body[jsonAuthenticationRequestIdKey] = requestId
         
-        post(resource: KServerResourceSessions, body: body, completion: { (json, raw) in
+        post(resource: KServerResourceSessions, body: body, completion: { [weak self] (json, raw) in
             
             let response = CreateSessionResponse(json: json)
-            self.sessionId = response.sessionId
+            self?.sessionId = response.sessionId
             handler(response.fidoAuthenticationResponse, [:], nil)
             
         }) { (error) in
@@ -526,32 +493,6 @@ internal class RPSAService : NSObject {
     // Account management
     //
     
-    public func active(authenticators: [IXUAFAuthenticator]?, completion: @escaping ([IXUAFAuthenticator]) -> Void) -> Void {
-        
-        var active = [IXUAFAuthenticator]()
-        
-        if let list = authenticators {
-            
-            // Get the list of authenticators from the server
-            listAuthenticators() { (response) in
-                
-                DispatchQueue.main.async {
-                    if response.error != nil {
-                        completion(list)
-                    } else {
-                        for authenticator in list {
-                            // If the authenticator is active add it
-                            if self.find(authenticators: response.authenticatorInfoList, aaid: authenticator.aaid, status: "ACTIVE") != nil {
-                                active.append(authenticator)
-                            }
-                        }
-                        completion(active)
-                    }
-                }
-            }
-        }
-    }
-    
     private func listAuthenticators(completion: @escaping (ListAuthenticatorsResponse) -> ()) {
         
         get(resource: KServerResourceListAuthenticators, completion: { (json, raw) in
@@ -577,7 +518,7 @@ internal class RPSAService : NSObject {
         body[jsonRegistrationRequestedKey]  = registration ? "true" : "false"
         body[jsonLanguageKey]               = Locale.current.languageCode
         
-        post(resource: KServerResourceAccounts, body: body, completion: { (json, raw) in
+        post(resource: KServerResourceAccounts, body: body, completion: { [weak self] (json, raw) in
                         
             print("Daon Service: create account")
             
@@ -585,17 +526,17 @@ internal class RPSAService : NSObject {
             
             let response = CreateAccountResponse(json: json)
             
-            self.cachedRegistrationRequest = response.fidoRegistrationRequest
-            self.cachedRegistrationRequestId = response.registrationRequestId
-            self.sessionId = response.sessionId
-            completion(self.sessionId, nil)
+            self?.cachedRegistrationRequest = response.fidoRegistrationRequest
+            self?.cachedRegistrationRequestId = response.registrationRequestId
+            self?.sessionId = response.sessionId
+            completion(self?.sessionId, nil)
             
-        }) { (error) in
+        }) { [weak self] (error) in
             // TODO option to disable this
             if error.code == 105 { // Account exists
                 print("Daon Service: create session")
                 
-                self.createSession(username: username,
+                self?.createSession(username: username,
                                    password: password ?? IXAKeychain.string(forKey: "daon.rpsa.password"),
                                    completion: completion)
             } else {
@@ -638,11 +579,11 @@ internal class RPSAService : NSObject {
         body[jsonEmailKey] = username
         body[jsonPasswordKey] = password
 
-        post(resource: KServerResourceSessions, body: body, completion: { (json, raw) in
+        post(resource: KServerResourceSessions, body: body, completion: { [weak self] (json, raw) in
 
             let response = CreateSessionResponse(json: json)
-            self.sessionId = response.sessionId
-            completion(self.sessionId, nil)
+            self?.sessionId = response.sessionId
+            completion(self?.sessionId, nil)
 
         }) { (error) in
             completion(nil, error)

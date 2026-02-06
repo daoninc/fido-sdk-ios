@@ -8,7 +8,7 @@ import UIKit
 import UserNotifications
 import DaonFIDOSDK
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?

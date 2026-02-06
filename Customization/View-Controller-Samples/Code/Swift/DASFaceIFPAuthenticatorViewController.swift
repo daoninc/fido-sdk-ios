@@ -299,7 +299,7 @@ final class OvalMaskView: UIView {
 }
 
 
-extension DASFaceIFPAuthenticatorViewController : DASFaceCaptureDelegate {
+extension DASFaceIFPAuthenticatorViewController : @MainActor DASFaceCaptureDelegate {
     
     func faceCaptureDidUpdate(message: String, image: UIImage?) {
         // Custom view status messages

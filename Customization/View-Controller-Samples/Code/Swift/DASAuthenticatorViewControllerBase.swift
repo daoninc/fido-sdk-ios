@@ -21,7 +21,7 @@ typealias DASAlertDismissalHandler = () -> Void
  @brief Base view controller for all authenticator view controllers.
  */
 @objc(DASAuthenticatorViewControllerBase)
-class DASAuthenticatorViewControllerBase: UIViewController, AVAudioPlayerDelegate, UIAdaptivePresentationControllerDelegate {
+class DASAuthenticatorViewControllerBase: UIViewController, @MainActor AVAudioPlayerDelegate, UIAdaptivePresentationControllerDelegate {
     // MARK:- Controls
     
     /*!
@@ -572,6 +572,7 @@ class DASAuthenticatorViewControllerBase: UIViewController, AVAudioPlayerDelegat
             currentChildVC.willMove(toParent: nil) // Ensures the view controller will do any cancellation / cleanup
             currentChildVC.removeFromParent()
             currentChildVC.view.removeFromSuperview()
+            NotificationCenter.default.removeObserver(currentChildVC)
         }
         
         currentChildViewController = nil

@@ -200,7 +200,6 @@ class DASOrPolicyViewController: DASAuthenticatorViewControllerBase {
      */
     override func authenticatorIsCancelling() {
         isCancelling = true
-        removeCurrentChildAuthenticatorViewController()
     }
     
     
