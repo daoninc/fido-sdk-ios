@@ -5,11 +5,9 @@
 //  Copyright © 2025 Daon. All rights reserved.
 //
 
-import SwiftUI
-
-import DaonAuthenticatorVoice
 @preconcurrency import DaonAuthenticatorSDK
-
+import DaonAuthenticatorVoice
+import SwiftUI
 
 #Preview {
     if #available(iOS 15.0, *) {
@@ -19,14 +17,12 @@ import DaonAuthenticatorVoice
     }
 }
 
-
 /// SwiftUI view for face registration and authentication.
 @available(iOS 15.0, *)
 struct VoiceView: View {
-    
-    @ObservedObject private var model : VoiceViewModel
-    
-    
+
+    @ObservedObject private var model: VoiceViewModel
+
     /// Initializes a new instance of the @link PasscodeView @/link struct.
     /// - Parameter context: The @link DASAuthenticatorContext @/link object with which the view can gain access to a passcode controller for registration and authentication.
     init(context: DASAuthenticatorContext?) {
@@ -50,7 +46,7 @@ struct VoiceView: View {
                         .background(.gray.opacity(0.1))
                     Text(model.info)
                         .bold()
-                    Button(model.state == .start ? "START" :"STOP") {
+                    Button(model.state == .start ? "START" : "STOP") {
                         self.model.toggleRecording()
                     }
                     .foregroundColor(model.state == .start ? .blue : .red)
@@ -58,26 +54,26 @@ struct VoiceView: View {
                 }
             }
             .padding()
-            
+
             Spacer()
-            
+
         }
         .navigationBarTitle(model.title)
-        .onAppear() {
+        .onAppear {
             self.model.updateProgress()
         }
         .alert(model.error, isPresented: $model.alert) {
             Button("OK", role: .cancel) {}
         }
     }
-    
+
 }
 
 @MainActor
-class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceControllerDelegate {
-    
+class VoiceViewModel: NSObject, ObservableObject, @MainActor DASVoiceControllerDelegate {
+
     private var context: DASAuthenticatorContext?
-    
+
     enum CaptureState {
         case start
         case recording
@@ -85,65 +81,66 @@ class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceController
         case success
     }
 
-    @Published var state : CaptureState = .start
-    @Published var info : String = ""
-    @Published var error : String = ""
-    @Published var alert : Bool = false
-    
+    @Published var state: CaptureState = .start
+    @Published var info: String = ""
+    @Published var error: String = ""
+    @Published var alert: Bool = false
+
     private let expectedVoiceSamples = 3
     private var voiceSampleIndex = 1
     private var voiceSamples = [Data]()
-    
+
     private var _controller: DASVoiceControllerProtocol?
-    
-    private var controller : DASVoiceControllerProtocol {
-        
+
+    private var controller: DASVoiceControllerProtocol {
+
         if context != nil {
             if _controller == nil {
-                _controller =  DASVoiceAuthenticatorFactory.createVoiceController(context: context, delegate: self)
+                _controller = DASVoiceAuthenticatorFactory.createVoiceController(
+                    context: context, delegate: self)
             }
         }
         return _controller!
     }
-    
-    var title : String {
+
+    var title: String {
         guard let context = context else {
             return "Voice (SwiftUI)"
         }
-            
-       return "\(context.authenticatorInfo?.authenticatorName ?? "Voice") (SwiftUI)"
+
+        return "\(context.authenticatorInfo?.authenticatorName ?? "Voice") (SwiftUI)"
     }
-    
+
     init(context: DASAuthenticatorContext?) {
         self.context = context
     }
-    
+
     func utterance() -> String {
         guard context != nil else {
             return "The phrase that the user should utter is not defined"
         }
-        
+
         return controller.defaultUtterance() ?? "NA"
     }
-    
+
     func toggleRecording() {
-        
+
         guard let context = context else {
             return
         }
-        
+
         if controller.isRecording() {
-            controller.stopRecording() { [self] error, data in
+            controller.stopRecording { [self] error, data in
                 Task { @MainActor in
-                    
+
                     state = .start
-                    
+
                     if let sample = data {
                         if context.isRegistration {
                             voiceSamples.append(sample)
-                            
+
                             if voiceSampleIndex < expectedVoiceSamples {
-                                
+
                                 voiceSampleIndex += 1
                                 updateProgress()
                             } else {
@@ -164,7 +161,9 @@ class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceController
                 Task { @MainActor in
                     if granted {
                         self.state = .recording
-                        self.controller.startRecording()
+                        if let error = self.controller.startRecording() {
+                            self.fail(error: error)
+                        }
                     } else {
                         self.fail(error: DASUtils.error(forError: .noMicrophonePermission))
                     }
@@ -176,28 +175,29 @@ class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceController
     func updateProgress() {
         if let context = context {
             if context.isRegistration {
-                self.info = String(format: "%d of %d", self.voiceSampleIndex, self.expectedVoiceSamples)
+                self.info = String(
+                    format: "%d of %d", self.voiceSampleIndex, self.expectedVoiceSamples)
             }
         }
     }
-    
+
     func controllerDidCompleteSuccessfully() {
         self.state = .success
-        
+
         // Pause a bit
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 1_000_000_000)
             self.context?.completeCapture()
         }
     }
-    
+
     func controllerDidFail(error: any Error, score: NSNumber?) {
-        
+
         guard let context = context else {
             fail(error: error)
             return
         }
-        
+
         if context.isRegistration {
             fail(error: error)
         } else {
@@ -208,49 +208,52 @@ class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceController
             }
         }
     }
-    
+
     func fail(error: Error) {
         let authenticatorError = DASAuthenticatorError(rawValue: error._code)
         if authenticatorError == .serverUserLockout
             || authenticatorError == .serverTooManyAttempts
             || authenticatorError == .serverVoiceTooManyAttempts
             || authenticatorError == .authenticatorTooManyAttemptsTempLocked
-            || authenticatorError == .authenticatorTooManyAttemptsPermLocked {
-            
+            || authenticatorError == .authenticatorTooManyAttemptsPermLocked
+        {
+
             context?.completeCapture(error: authenticatorError!)
         } else {
-           reset(error: error, recaptureAllSamples:voiceSampleIndex >= expectedVoiceSamples)
+            reset(error: error, recaptureAllSamples: voiceSampleIndex >= expectedVoiceSamples)
         }
     }
 
     func shouldUpdateAttempt(error: Error) -> Bool {
-        
+
         guard let context = context else {
             return false
         }
-        
+
         if context.isADoSRequired {
             return false
         }
-        
+
         return true
     }
 
     func failAndUpdateAttempts(error: Error, score: NSNumber?) {
-        
+
         guard let context = context else {
             return
         }
-        
+
         context.incrementFailures(error: error._code, score: score) { lockError in
             Task { @MainActor in
-                if let e = lockError  {
+                if let e = lockError {
                     // We are locked
                     self.fail(error: e)
                 } else {
                     // We are not locked, so check for too many attempts
                     if context.haveEnoughFailedAttemptsForWarning() {
-                        self.fail(error: DASUtils.error(forError: DASAuthenticatorError.voiceMultipleFailedAttempts))
+                        self.fail(
+                            error: DASUtils.error(
+                                forError: DASAuthenticatorError.voiceMultipleFailedAttempts))
                     } else {
                         self.fail(error: error)
                     }
@@ -258,18 +261,18 @@ class VoiceViewModel : NSObject, ObservableObject, @MainActor DASVoiceController
             }
         }
     }
-    
+
     func reset(error: Error?, recaptureAllSamples: Bool) {
-        
+
         if recaptureAllSamples {
             self.controller.cancel()
             self.voiceSampleIndex = 1
             self.voiceSamples.removeAll()
             self.updateProgress()
         }
-                            
+
         self.state = .start
-        
+
         if let e = error {
             self.alert = true
             self.error = e.localizedDescription

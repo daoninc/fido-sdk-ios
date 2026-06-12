@@ -230,7 +230,7 @@ final class IdentityX: Sendable {
      */
     func update(withAttempt info: [String : Any], requestId: String, completion: @escaping @Sendable  (Error?, AuthenticationRequest?) -> (Void)) {
         
-        var attempt = [String : Any]()
+        var attempt = [String : String]()
         
         if let authKeyId = info["userAuthKeyId"] {
             
@@ -241,11 +241,11 @@ final class IdentityX: Sendable {
             attempt[JSON.authKeyId] = authKeyId as? String
             
             if let errorCode = info["errorCode"] {
-                attempt[JSON.errorCode] = errorCode as? Int
+                attempt[JSON.errorCode] = "\(errorCode)"
             }
             
             if let score = info["score"] {
-                attempt[JSON.score] = score as? Double
+                attempt[JSON.score] = "\(score)"
             }
             
             let request = [JSON.id                  : requestId,

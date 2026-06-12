@@ -1,4 +1,4 @@
-/* 
+/*
   Errors.strings
   DaonAuthenticatorSDK
 
@@ -129,6 +129,8 @@
 "717" = "Could not determine voice model location";
 "718" = "Could not encode audio sample";
 "719" = "Unsupported format";
+"720" = "External microphone detected. Voice biometric operations require the built-in device microphone.";
+"721" = "Built-in microphone not available. No audio input detected.";
 
 // Touch ID
 "800" = "Failed to verify Touch ID";
@@ -266,6 +268,3 @@
 "11602" = "No more face authentication attempts are allowed";
 "11603" = "No more voice authentication attempts are allowed";
 "11604" = "No more passcode authentication attempts are allowed";
-
-
-

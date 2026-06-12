@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -17,13 +18,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>4.9</string>
 	<key>CFBundleVersion</key>
-	<string>4.9.260</string>
+	<string>4.9.266</string>
 	<key>LSRequiresIPhoneOS</key>
-	<true/>
+	<true />
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<true/>
+		<true />
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera</string>
@@ -38,7 +39,7 @@
 	<key>NSMotionUsageDescription</key>
 	<string>Device upright detection</string>
 	<key>UIFileSharingEnabled</key>
-	<false/>
+	<false />
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
