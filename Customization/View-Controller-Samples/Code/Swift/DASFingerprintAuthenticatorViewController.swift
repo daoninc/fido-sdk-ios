@@ -5,8 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
-import DaonCryptoSDK
+import DaonFIDOSDK
 
 /*!
  @brief View Controller for presenting the Touch ID dialog.

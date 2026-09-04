@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 /// SwiftUI view for Touch ID / Face ID registration and authentication.
 

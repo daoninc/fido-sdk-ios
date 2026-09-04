@@ -7,7 +7,7 @@
 
 import UIKit
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 class MultipleChoiceCaptureController: DASCaptureControllerProtocol {
     // MARK:- Member variables

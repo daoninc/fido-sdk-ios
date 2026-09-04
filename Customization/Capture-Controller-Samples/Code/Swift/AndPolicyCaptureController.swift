@@ -5,7 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 class AndPolicyCaptureController: DASCaptureControllerProtocol {
     // MARK:- Member variables
@@ -140,7 +140,7 @@ class AndPolicyCaptureController: DASCaptureControllerProtocol {
                 singleAuthenticatorCaptureController!.execute()
             }
         } else {
-            print("ERROR: Single authenticator context was not created for factor: ", factor)
+            print("ERROR: Single authenticator context was not created.")
             showErrorAndTerminate(error: .authenticatorInconsistentState)
         }
         

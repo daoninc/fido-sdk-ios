@@ -5,8 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
-import DaonCryptoSDK
+import DaonFIDOSDK
 
 /*!
 @brief View Controller for allowing the user to chose one authenticator from a set of authenticators.

@@ -519,14 +519,6 @@ class ViewController: UIViewController, @MainActor IXUAFDelegate {
         }
     }
     
-//    func operation(_ operation: IXUAFOperation, willAllowAuthenticators authenticators: [[IXUAFAuthenticator]]) -> [[IXUAFAuthenticator]]? {
-//        
-//        
-//        // Return all available authenticators. Authenticators can be removed from the list for
-//        // additional filtering.
-//        return authenticators
-//    }
-    
     // Use the following to enable replacement of default authenticator screens.
     //
     // By default, just including one of the Daon provided sample classes referenced below in your project is enough to direct the

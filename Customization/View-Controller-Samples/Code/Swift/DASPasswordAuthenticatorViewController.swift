@@ -5,8 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 import DaonAuthenticatorPasscode
-import DaonAuthenticatorSDK
-import DaonCryptoSDK
+import DaonFIDOSDK
 
 /*!
  @typedef DASPasscodeCaptureState

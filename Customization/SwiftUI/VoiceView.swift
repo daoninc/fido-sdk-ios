@@ -5,7 +5,7 @@
 //  Copyright © 2025 Daon. All rights reserved.
 //
 
-@preconcurrency import DaonAuthenticatorSDK
+@preconcurrency import DaonFIDOSDK
 import DaonAuthenticatorVoice
 import SwiftUI
 

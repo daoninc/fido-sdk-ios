@@ -7,7 +7,7 @@
 
 import UIKit
 import AVFoundation
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 // Typedalias for simplicity
 

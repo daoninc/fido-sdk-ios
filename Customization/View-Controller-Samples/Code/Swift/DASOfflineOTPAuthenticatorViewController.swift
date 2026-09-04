@@ -5,7 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 /*!
  @brief View Controller for scanning a QR code.

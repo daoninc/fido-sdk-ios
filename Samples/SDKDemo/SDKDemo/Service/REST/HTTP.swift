@@ -8,7 +8,7 @@
 // TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import UIKit
-import DaonCryptoSDK
+import DaonFIDOSDK
 
 typealias CompletionHandler = @Sendable (Error?, String?) -> (Void)
 

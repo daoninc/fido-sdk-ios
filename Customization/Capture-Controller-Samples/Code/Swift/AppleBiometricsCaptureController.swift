@@ -5,7 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 class AppleBiometricsCaptureController: DASCaptureControllerProtocol {
     // MARK:- Member variables

@@ -5,7 +5,7 @@
 //  Copyright © 2024 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 class VoiceCaptureController: DASCaptureControllerProtocol {
     

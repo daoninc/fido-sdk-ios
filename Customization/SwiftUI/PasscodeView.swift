@@ -8,8 +8,7 @@
 import SwiftUI
 
 import DaonAuthenticatorPasscode
-@preconcurrency import DaonAuthenticatorSDK
-import DaonCryptoSDK
+@preconcurrency import DaonFIDOSDK
 
 #Preview {
     if #available(iOS 15.0, *) {

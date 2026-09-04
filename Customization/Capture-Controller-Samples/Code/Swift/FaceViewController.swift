@@ -9,7 +9,7 @@
 import AVFoundation
 
 import DaonAuthenticatorFace
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 import DaonFaceSDK
 
 // Closures

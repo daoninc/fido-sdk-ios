@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-import DaonAuthenticatorSDK
-import DaonCryptoSDK
+import DaonFIDOSDK
 
 /// SwiftUI view for switching between different SwiftUI authenticator views.
 

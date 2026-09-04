@@ -5,7 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 import DaonAuthenticatorPasscode
 
 class PasscodeCaptureController: DASCaptureControllerProtocol, DASDataControllerWrapperDelegate {

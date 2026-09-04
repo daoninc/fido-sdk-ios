@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 #Preview {
     if #available(iOS 15.0, *) {

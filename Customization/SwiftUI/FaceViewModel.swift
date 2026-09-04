@@ -7,7 +7,7 @@
 import SwiftUI
 
 import DaonAuthenticatorFaceIFP
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 import DaonFaceSDK
 
 
@@ -64,6 +64,10 @@ class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDele
         capture?.captureMode = .manual
         capture?.delegate = self
         capture?.setParameters([kDFSConfigQualityThresholdEyesOpenKey: 0.65])
+        
+        capture?.trueDepthAssessment = true
+        capture?.trueDepthRequireIdentityMatch = false
+        
         capture?.start(controller: DASUtils.determineHostViewController()) {
             print("CAPTURE DONE")
         }
@@ -115,7 +119,7 @@ class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDele
     // DASFaceCaptureDelegate methods
     //
     
-    func faceCaptureDidUpdate(message: String, image: UIImage?) {
+    func faceCaptureDidUpdate(status: DFSCaptureStatus, message: String, image: UIImage?) {
         self.message = message
     }
     

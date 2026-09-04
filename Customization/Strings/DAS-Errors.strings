@@ -11,6 +11,10 @@
 "1" = "Aborted";
 "2" = "Fallback";
 
+// Face Capture controller
+"3" = "TrueDepth liveness check failed";
+"4" = "Face identity match failed";
+
 // Permissions
 "50" = "App does not have permission to use the Camera. Please check your settings and try again";
 "51" = "App does not have permission to use the Microphone. Please check your settings and try again";

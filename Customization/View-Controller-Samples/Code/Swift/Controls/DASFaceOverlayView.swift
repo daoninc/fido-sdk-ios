@@ -6,7 +6,7 @@
 //
 
 import DaonAuthenticatorFace
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 
 /*!
@@ -270,7 +270,7 @@ class DASFaceOverlayView: UIView {
      @param message The message to display.
      */
     func update(status: String) {
-        print("STATUS: ", status)
+        print("STATUS updated")
     }
     
     

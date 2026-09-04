@@ -6,7 +6,7 @@
 //
 
 import DaonAuthenticatorFace
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 class FaceTemplateCaptureController: DASCaptureControllerProtocol {
     // MARK:- Member variables

@@ -5,7 +5,7 @@
 //  Copyright © 2020-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 /*!
  @brief A placeholder View Controller for registering or authenticating with authenticators that don't typically have a UI (Silent, OTP).

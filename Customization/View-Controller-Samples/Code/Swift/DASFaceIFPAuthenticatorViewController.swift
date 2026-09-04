@@ -5,7 +5,7 @@
 //  Copyright © 2024 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 import DaonAuthenticatorFaceIFP
 
 
@@ -59,6 +59,9 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
                         
         capture?.enhancedDetection = isRegistration ? true : false
         capture?.assessmentDelay = 0.75
+        capture?.trueDepthAssessment = true
+        capture?.trueDepthRequireIdentityMatch = false
+
                         
         capture?.start(controller: self) {
             print("CAPTURE DONE")
@@ -301,7 +304,7 @@ final class OvalMaskView: UIView {
 
 extension DASFaceIFPAuthenticatorViewController : @MainActor DASFaceCaptureDelegate {
     
-    func faceCaptureDidUpdate(message: String, image: UIImage?) {
+    func faceCaptureDidUpdate(status: DFSCaptureStatus, message: String, image: UIImage?) {
         // Custom view status messages
         statusLabel?.text = message
     }

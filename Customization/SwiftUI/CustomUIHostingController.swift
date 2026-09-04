@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 /// Inherits from UIHostingController in order to capture the drag down to dismiss event in hosted SwiftUI views.
 class CustomUIHostingController: UIHostingController<AnyView>, UIAdaptivePresentationControllerDelegate {

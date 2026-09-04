@@ -5,7 +5,7 @@
 //  Copyright © 2019-25 Daon. All rights reserved.
 //
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 class OrPolicyCaptureController: DASCaptureControllerProtocol {
     // MARK:- Member variables
@@ -134,7 +134,7 @@ class OrPolicyCaptureController: DASCaptureControllerProtocol {
                     handleCaptureComplete(.authenticatorNotImplemented)
                 }
             } else {
-                print("ERROR: Single authenticator context was not created for factor: ", factor)
+                print("ERROR: Single authenticator context was not created.")
                 handleCaptureComplete(.authenticatorInconsistentState)
             }
         }

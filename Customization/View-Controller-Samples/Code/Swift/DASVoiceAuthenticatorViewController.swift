@@ -5,9 +5,9 @@
 //  Copyright © 2019-24 Daon. All rights reserved.
 //
 
-@preconcurrency import DaonAuthenticatorSDK
+@preconcurrency import DaonFIDOSDK
 import DaonAuthenticatorVoice
-import DaonCryptoSDK
+import DaonFIDOSDK
 
 /*!
  @brief View Controller for collecting one or more voice samples.

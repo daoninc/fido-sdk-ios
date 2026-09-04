@@ -7,7 +7,7 @@
 
 import UIKit
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 import DaonAuthenticatorVoice
 
 // Closures

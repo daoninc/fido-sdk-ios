@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-import DaonAuthenticatorSDK
+import DaonFIDOSDK
 
 /// Cancellable SwiftUI view for displaying an error.
 
