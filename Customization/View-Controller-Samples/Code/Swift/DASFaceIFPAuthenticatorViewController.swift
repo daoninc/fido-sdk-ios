@@ -59,7 +59,7 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
                         
         capture?.enhancedDetection = isRegistration ? true : false
         capture?.assessmentDelay = 0.75
-        capture?.trueDepthAssessment = true
+        capture?.trueDepthAssessment = false
         capture?.trueDepthRequireIdentityMatch = false
 
                         
