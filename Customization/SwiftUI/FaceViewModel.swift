@@ -65,7 +65,7 @@ class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDele
         capture?.delegate = self
         capture?.setParameters([kDFSConfigQualityThresholdEyesOpenKey: 0.65])
         
-        capture?.trueDepthAssessment = true
+        capture?.trueDepthAssessment = false
         capture?.trueDepthRequireIdentityMatch = false
         
         capture?.start(controller: DASUtils.determineHostViewController()) {
