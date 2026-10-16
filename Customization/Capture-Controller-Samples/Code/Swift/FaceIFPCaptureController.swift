@@ -37,7 +37,7 @@ class FaceIFPCaptureController: DASCaptureControllerProtocol {
                             
             self.capture?.enhancedDetection = registration ? true : false
             self.capture?.assessmentDelay = 0.75
-            self.capture?.trueDepthAssessment = true
+            self.capture?.trueDepthAssessment = false
             self.capture?.trueDepthRequireIdentityMatch = false
             
             self.capture?.start(controller: DASUtils.determineHostViewController())
