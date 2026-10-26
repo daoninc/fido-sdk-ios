@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daoninc/fido-sdk-ios",
       "state" : {
-        "revision" : "b76dc4cbe9c8252a4ca9b4ed3e80abadfc74d2f7",
-        "version" : "4.10.46"
+        "revision" : "4e429572cb7986c2779ca48300f83198f22be59e",
+        "version" : "4.11.4"
       }
     }
   ],
