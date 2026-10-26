@@ -106,7 +106,7 @@ private class LocalAuthenticationViewModel : ObservableObject {
                 // Show an error
                 if let authenticatorError = DASAuthenticatorError(rawValue: err._code) {
                     if authenticatorError != .cancelled {
-                        self.error = DASUtils.string(forError: authenticatorError) ?? DASUtils.string(forError: .faceIdFailedToVerify)
+                        self.error = DASUtils.string(forError: authenticatorError)
                         self.alert = true
                     } else {
                         self.cancel()

@@ -165,6 +165,8 @@ class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase,
 
     override func authenticatorIsCancelling() {
         super.authenticatorIsCancelling()
+
+        isCancelling = true
         voiceController.cancel()
     }
 
@@ -220,8 +222,15 @@ class DASVoiceAuthenticatorViewController: DASAuthenticatorViewControllerBase,
                 }
             }
         } else {
+            // The user explicitly asked to record, so this screen is no longer cancelling.
+            isCancelling = false
+
             AVCaptureDevice.requestAccess(for: AVMediaType.audio) { [self] granted in
                 DispatchQueue.main.async {
+                    // Permission is answered asynchronously, so the authenticator may have
+                    // been cancelled or reset while the prompt was up.
+                    guard !self.isCancelling else { return }
+
                     if granted {
                         if let error = self.voiceController.startRecording() {
                             self.fail(error: error)

@@ -21,6 +21,7 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
     
     var useCustomView: Bool = true
     var isRegistration: Bool = false
+    private let trueDepthAssessmentEnabled = false
     
     override init(nibName nibNameOrNil: String?,
                   bundle nibBundleOrNil: Bundle?,
@@ -59,7 +60,7 @@ class DASFaceIFPAuthenticatorViewController: DASAuthenticatorViewControllerBase 
                         
         capture?.enhancedDetection = isRegistration ? true : false
         capture?.assessmentDelay = 0.75
-        capture?.trueDepthAssessment = false
+        capture?.trueDepthAssessment = trueDepthAssessmentEnabled
         capture?.trueDepthRequireIdentityMatch = false
 
                         
@@ -306,7 +307,11 @@ extension DASFaceIFPAuthenticatorViewController : @MainActor DASFaceCaptureDeleg
     
     func faceCaptureDidUpdate(status: DFSCaptureStatus, message: String, image: UIImage?) {
         // Custom view status messages
-        statusLabel?.text = message
+        if trueDepthAssessmentEnabled && status == .done {
+            statusLabel?.text = "\(message) - Hold still and keep face centered"
+        } else {
+            statusLabel?.text = message
+        }
     }
     
     func faceCaptureDidUpdate(result: Result, image: UIImage) {

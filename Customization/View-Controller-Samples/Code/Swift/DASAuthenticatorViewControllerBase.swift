@@ -255,7 +255,7 @@ class DASAuthenticatorViewControllerBase: UIViewController, @MainActor AVAudioPl
      @return The localized NSString.
      */
     func localise(_ key: String) -> String {
-        return DASUtils.localise(key)
+        return DASUtils.localise(key) ?? "NA"
     }
     
     
@@ -555,7 +555,7 @@ class DASAuthenticatorViewControllerBase: UIViewController, @MainActor AVAudioPl
 
             addChild(currentChildViewController!)
             self.view.addSubview(currentChildViewController!.view)
-            DASUtils.addConstrainEqualConstraint(to: self.view, containerView: self.containerView, childView: currentChildViewController!.view)
+            DASUtils.addConstrainEqualConstraint(to: self.view, containerView: self.containerView!, childView: currentChildViewController!.view)
             currentChildViewController?.didMove(toParent: self)
             
             self.title = currentChildViewController?.title

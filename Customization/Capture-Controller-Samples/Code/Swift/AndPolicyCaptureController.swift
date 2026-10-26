@@ -176,7 +176,7 @@ class AndPolicyCaptureController: DASCaptureControllerProtocol {
     private func showErrorAndTerminate(error: DASAuthenticatorError) {
         let errorObj = DASUtils.error(forError: error)
         
-        let alertController = UIAlertController(title: errorObj?.localizedDescription, message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: errorObj.localizedDescription, message: nil, preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { (action) in
             self.handleCaptureComplete(error)

@@ -215,6 +215,7 @@
 "uaf_error_sdk_not_initialized" = "SDK not initialized.";
 "uaf_error_sdk_already_initialized" = "SDK already initialized.";
 "uaf_error_sdk_no_hardware_keystore" = "Hardware keystore required.";
+"uaf_error_sdk_keychain_unavailable" = "The Keychain is temporarily unavailable.";
 "uaf_error_client_not_found" = "No suitable FIDO UAF Client was found.";
 "uaf_error_unexpected" = "An unexpected error occurred.";
 "uaf_error_user_not_enrolled" = "User not enrolled";

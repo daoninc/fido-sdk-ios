@@ -235,9 +235,8 @@ class DASFaceOverlayView: UIView {
         
         if let firstIssue = issues?.first {
             if let error = DASAuthenticatorError(rawValue: firstIssue.intValue) {
-                    if let errorString = DASUtils.string(forError: error) {
-                        update(message: errorString)
-                    }
+                    let errorString = DASUtils.string(forError: error)
+                    update(message: errorString)
             }
         } else {
             update(message: nil)

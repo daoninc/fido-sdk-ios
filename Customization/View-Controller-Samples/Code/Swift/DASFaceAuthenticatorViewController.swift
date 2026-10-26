@@ -124,7 +124,7 @@ class DASFaceAuthenticatorViewController: DASAuthenticatorViewControllerBase, DA
         overlay = DASFaceOverlayView(frame: videoOverlayContainer.frame)
         videoOverlayContainer.addSubview(overlay!)
         
-        DASUtils.addConstrainEqualConstraint(to: view, containerView: videoOverlayContainer, childView: overlay)
+        DASUtils.addConstrainEqualConstraint(to: view, containerView: videoOverlayContainer, childView: overlay!)
         
         update(state: .preparing)
         

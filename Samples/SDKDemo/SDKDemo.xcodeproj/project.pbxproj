@@ -51,6 +51,7 @@
 		77CE71202E38022B00C73763 /* RequestAuthenticationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CE710C2E38022B00C73763 /* RequestAuthenticationResponse.swift */; };
 		77CE71212E38022B00C73763 /* RequestRegistrationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CE710D2E38022B00C73763 /* RequestRegistrationResponse.swift */; };
 		77CE71222E38022B00C73763 /* BaseNetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CE71042E38022B00C73763 /* BaseNetworkResponse.swift */; };
+		77D7C405308FBF0B001621C8 /* DaonFaceMaskDetector in Frameworks */ = {isa = PBXBuildFile; productRef = 77D7C404308FBF0B001621C8 /* DaonFaceMaskDetector */; };
 		C3721AA32318127E0018A048 /* DAS-Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3721AA22318127E0018A048 /* DAS-Images.xcassets */; };
 		C3721AA72318128D0018A048 /* DASAndPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3721AA42318128C0018A048 /* DASAndPolicyViewController.swift */; };
 		C3721AA92318128D0018A048 /* DASOrPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3721AA62318128D0018A048 /* DASOrPolicyViewController.swift */; };
@@ -166,6 +167,7 @@
 				771A5C7F2EA962CE00AE29FB /* DaonFIDOSDK in Frameworks */,
 				771A5C7B2EA962CE00AE29FB /* DaonAuthenticatorPasscode in Frameworks */,
 				771A5C792EA962CE00AE29FB /* DaonAuthenticatorFaceIFP in Frameworks */,
+				77D7C405308FBF0B001621C8 /* DaonFaceMaskDetector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +380,9 @@
 			dependencies = (
 			);
 			name = SDKDemo;
+			packageProductDependencies = (
+				77D7C404308FBF0B001621C8 /* DaonFaceMaskDetector */,
+			);
 			productName = SDKDemo;
 			productReference = FB362639220B1E0300CB5C56 /* SDKDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -674,7 +679,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Frameworks/**";
 				INFOPLIST_FILE = SDKDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -699,7 +704,7 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../Frameworks/**";
 				INFOPLIST_FILE = SDKDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -764,6 +769,11 @@
 		771A5C7E2EA962CE00AE29FB /* DaonFIDOSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DaonFIDOSDK;
+		};
+		77D7C404308FBF0B001621C8 /* DaonFaceMaskDetector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 776681DD2F36646800266703 /* XCRemoteSwiftPackageReference "fido-sdk-ios" */;
+			productName = DaonFaceMaskDetector;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -20,14 +20,6 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
     fileprivate var fingerprintController: DASFingerprintControllerProtocol?
     
     
-    // MARK:- State
-    
-    /*!
-     @brief A flag used to keep track of whether the Touch ID dialog has been presented once. We do this automatically in viewDidAppear.
-     */
-    fileprivate var autoPresentedOnce = false
-    
-    
     // MARK:- IBOutlets
     
     /*!
@@ -36,9 +28,9 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
     @IBOutlet var backgroundImageView: UIImageView!
     
     /*!
-     @brief A UIButton which when pressed allows the user to attempt Face ID registration / authentication again if it was previously cancelled.
+     @brief A UIButton which when pressed starts Touch ID registration / authentication.
      */
-    @IBOutlet var retryButton: UIButton!
+    @IBOutlet var startButton: UIButton!
     
     /*!
      @brief A UIImageView which displays a success icon after registration / authentication is complete.
@@ -83,12 +75,10 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
         super.viewDidLoad()
         
         // Configure the UI
-        self.backgroundImageView.image = loadImageNamed("Fingerprint-Collection-Background")
-        
         self.title = localise("Fingerprint Screen - Title") + " (Swift)"
         
-        self.retryButton.setTitle(localise("Fingerprint Screen - Button - Retry"), for: .normal)
-        self.retryButton.isHidden = true
+        self.startButton.setTitle(localise("Fingerprint Screen - Button - Start"), for: .normal)
+        self.startButton.isHidden = false
         
         self.resultImageView.isHidden = true
         self.resultImageView.image = loadImageNamed("Passed-Indicator")
@@ -109,26 +99,17 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
             //
             // Reset the UI, so that the user may capture again.
             //
-            self.retryButton.isHidden       = false
+            self.startButton.isHidden       = false
             self.resultImageView.isHidden   = true
         }
     }
     
     /*!
-     @brief Called when the view has appeared. We use this to automatically present the Touch ID dialog.
+     @brief Called when the view has appeared.
      @param animated YES if view appearance will be animated.
      */
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // The first time the view appears, automatically present
-        // the Touch ID dialog.
-        if !autoPresentedOnce {
-            autoPresentedOnce   = true
-            self.isCancelling   = false
-            
-            performTouchIDAuthentication()
-        }
     }
 
     
@@ -143,7 +124,6 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
         super.authenticatorShouldReset()
         
         self.isCancelling   = true
-        autoPresentedOnce   = false
         
         fingerprintController!.cancel()
     }
@@ -152,9 +132,9 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
     // MARK:- Actions
     
     /*!
-     @brief IBAction called when @link retryButton @/link is pressed.
+     @brief IBAction called when @link startButton @/link is pressed.
      */
-    @IBAction func retry(_ sender: UIButton?) {
+    @IBAction func start(_ sender: UIButton?) {
         self.isCancelling = false
         
         performTouchIDAuthentication()
@@ -179,7 +159,7 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
                 Task { @MainActor in
                     if !self.isCancelling {
                         if error == nil {
-                            self.retryButton.isHidden       = true
+                            self.startButton.isHidden       = true
                             self.resultImageView.alpha      = 0
                             self.resultImageView.isHidden   = false
                             
@@ -197,7 +177,7 @@ class DASFingerprintAuthenticatorViewController: DASAuthenticatorViewControllerB
                                             }
                             })
                         } else {
-                            self.retryButton.isHidden = false
+                            self.startButton.isHidden = false
                             
                             if let authenticatorError = DASAuthenticatorError(rawValue: error!._code) {
                                 if authenticatorError != .cancelled {

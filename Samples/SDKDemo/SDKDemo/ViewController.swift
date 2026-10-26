@@ -15,6 +15,7 @@ class ViewController: UIViewController, @MainActor IXUAFDelegate {
     
     var extensions = ["com.daon.sdk.ados.enabled" : "true",
                       "com.daon.sdk.keys.access.biometry" : "true",
+                      "com.daon.sdk.keychain.retry.delay" : "0.1", // 100 milliseconds
                       "com.daon.sdk.exclude.invalidAuthenticators" : "true",
                       "com.daon.sdk.operation.wait.timeout" : "10"] 
     
@@ -105,6 +106,7 @@ class ViewController: UIViewController, @MainActor IXUAFDelegate {
     func initialize(parameters: [String : String]) {
         fido?.logging = true
         fido?.delegate = self
+        fido?.keychainProtectedDataAvailable = { UIApplication.shared.isProtectedDataAvailable }
         
         fido?.initialize(parameters: extensions) { [weak self] (code, warnings) in
             
@@ -605,7 +607,59 @@ class ViewController: UIViewController, @MainActor IXUAFDelegate {
     // Alerts and dialogs
 
     func show(error: Error) {
-        show(title: "Error", message: "\(error._code): \(error.localizedDescription)")
+        let error = error as NSError
+        var message = "\(error.code): \(error.localizedDescription)"
+
+        if let keychainDetails = keychainFailureDetails(error: error) {
+            message.append("\n\n\(keychainDetails)")
+        }
+
+        show(title: "Error", message: message)
+    }
+
+    private func keychainFailureDetails(error: NSError) -> String? {
+        guard let failure = error.keychainFailure else {
+            return nil
+        }
+
+        let reasonDescription: String
+        switch failure.reason {
+        case .permanentKeyLoss:
+            reasonDescription = "Permanent key loss"
+        case .protectedDataUnavailable:
+            reasonDescription = "Protected Keychain data unavailable"
+        case .keychainUnavailable:
+            reasonDescription = "Keychain unavailable"
+        case .interactionNotAllowed:
+            reasonDescription = "Keychain interaction not allowed"
+        case .authenticationFailed:
+            reasonDescription = "Keychain authentication failed"
+        case .incompleteKeyPair:
+            reasonDescription = "Incomplete key pair"
+        case .keychainReadFailed:
+            reasonDescription = "Keychain read failed"
+        case .unknown:
+            reasonDescription = "Unknown Keychain failure"
+        @unknown default:
+            reasonDescription = "Unrecognized Keychain failure (\(failure.reason.rawValue))"
+        }
+
+        var details = [
+            "Keychain reason: \(reasonDescription)",
+            "Recoverable: \(failure.recoverable ? "Yes" : "No")"
+        ]
+
+        if failure.hasPublicKeyStatus {
+            details.append("Public key status: \(failure.publicKeyStatus)")
+        }
+        if failure.hasPrivateKeyStatus {
+            details.append("Private key status: \(failure.privateKeyStatus)")
+        }
+        if failure.hasProtectedDataAvailability {
+            details.append("Protected data available: \(failure.protectedDataAvailable)")
+        }
+
+        return details.joined(separator: "\n")
     }
 
     func show(title: String, response:[String : Any]?) {
@@ -628,7 +682,7 @@ class ViewController: UIViewController, @MainActor IXUAFDelegate {
         
         Logging.shared.log(string:"***\n\(title): \(message)\n***")
 
-        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+        if var topController = view.window?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
             }
@@ -676,4 +730,3 @@ class ViewController: UIViewController, @MainActor IXUAFDelegate {
         }
     }
 }
-

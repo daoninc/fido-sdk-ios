@@ -13,7 +13,7 @@
             <connections>
                 <outlet property="backgroundImageView" destination="r07-7y-l8e" id="F8z-NM-yhr"/>
                 <outlet property="resultImageView" destination="IG3-mQ-2tJ" id="6Ct-BB-ipy"/>
-                <outlet property="retryButton" destination="w8G-dh-U84" id="UEH-Um-CSh"/>
+                <outlet property="startButton" destination="w8G-dh-U84" id="UEH-Um-CSh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -34,11 +34,11 @@
                         <constraint firstAttribute="width" constant="32" id="TRo-Cm-tXI"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8G-dh-U84" userLabel="Retry Button">
-                    <rect key="frame" x="164.5" y="553" width="46" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w8G-dh-U84" userLabel="Start Button">
+                    <rect key="frame" x="164.5" y="286.5" width="46" height="30"/>
                     <state key="normal" title="Button"/>
                     <connections>
-                        <action selector="retry:" destination="-1" eventType="touchUpInside" id="rTf-ip-kXW"/>
+                        <action selector="start:" destination="-1" eventType="touchUpInside" id="rTf-ip-kXW"/>
                     </connections>
                 </button>
             </subviews>
@@ -49,7 +49,7 @@
                 <constraint firstAttribute="trailing" secondItem="r07-7y-l8e" secondAttribute="trailing" id="A36-jG-ygc"/>
                 <constraint firstItem="r07-7y-l8e" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="NKW-Hg-eiz"/>
                 <constraint firstItem="IG3-mQ-2tJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="rCJ-ZO-hZ7"/>
-                <constraint firstAttribute="bottom" secondItem="w8G-dh-U84" secondAttribute="bottom" constant="20" symbolic="YES" id="x5h-kU-sqe"/>
+                <constraint firstItem="w8G-dh-U84" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="x5h-kU-sqe"/>
                 <constraint firstItem="w8G-dh-U84" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yzM-EA-lzm"/>
                 <constraint firstItem="IG3-mQ-2tJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" symbolic="YES" id="zF5-oQ-hhc"/>
             </constraints>

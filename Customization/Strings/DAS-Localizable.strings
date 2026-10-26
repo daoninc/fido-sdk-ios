@@ -100,6 +100,8 @@
 
 "Fingerprint Screen - Title" = "Touch ID";
 
+"Fingerprint Screen - Button - Start" = "START";
+
 "Fingerprint Screen - Button - Retry" = "Retry";
 
 "Fingerprint Screen - Reason - Registration" = "Verify your fingerprint to continue registration.";

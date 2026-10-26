@@ -18,6 +18,7 @@ class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDele
     private var useCustomView: Bool
     private var registration: Bool
     private var capture: DASFaceCapture?
+    private let trueDepthAssessmentEnabled = false
     
     enum State {
         case start
@@ -65,10 +66,15 @@ class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDele
         capture?.delegate = self
         capture?.setParameters([kDFSConfigQualityThresholdEyesOpenKey: 0.65])
         
-        capture?.trueDepthAssessment = false
+        capture?.trueDepthAssessment = trueDepthAssessmentEnabled
         capture?.trueDepthRequireIdentityMatch = false
         
-        capture?.start(controller: DASUtils.determineHostViewController()) {
+        guard let hostViewController = DASUtils.determineHostViewController() else {
+            context?.completeCapture(error: .authenticatorNoHostViewController)
+            return
+        }
+
+        capture?.start(controller: hostViewController) {
             print("CAPTURE DONE")
         }
     }
@@ -120,7 +126,11 @@ class FaceViewModel : NSObject, ObservableObject,  @MainActor DASFaceCaptureDele
     //
     
     func faceCaptureDidUpdate(status: DFSCaptureStatus, message: String, image: UIImage?) {
-        self.message = message
+        if trueDepthAssessmentEnabled && status == .done {
+            self.message = "\(message) - Hold still and keep face centered"
+        } else {
+            self.message = message
+        }
     }
     
     func faceCaptureDidUpdate(result: Result, image: UIImage) {
